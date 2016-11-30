@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>페이징 구현 TEST</title>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <style>
+        table,tr,td,th {border:1px solid #666;border-collapse:collapse}a{padding:10px;background:#eee}.current {color:red;font-weight:bold}
+    </style>
+</head>
+<body>
+    <div id="paging" style="margin:20px 0 0 0;text-align:center">
+        <a href="" class="firstPage">처음</a>
+        <a href="" class="prevPage">이전</a>
+        <a href="" class="current">0</a>
+        <a href="">0</a>
+        <a href="">0</a>
+        <a href="">0</a>
+        <a href="">0</a>
+        <a href="">0</a>
+        <a href="">0</a>
+        <a href="">0</a>
+        <a href="">0</a>
+        <a href="">10</a>
+        <a href="" class="nextPage">다음</a>
+        <a href="" class="lastPage">마지막</a>
+    </div>
+    <table style="width:900px;margin:20px auto">
+        <thead>
+            <tr><th>TITLE</th><th>TITLE</th><th>TITLE</th><th>TITLE</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>number</td><td>content</td><td>content</td><td>content</td></tr>
+            <tr><td>number</td><td>content</td><td>content</td><td>content</td></tr>
+            <tr><td>number</td><td>content</td><td>content</td><td>content</td></tr>
+            <tr><td>number</td><td>content</td><td>content</td><td>content</td></tr>
+            <tr><td>number</td><td>content</td><td>content</td><td>content</td></tr>
+        </tbody>
+    </table>
+    <script>
+        function ottoriPagination(){
+            this.paging = function(obj){
+                //개발자가 실수로 현재 페이지 옵션값을 넘기지 않았을 경우
+                if(!obj.id){
+                    alert("id 지정 필")
+                };
+                if(!obj.page){
+                    alert("page 지정은 필수임")
+                };
+                if(!obj.row){
+                    alert("리스트 몇 개 뿌려줄 건지 정하슈")
+                };
+
+                var pageBox = $("#"+obj.id)
+                    , firstPage = $(".firstPage", pageBox)
+                    , prevPage = $(".prevPage", pageBox)
+                    , nextPage = $(".nextPage", pageBox)
+                    , lastPage = $(".lastPage", pageBox)
+
+                var linkNumber = $("a", pageBox)
+                    , link = obj.link
+                    , totalCount = obj.totalCount
+                    , row = obj.row
+                    , pageListNum = totalCount/row
+                    , pageGroup = obj.pageGroup
+                    , currentPage = obj.currentPage
+
+                var pageList = new Array();
+                var arr = new Array();
+
+
+                //페이지 리스트 배열 생성
+                //total 건수에 row를 나눈값이 총 페이지리스트 갯수가 되며 다음을 클릭할 때마다 해당 순서에 해당하는 페이지리스트를 뿌려줌
+
+                pageList.length = pageListNum;//total 건수에 row를 나눈값. (row가 5일 경우 페이지리스트는 400개가 된다.)
+
+                for(var i=1; i<pageListNum+1; i++){
+                    if(i % row){
+                        arr.push(i)
+                    }else{
+
+                    }
+                }
+
+console.log(lastPage, pageList , pageListNum);
+
+                //a 요소 안에 숫자 세팅
+                var order = linkNumber.index() < 2 || linkNumber.index() > 11
+                var writingNumber = totalCount/pageGroup
+                var pageArray = [];
+
+                pageArray.innerHTML = writingNumber;
+
+                for(var i = 2; i < pageGroup + 2 ; i++){
+                    linkNumber.eq(i).text(i-1);
+                }
+
+                //클릭시 해당 링크 볼드 표시
+                linkNumber.click(function(e){
+                    if($(this).index() < 2 || $(this).index() > 11){
+
+                    }else{
+                        if($(this).index() == obj.page){
+
+                        }else{
+                            linkNumber.removeClass()
+                            $(this).addClass("current");
+                        };
+                    };
+                    e.preventDefault();
+                });
+            }
+        };
+
+        var Opage = new ottoriPagination();
+
+        Opage.paging({
+            id : "paging",
+            page : 2,
+            row : 5,
+            totalCount : 2000,
+            pageGroup : 10,
+            currentPage : 2
+        })
+
+
+        // function id(id){return document.getElementById(id)}
+        // var paging = id("paging");
+        // var linkNumber = paging.getElementsByTagName("a");
+
+        // var link = {};
+        // var totalCount = 2000;
+        // var rows = 5;
+        // var totalPage = totalCount/rows
+        // var pageGroup = 10;
+        // var currentPage = 2;
+
+//         function pagination(page){
+//             this.paging = function(obj){
+//                 for( var i =0, length = linkNumber.length; i < length; i++){
+//                     linkNumber[i].click = function(){
+//                         if( i < 2 || i > 9){
+// console.log("click")
+//                         }else{
+//                             if(this.index == obj.page){
+
+//                             }else{
+
+//                                 this.className = "current";
+//                             };
+//                             return false;
+//                         }
+//                     }
+//                 };
+//             }
+//         };
+
+//        var Opage = new pagination();
+
+
+
+
+
+    </script>
+
+</body>
+</html>
+
