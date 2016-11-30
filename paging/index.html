@@ -40,7 +40,7 @@
     <script>
         function ottoriPagination(){
             this.paging = function(obj){
-                //개발자가 실수로 현재 페이지 옵션값을 넘기지 않았을 경우
+                //개발자가 실수로 현재 페이지 옵션값을 넘기지 않고 호출했을 경우
                 if(!obj.id){
                     alert("id 지정 필")
                 };
@@ -61,28 +61,85 @@
                     , link = obj.link
                     , totalCount = obj.totalCount
                     , row = obj.row
-                    , pageListNum = totalCount/row
                     , pageGroup = obj.pageGroup
+                    , pageListNum = totalCount/row
                     , currentPage = obj.currentPage
 
-                var pageList = new Array();
-                var arr = new Array();
+                var that = this;
+                that.pageList = new Array();
+                that.arr = new Array();
 
+                //숫자링크 생성
+                var linkElement = linkNumber.get(3)
 
-                //페이지 리스트 배열 생성
-                //total 건수에 row를 나눈값이 총 페이지리스트 갯수가 되며 다음을 클릭할 때마다 해당 순서에 해당하는 페이지리스트를 뿌려줌
+                //현재 페이지리스트로 뿌려줄 넘버 뽑아내기
+                function thisPageArray(){
+                    var startNumber = 0;
+                    var tempNum = currentPage.toString();
+                    var arr = $.makeArray(currentPage)
 
-                pageList.length = pageListNum;//total 건수에 row를 나눈값. (row가 5일 경우 페이지리스트는 400개가 된다.)
+                    //var numArray = $.makeArray(currentPage)
 
-                for(var i=1; i<pageListNum+1; i++){
-                    if(i % row){
-                        arr.push(i)
+                    if(currentPage < 11){
+                        startNumber = 1;
+                    }else if(currentPage > 10 && currentPage < 101){
+                        startNumber = parseInt(tempNum.slice(0,1) + 0);
+                        console.log(startNumber)
+                    }else if(currentPage > 100 && currentPage < 1001){
+                        //일단 보류.
+                    }else if(currentPage > 1000 && currentPage < 10001){
+                        //일단 보류.
                     }else{
+                        //일단 보류.
+                    };
 
+                    for(var i=1;i<=pageGroup;i++){
+                        that.pageList.push( startNumber + i )
                     }
-                }
+                };
+                thisPageArray();
 
-console.log(lastPage, pageList , pageListNum);
+console.log(that.pageList)
+                //페이지 리스트 링크 삭제
+                for(var i=2;i<=pageGroup+1;i++){
+                    linkNumber[i].remove();
+                }
+                //페이지 리스트 링크 새로 생성
+                //var pageLinkElement = ' <a href="#"></a> '
+                var pageLinkElement = document.createElement("a");
+                var pageLinkElementArray = " <a href='#'></a> "
+                console.log(pageLinkElement)
+
+                for(var i=0, lengths=that.pageList.length; i<lengths;i++){
+                    pageLinkElementArray += " <a href='#'></a> "
+//                    linkNumber[i+2].innerHTML = that.pageList[i]
+
+                    // pageLinkElement.innerHTML = that.pageList[i]
+                    // var pageLinkElement = document.createElement("a").innerHTML = that.pageList[i]
+                    // console.log(pageLinkElement)
+                    // nextPage.before(pageLinkElement)
+                }
+                console.log(pageLinkElementArray[0])
+                nextPage.before(pageLinkElementArray);
+                setTimeout(function(){
+                    for(var i=0, lengths=that.pageList.length; i<lengths;i++){
+                        linkNumber[i+2].innerHTML = that.pageList[i];
+                        console.log(i)
+                    }
+                },500)
+
+
+
+
+                //total 건수에 row를 나눈값이 총 페이지리스트 갯수가 되며 다음을 클릭할 때마다 해당 순서에 해당하는 페이지리스트를 뿌려줌
+                // for(var i=1; i<pageListNum+1; i++){
+                //     if(i % row == 0){
+                //         pageList.push(arr);
+                //     }else{
+                //         arr.push(i);
+                //     }
+                //     console.log(pageList, arr)
+                // }
 
                 //a 요소 안에 숫자 세팅
                 var order = linkNumber.index() < 2 || linkNumber.index() > 11
@@ -120,7 +177,7 @@ console.log(lastPage, pageList , pageListNum);
             row : 5,
             totalCount : 2000,
             pageGroup : 10,
-            currentPage : 2
+            currentPage : 20
         })
 
 
