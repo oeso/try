@@ -83,31 +83,13 @@
                 var linkElement = linkNumber.get(3)
 
                 //현재 페이지리스트로 뿌려줄 넘버 뽑아내기
-                function thisPageArray(){
-                    var startNumber = 0;
-                    var tempNum = page.toString();
-                    var arr = $.makeArray(page)
+                var startNumber = 0;
+                var result = page-1;
+                startNumber = parseInt(result/pageGroup) * pageGroup;
 
-                    //var numArray = $.makeArray(page)
-
-                    if(page < 11){
-                        startNumber = 1;
-                    }else if(page > 10 && page < 101){
-                        startNumber = parseInt(tempNum.slice(0,1) + 0);
-                        console.log(startNumber)
-                    }else if(page > 100 && page < 1001){
-                        //일단 보류.
-                    }else if(page > 1000 && page < 10001){
-                        //일단 보류.
-                    }else{
-                        //일단 보류.
-                    };
-
-                    for(var i=1;i<=pageGroup;i++){
-                        that.pageList.push( startNumber + i )
-                    }
-                };
-                thisPageArray();
+                for(var i=1;i<=pageGroup;i++){
+                    that.pageList.push( startNumber + i )
+                }
 
                 //페이지 리스트 링크 삭제
                 for(var i=2;i<=pageGroup+1;i++){
@@ -147,7 +129,7 @@
 
         Opage.paging({
             id : "paging",
-            page : 75,
+            page : 10,
             row : 5,
             totalCount : 2000,
             pageGroup : 10
