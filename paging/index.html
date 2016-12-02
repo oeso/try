@@ -38,38 +38,17 @@
         </tbody>
     </table>
     <script>
-        /*
-            필요한 매개변수 object로 넘기세요.
-            {
-                id : 페이징기능 호출할 엘리먼트의 id
-                totalCount : 전체 게시물 수
-                rows : 한페이지에 뿌려질 데이터 갯수
-                pageGroup : 한페이지에 뿌려질 페이징 갯수
-                page : 현재 페이지 번호
-            }
-        */
+        Opage.paging({
+            id : "paging",
+            page : 88,
+            row : 5,
+            totalCount : 2000,
+            pageGroup : 10
+        });
         function ottoriPagination(){
             this.paging = function(obj){
-                //개발자가 실수로 현재 페이지 옵션값을 넘기지 않고 호출했을 경우
-                if(!obj.id){
-                    alert("id 지정 필")
-                };
-                if(!obj.page){
-                    alert("page 지정은 필수임")
-                };
-                if(!obj.row){
-                    alert("리스트 몇 개 뿌려줄 건지 정하슈")
-                };
-
                 var pageBox = $("#"+obj.id)
-                    , firstPage = $(".firstPage", pageBox)
-                    , prevPage = $(".prevPage", pageBox)
-                    , nextPage = $(".nextPage", pageBox)
-                    , lastPage = $(".lastPage", pageBox)
-
                 var linkNumber = $("a", pageBox)
-                    , link = obj.link
-                    , totalCount = obj.totalCount
                     , row = obj.row
                     , pageGroup = obj.pageGroup
                     , pageListNum = totalCount/row
@@ -79,16 +58,14 @@
                 that.pageList = new Array();
                 this.arr = new Array();
 
-                //숫자링크 생성
-                var linkElement = linkNumber.get(3)
-
                 //현재 페이지리스트로 뿌려줄 넘버 뽑아내기
                 var startNumber = 0;
-                var result = page-1;
-                startNumber = parseInt(result/pageGroup) * pageGroup;
 
-                for(var i=1;i<=pageGroup;i++){
-                    that.pageList.push( startNumber + i )
+                pageStart = (page / pageGroup) <= 1 ? 1 : Math.floor(page / pageGroup)*pageGroup+1;
+                pageEnd =  (pageStart > pageGroup) ? pageStart+(pageGroup-1) : pageGroup;
+
+                for(var i=pageStart;i<=pageEnd;i++){
+                    that.pageList.push( i )
                 }
 
                 //페이지 리스트 링크 삭제
@@ -99,17 +76,19 @@
                 var pageLinkElement = document.createElement("a");
                 var pageLinkElementArray = "";
 
-                for(var i=0, lengths=that.pageList.length; i<lengths;i++){
-                    if( that.pageList[i] == page ){
-                        pageLinkElementArray += " <a href='#' class='current'>"+ that.pageList[i] +"</a> "
-                    }else{
-                        pageLinkElementArray += " <a href='#'>"+ that.pageList[i] +"</a> "
+                function draw(){
+                    for(var i=0, lengths=that.pageList.length; i<lengths;i++){
+                        if( that.pageList[i] == page ){
+                            pageLinkElementArray += " <a href='#' class='current'>"+ that.pageList[i] +"</a> "
+                        }else{
+                            pageLinkElementArray += " <a href='#'>"+ that.pageList[i] +"</a> "
+                        }
                     }
+                    nextPage.before(pageLinkElementArray);
                 }
-                nextPage.before(pageLinkElementArray);
 
-                //클릭시 해당 링크 볼드 표시. 이때 $("#paging a")를 변수에 미리 담아둔 linkNumber를 쓰면 동작 불가. 새로 뿌려준 a요소와 기존에 담아둔 a요소는 다르기 때문. 맞겠지?
-                $("#paging a").click(function(e){console.log($(this).index())
+                //클릭시 해당 링크 볼드 표시
+                $("#paging a").click(function(e){
                     if($(this).index() < 2 || $(this).index() > 11){
 
                     }else{
@@ -124,55 +103,7 @@
                 });
             }
         };
-
         var Opage = new ottoriPagination();
-
-        Opage.paging({
-            id : "paging",
-            page : 10,
-            row : 5,
-            totalCount : 2000,
-            pageGroup : 10
-        })
-
-
-        // function id(id){return document.getElementById(id)}
-        // var paging = id("paging");
-        // var linkNumber = paging.getElementsByTagName("a");
-
-        // var link = {};
-        // var totalCount = 2000;
-        // var rows = 5;
-        // var totalPage = totalCount/rows
-        // var pageGroup = 10;
-        // var page = 2;
-
-//         function pagination(page){
-//             this.paging = function(obj){
-//                 for( var i =0, length = linkNumber.length; i < length; i++){
-//                     linkNumber[i].click = function(){
-//                         if( i < 2 || i > 9){
-// console.log("click")
-//                         }else{
-//                             if(this.index == obj.page){
-
-//                             }else{
-
-//                                 this.className = "current";
-//                             };
-//                             return false;
-//                         }
-//                     }
-//                 };
-//             }
-//         };
-
-//        var Opage = new pagination();
-
-
-
-
-
     </script>
 
 </body>
