@@ -4,26 +4,18 @@
     <meta charset="UTF-8">
     <title>페이징 구현 TEST</title>
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-    <style>
-        table,tr,td,th {border:1px solid #666;border-collapse:collapse}a,strong{padding:10px;background:#eee}.current {color:red;font-weight:bold}
+    <style>h1{text-align:center;margin:30px 0;}#paging{margin:20px 0 40px;text-align:center}strong,a{border-radius:4px;color:#666;display:inline-block;min-width:25px;font-weight:normal; margin:0 3px;text-decoration:none; font-size:15px;font-family:"Dotum", sans-serif}
+        table,tr,td,th {border:1px solid #666;border-collapse:collapse}a,strong{padding:10px;background:#eee}.current {color:crimson;font-weight:bold}
     </style>
 </head>
 <body>
-    <div id="paging" style="margin:20px 0 0 0;text-align:center">
-        <a href="" class="firstPage">처음</a>
-        <a href="" class="prevPage">이전</a>
+    <h1>Paging</h1>
+    <div id="paging">
+        <a href="" class="first">처음</a>
+        <a href="" class="prev">이전</a>
         <a class="current">0</a>
-        <a href="">0</a>
-        <a href="">0</a>
-        <a href="">0</a>
-        <a href="">0</a>
-        <a href="">0</a>
-        <a href="">0</a>
-        <a href="">0</a>
-        <a href="">0</a>
-        <a href="">10</a>
-        <a href="" class="nextPage">다음</a>
-        <a href="" class="lastPage">마지막</a>
+        <a href="" class="next">다음</a>
+        <a href="" class="last">마지막</a>
     </div>
     <table style="width:900px;margin:20px auto">
         <thead>
@@ -38,72 +30,83 @@
         </tbody>
     </table>
     <script>
+        function ottoriPagination(){
+            this.paging = function(obj){
+                var pageBox = $("#"+obj.id)
+                var row = obj.row
+                    ,pageGroup = obj.pageGroup
+                    ,page = obj.page
+                    ,that = this;
+
+                that.pageList = new Array();
+                this.arr = new Array();
+
+                //현재 페이지리스트로 뿌려줄 시작넘버와 마지막넘버 구하기.
+                var pageStart = (page / pageGroup) <= 1 ? 1 : Math.floor(page / pageGroup)*pageGroup+1;
+                var pageEnd =  (pageStart > pageGroup) ? pageStart+(pageGroup-1) : pageGroup;
+                var pageContent = new Array();
+
+               function pageContents(){
+                   for(var i=pageStart; i<=pageEnd; i++){
+                        if(i == page){
+                            pageContent.push("<strong class='current'>"+ i +"</strong>");
+                        }else{
+                            pageContent.push("<a href='#'>"+ i +"</a>");
+                        };
+                    };
+                    pageContent = pageContent.join("");
+                };
+                pageContents();
+
+                that.pageList.push("<a href='#' class='first'>처음</a>");
+                that.pageList.push("<a href='#' class='prev'>이전</a>");
+                that.pageList.push(pageContent);
+                that.pageList.push("<a href='#' class='next'>다음</a>");
+                that.pageList.push("<a href='#' class='last'>끝</a>");
+
+                pageBox.html(that.pageList);
+
+                //클릭시 해당 링크 볼드 표시
+                $("#paging a").click(function(e){
+                    var links = $(this);
+                    if(links.hasClass("first")){
+                        changePage();
+                    }else if(links.hasClass("prev")){
+                        pageContent = new Array();
+                        console.log(pageContent)
+
+                        pageStart = pageStart - pageGroup;
+                        pageEnd = pageEnd - pageGroup;
+
+                        changePage(pageStart, dataUrl)
+
+                        pageContents();
+
+                        $(".prev").after(pageContent);
+                    }else if(links.hasClass("next")){
+                        changePage();
+                    }else if(links.hasClass("last")){
+                        changePage();
+                    }else{
+                        $("#paging a, #paging strong").removeClass("current");
+                        links.addClass("current");
+                    }
+                    e.preventDefault();
+                });
+
+                function changePage(page, url){
+
+                }
+            }
+        };
+        var Opage = new ottoriPagination();
         Opage.paging({
             id : "paging",
-            page : 88,
+            page : 11,
             row : 5,
             totalCount : 2000,
             pageGroup : 10
         });
-        function ottoriPagination(){
-            this.paging = function(obj){
-                var pageBox = $("#"+obj.id)
-                var linkNumber = $("a", pageBox)
-                    , row = obj.row
-                    , pageGroup = obj.pageGroup
-                    , pageListNum = totalCount/row
-                    , page = obj.page
-
-                var that = this;
-                that.pageList = new Array();
-                this.arr = new Array();
-
-                //현재 페이지리스트로 뿌려줄 넘버 뽑아내기
-                var startNumber = 0;
-
-                pageStart = (page / pageGroup) <= 1 ? 1 : Math.floor(page / pageGroup)*pageGroup+1;
-                pageEnd =  (pageStart > pageGroup) ? pageStart+(pageGroup-1) : pageGroup;
-
-                for(var i=pageStart;i<=pageEnd;i++){
-                    that.pageList.push( i )
-                }
-
-                //페이지 리스트 링크 삭제
-                for(var i=2;i<=pageGroup+1;i++){
-                    linkNumber[i].remove();
-                }
-                //페이지 리스트 링크 새로 생성. 현재 페이지 넘버 볼드처리 포함
-                var pageLinkElement = document.createElement("a");
-                var pageLinkElementArray = "";
-
-                function draw(){
-                    for(var i=0, lengths=that.pageList.length; i<lengths;i++){
-                        if( that.pageList[i] == page ){
-                            pageLinkElementArray += " <a href='#' class='current'>"+ that.pageList[i] +"</a> "
-                        }else{
-                            pageLinkElementArray += " <a href='#'>"+ that.pageList[i] +"</a> "
-                        }
-                    }
-                    nextPage.before(pageLinkElementArray);
-                }
-
-                //클릭시 해당 링크 볼드 표시
-                $("#paging a").click(function(e){
-                    if($(this).index() < 2 || $(this).index() > 11){
-
-                    }else{
-                        if($(this).index() == obj.page){
-
-                        }else{
-                            $("#paging a").removeClass()
-                            $(this).addClass("current");
-                        };
-                    };
-                    e.preventDefault();
-                });
-            }
-        };
-        var Opage = new ottoriPagination();
     </script>
 
 </body>

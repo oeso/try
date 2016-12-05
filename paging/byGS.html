@@ -35,8 +35,8 @@
     </div>
     <script>
         pagination({
-            totalPages : 999999,
-            pageNumber : 4646,
+            totalPages : 999,
+            pageNumber : 582,
             paginationSize : 10
         })
         //pagination
@@ -76,6 +76,7 @@
                 page.push('<li class="arrow"><a href="#" title="다음 10페이지" class="next"><i class="fa fa-angle-double-right"></i></a></li>');
                 page.push('<li class="arrow"><a href="#" title="맨 끝" class="last"><i class="fa fa-angle-right"></i></a></li>');
             }
+            console.log(page.join(''))
             $('.pagination').html(page.join(''));
 
             $('.pagination a').click(function(){
@@ -95,29 +96,6 @@
                 return false;
             });
         }
-
-
-        //위 코드에서 특히 아래
-        // $('.pagination a').click(function(){
-        //     _$paginationLink = $(this);
-        //     if (_$paginationLink.hasClass('first')) {
-        //       queryStringUtils.changePage(1, dataUrl);
-        //     }else if (_$paginationLink.hasClass('prev')) {
-        //       queryStringUtils.changePage(startPageNumber - data.paginationSize, dataUrl);
-        //     }else if (_$paginationLink.hasClass('next')) {
-        //       queryStringUtils.changePage(startPageNumber + data.paginationSize, dataUrl);
-        //     }else if (_$paginationLink.hasClass('last')) {
-        //       queryStringUtils.changePage(totalPages, dataUrl);
-        //     }else {
-        //       var pageNum = _$paginationLink.text();
-        //       queryStringUtils.changePage(pageNum, dataUrl);
-        //     }
-        //     return false;
-        //   });
-        // 이부분에선
-        // queryStringUtils.changePage(1, dataUrl);1  에 해당하는 부분만
-        // 해당 링크일때 공식으로 생각하면 됨
-
     </script>
 
 </body>
