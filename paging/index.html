@@ -73,14 +73,15 @@
                         changePage();
                     }else if(links.hasClass("prev")){
                         pageContent = new Array();
-                        console.log(pageContent)
-
                         pageStart = pageStart - pageGroup;
                         pageEnd = pageEnd - pageGroup;
 
-                        changePage(pageStart, dataUrl)
-
-                        pageContents();
+                        $.ajax("https://oeso.github.io/try/paging/json/dataurl.json", function(data){
+                            console.log(1)
+                            console.log(data)
+                        })
+                        //changePage(page)
+                        //pageContents();
 
                         $(".prev").after(pageContent);
                     }else if(links.hasClass("next")){
@@ -94,9 +95,15 @@
                     e.preventDefault();
                 });
 
-                function changePage(page, url){
+                // function changePage(page, url){
+                //     $.ajax("https://oeso.github.io/try/paging/json/dataurl.json", function(data){
 
-                }
+
+                //             console.log(data)
+
+
+                //     })
+                // }
             }
         };
         var Opage = new ottoriPagination();
