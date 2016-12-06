@@ -10,6 +10,7 @@
         h1, p{text-align:center;margin:30px 0;}#paging{margin:20px 0 40px;text-align:center}
         strong,a{border-radius:4px;color:#666;display:inline-block;min-width:25px;font-weight:normal; margin:0 3px;text-decoration:none; font-size:15px;font-family:"Dotum", sans-serif}
         a,strong{padding:10px;background:#eee}strong.btn{cursor:unset}
+        .btn-info{cursor:unset}
     </style>
 </head>
 <body>
@@ -41,11 +42,11 @@
         function ottoriPagination(){
             this.paging = function(obj){
                 var param = obj
-                    ,pageBox = $("#"+param.id)
                     ,pageContent = new Array()
+                    ,pageElList = new Array()
+                    ,pageBox = $("#"+param.id)
                     ,pageGroup = param.pageGroup
                     ,page = param.page
-                    ,pageElList = new Array()
                     ,listSize = Math.ceil(param.totalCount/param.row)/pageGroup
                     ,lastNumber = ( listSize % 2 ) > 0 ? Math.floor( listSize ) * pageGroup + 1 : Math.floor( listSize ) * pageGroup //마지막 페이징목록에 처음 오는 수
 
@@ -94,10 +95,13 @@
                         if( startNumber == lastNumber ){ alert("마지막 페이지 목록입니다.");return false;};
                         param.page = lastNumber
                         Opage.paging(param);
+                    }else if(links.hasClass("btn-info")){
+                        return false;
                     }else{
                         $(".btn-info").removeClass("btn-info").addClass("btn-default");
                         links.addClass("btn-info")
-                    }
+                    };
+                    e.preventDefault();
                 });
             }
         };
