@@ -40,10 +40,10 @@
 
         function ottoriPagination(){
             this.paging = function(obj){
-                var param = obj;
-                var pageBox = $("#"+param.id);
-                var pageContent = new Array();
-                var pageGroup = param.pageGroup
+                var param = obj
+                    ,pageBox = $("#"+param.id)
+                    ,pageContent = new Array()
+                    ,pageGroup = param.pageGroup
                     ,page = param.page
                     ,pageElList = new Array()
                     ,listSize = Math.ceil(param.totalCount/param.row)/pageGroup
@@ -59,7 +59,7 @@
                         break;
                     }else{
                         if(i == page){
-                            pageContent.push("<strong class='btn btn-info' title='현재 페이지'>"+ i +"</strong>");
+                            pageContent.push("<a href='#' class='btn btn-info' title='현재 페이지'>"+ i +"</a>");
                         }else{
                             pageContent.push("<a href='#' class='btn btn-default'>"+ i +"</a>");
                         };
@@ -96,10 +96,7 @@
                         Opage.paging(param);
                     }else{
                         $(".btn-info").removeClass("btn-info").addClass("btn-default");
-                        var beforeNum = $("strong", pageBox).text()
-                            ,afterNum = links.text();
-                        $("strong", pageBox).after("<a class='btn btn-default' href='#'>"+ beforeNum +"</a>").remove();
-                        links.after("<strong class='btn btn-info' title='현재 페이지'>"+ afterNum +"</strong>").remove();
+                        links.addClass("btn-info")
                     }
                 });
             }
