@@ -23,16 +23,17 @@
         <a href="" class="btn btn-primary next">다음</a>
         <a href="" class="btn btn-primary last">끝</a>
     </div>
-    <table class="table table-bordered" style="width:900px;margin:20px auto">
+    <table class="table table-bordered text-center" style="width:900px;margin:20px auto">
+        <colgroup><col style="width:100px"><col><col><col style="width:100px"></colgroup>
         <thead>
-            <tr><th>TITLE</th><th>TITLE</th><th>TITLE</th><th>TITLE</th></tr>
+            <tr><th class="text-center">No.</th><th class="text-center">Title</th><th class="text-center">Contents</th><th class="text-center">View</th></tr>
         </thead>
         <tbody>
-            <tr><td>number</td><td>content</td><td>content</td><td>content</td></tr>
-            <tr><td>number</td><td>content</td><td>content</td><td>content</td></tr>
-            <tr><td>number</td><td>content</td><td>content</td><td>content</td></tr>
-            <tr><td>number</td><td>content</td><td>content</td><td>content</td></tr>
-            <tr><td>number</td><td>content</td><td>content</td><td>content</td></tr>
+            <tr><td>number</td><td>content</td><td>content</td><td>312</td></tr>
+            <tr><td>number</td><td>content</td><td>content</td><td>512</td></tr>
+            <tr><td>number</td><td>content</td><td>content</td><td>64</td></tr>
+            <tr><td>number</td><td>content</td><td>content</td><td>78</td></tr>
+            <tr><td>number</td><td>content</td><td>content</td><td>909</td></tr>
         </tbody>
     </table>
     <div id="contents"></div>
@@ -49,13 +50,12 @@
                     ,page = param.page
                     ,listSize = Math.ceil(param.totalCount/param.row)/pageGroup
                     ,lastNumber = ( listSize % 2 ) > 0 ? Math.floor( listSize ) * pageGroup + 1 : Math.floor( listSize ) * pageGroup //마지막 페이징목록에 처음 오는 수
-
+console.log(lastNumber)
                 //현재 페이지리스트로 뿌려줄 시작넘버와 마지막넘버 구하기.
                 pageStart = (page / pageGroup) <= 1 ? 1 : Math.floor(page / pageGroup)*pageGroup+1;
                 pageEnd =  (pageStart > pageGroup) ? pageStart+(pageGroup-1) : pageGroup;
 
                 for(var i=pageStart; i<=pageEnd; i++){
-                    console.log(i*param.row)
                     if( i*param.row >= param.totalCount ){
                         break;
                     }else{
@@ -112,10 +112,10 @@
     <script>
         Opage.paging({
             id : "paging",
-            page : 45,
+            page : 7,
             row : 5,
             totalCount : 326,
-            pageGroup : 7
+            pageGroup : 4
         });
     </script>
 
