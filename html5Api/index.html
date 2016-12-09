@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=320; user-scalable=no" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>HTML5 Cam</title>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+
+    <script>
+    $(document).ready(function(){
+        if (!('url' in window) && ('webkitURL' in window)) {
+            window.URL = window.webkitURL;
+        }
+
+        $('#camera').change(function(e){
+            $('#pic').attr('src', URL.createObjectURL(e.target.files[0]));
+        });
+    });
+    </script>
+    <style>
+        .btn {position:relative;overflow:hidden;margin:20px 10px;background:#F16529; color:#fff;line-height:30px;height:30px;text-align:center;font-weight:bold}
+        .btn input {position:absolute;left:0;top:0;right:0;bottom:0;display:block;opacity:0;width:100%}
+    </style>
+</head>
+<body>
+    <div class="btn">
+        <div>TAKE PICTURE AND UPLOAD</div>
+        <input type="file" id="camera" name="camera" capture="camera" accept="image/*" />
+    </div>
+    <br />
+
+    <img id="pic" style="width:100%;" />
+</body>

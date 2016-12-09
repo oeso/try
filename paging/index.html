@@ -50,7 +50,7 @@
                     ,page = param.page
                     ,listSize = Math.ceil(param.totalCount/param.row)/pageGroup
                     ,lastNumber = ( listSize % 2 ) > 0 ? Math.floor( listSize ) * pageGroup + 1 : Math.floor( listSize ) * pageGroup //마지막 페이징목록에 처음 오는 수
-console.log(lastNumber)
+
                 //현재 페이지리스트로 뿌려줄 시작넘버와 마지막넘버 구하기.
                 pageStart = (page / pageGroup) <= 1 ? 1 : Math.floor(page / pageGroup)*pageGroup+1;
                 pageEnd =  (pageStart > pageGroup) ? pageStart+(pageGroup-1) : pageGroup;
@@ -114,8 +114,8 @@ console.log(lastNumber)
             id : "paging",
             page : 7,
             row : 5,
-            totalCount : 326,
-            pageGroup : 4
+            totalCount : 565,
+            pageGroup : 7
         });
     </script>
 
