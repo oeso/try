@@ -47,10 +47,6 @@ function calendar(obj, date){
         //꽂아넣을 html 생성. thead 부분과 tbody부분 생성.
 
         str += "<button class='btn btn-primary first' name='firstBtn' onclick='calendar({id : \""+param.id+"\", lang : \""+param.lang+"\"}); return false'> << </button>";
-
-        var title = year +" "+month;
-        $("#yearTitle").html(title)
-
         str += "<h2 id='yearTitle' class='text-center'>"+year+ " "+ month+"</h2>";
         str += "<table class='table table-bordered'>"
         str += "<caption class='hide'>Calendar</caption>"
