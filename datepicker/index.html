@@ -1,40 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<title> 날짜 셀렉터 </title>
-<meta charset="utf-8">
-<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script defer src="js/calendar.js"></script>
-<style type="text/css">
-    .hide {position:absolute;left:-9000px;height:0;}
-    .ex {width:310px;margin:0 auto}
-    .calendar {position:relative;width:310px;padding:0 0 20px 0;margin:0 auto}
-    caption {font-size:20px;font-weight:bold;height:30px;line-height:30px;margin-bottom:20px}
-    button {position:absolute;top:0;min-width:35px;height:35px;line-height:1}
-    .calendar a {display:block;margin:0;padding:0;text-align:center;text-decoration:none;height:40px;line-height:40px;}
-    .calendar td {padding:0 !important}
-    .calendar a:hover {background-color:palevioletred;color:#fff}
-    .calendar .on {background-color:deepskyblue;color:#fff}
-    .calendar .today {background:lightslategray;color:#fff}
-    .text-danger a {color:red }
-    span {vertical-align:middle}
-    #dates {}
-    #first {left:0;}
-    #prev{left:50px}
-    #next{right:50px}
-    #last{right:0}
-</style>
+    <title> 날짜 셀렉터 </title>
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>-->
+    <script defer src="js/calendar.js"></script>
+    <style type="text/css">
+        ul,li {padding:0}
+        .hide {position:absolute;left:-9000px;height:0;}
+        .ex {width:310px;margin:0 auto}
+        .calendar {position:relative;width:310px;padding:0 0 20px 0;margin:0 auto}
+        caption {font-size:20px;font-weight:bold;height:30px;line-height:30px;margin-bottom:20px}
+        .btn {position:absolute;min-width:35px;height:35px;padding:0 !important;line-height:1}
+        .calendar a {display:block;margin:0;padding:0;text-align:center;text-decoration:none;height:40px;line-height:40px;color:#666;}
+        .calendar th {text-align:center !important}
+        .calendar td { padding:0 !important}
+        .calendar td:last-child a {color:steelblue}
+        .calendar a:hover {background-color:palevioletred;color:#fff !important}
+        .calendar .on {background-color:deepskyblue;color:#fff}
+        .calendar .today {background:lightslategray;color:#fff}
+        .text-danger a {color:red }
+        span {vertical-align:middle}
+        .btn.first {left:0;}
+        .btn.prev{left:40px}
+        .btn.next{right:40px}
+        .btn.last{right:0}
+    </style>
 </head>
 <body>
     <h1 class="page-header text-center">Calendar Function</h1>
     <div class="wrap">
         <div id="calendar" class="calendar">
-            <button class="btn btn-primary" id="first"><span class="glyphicon glyphicon-backward"></span></button>
-            <button class="btn btn-info" id="prev"><span class="glyphicon glyphicon-chevron-left"></span></button>
-            <button class="btn btn-info" id="next"><span class="glyphicon glyphicon-chevron-right"></span></button>
-            <button class="btn btn-primary" id="last"><span class="glyphicon glyphicon-forward"></span></button>
+            <!--<button class="btn btn-primary" id="first" name="firstBtn"><span class="glyphicon glyphicon-backward"></span></button>
+            <button class="btn btn-info" id="prev" name="prevBtn"><span class="glyphicon glyphicon-chevron-left"></span></button>
+            <button class="btn btn-info" id="next" name="nextBtn"><span class="glyphicon glyphicon-chevron-right"></span></button>
+            <button class="btn btn-primary" id="last" name="lastBtn"><span class="glyphicon glyphicon-forward"></span></button>-->
+
             <h2 id="yearTitle" class="text-center">2016 12</h2>
             <table class="table table-bordered">
                 <caption class="hide">Calendar</caption>
@@ -51,10 +54,10 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td><a href="#" class="text-danger">1</a></td>
+                        <td><a href="#">1</a></td>
+                        <td><a href="#">1</a></td>
+                        <td><a href="#">1</a></td>
                         <td><a href="#">1</a></td>
                         <td><a href="#">2</a></td>
                         <td><a href="#">3</a></td>
@@ -97,6 +100,8 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div style="width:310px;margin:0 auto">
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1">시작날짜</span>
                 <input type="text" id="startDay" class="form-control" placeholder="시작날짜" aria-describedby="basic-addon1">
@@ -110,7 +115,7 @@
             <br><br>
 
             <div class="ex text-center">
-                <h3><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> <span>요구사항</span></h3>
+                <h3><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> <span>1차 요구사항</span></h3>
                 <ul class="text-left">
                     <li>TODAY 표시</li>
                     <li>시작날짜와 종료날짜 각각 선택가능하며 하단 입력창에 표시</li>
@@ -121,11 +126,6 @@
             </div>
         </div>
     </div>
-    <script>
-        $(function () {
-            $('[data-toggle="tooltip"]').tooltip()
-        })
-    </script>
 
 </body>
 </html>
