@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>-->
     <script defer src="js/calendar.js"></script>
     <style type="text/css">
         ul,li {padding:0}
@@ -17,10 +16,11 @@
         .calendar a {display:block;margin:0;padding:0;text-align:center;text-decoration:none;height:40px;line-height:40px;color:#666;}
         .calendar th {text-align:center !important}
         .calendar td { padding:0 !important}
+        .calendar td:first-child a{color:red}
         .calendar td:last-child a {color:steelblue}
         .calendar a:hover {background-color:palevioletred;color:#fff !important}
-        .calendar .on {background-color:deepskyblue;color:#fff}
         .calendar .today {background:lightslategray;color:#fff}
+        .calendar .on {background-color:deepskyblue;color:#fff !important}
         .text-danger a {color:red }
         span {vertical-align:middle}
         .btn.first {left:0;}
@@ -33,10 +33,10 @@
     <h1 class="page-header text-center">Calendar Function</h1>
     <div class="wrap">
         <div id="calendar" class="calendar">
-            <!--<button class="btn btn-primary" id="first" name="firstBtn"><span class="glyphicon glyphicon-backward"></span></button>
-            <button class="btn btn-info" id="prev" name="prevBtn"><span class="glyphicon glyphicon-chevron-left"></span></button>
-            <button class="btn btn-info" id="next" name="nextBtn"><span class="glyphicon glyphicon-chevron-right"></span></button>
-            <button class="btn btn-primary" id="last" name="lastBtn"><span class="glyphicon glyphicon-forward"></span></button>-->
+            <button class="btn btn-primary first" id="first" name="firstBtn"><span class="glyphicon glyphicon-backward"></span></button>
+            <button class="btn btn-info prev" id="prev" name="prevBtn"><span class="glyphicon glyphicon-chevron-left"></span></button>
+            <button class="btn btn-info next" id="next" name="nextBtn"><span class="glyphicon glyphicon-chevron-right"></span></button>
+            <button class="btn btn-primary last" id="last" name="lastBtn"><span class="glyphicon glyphicon-forward"></span></button>
 
             <h2 id="yearTitle" class="text-center">2016 12</h2>
             <table class="table table-bordered">
@@ -54,16 +54,16 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><a href="#" class="text-danger">1</a></td>
-                        <td><a href="#">1</a></td>
-                        <td><a href="#">1</a></td>
-                        <td><a href="#">1</a></td>
                         <td><a href="#">1</a></td>
                         <td><a href="#">2</a></td>
                         <td><a href="#">3</a></td>
+                        <td><a href="#">4</a></td>
+                        <td><a href="#">5</a></td>
+                        <td><a href="#">6</a></td>
+                        <td><a href="#">7</a></td>
                     </tr>
                     <tr>
-                        <td><a href="#" class="text-danger">4</a></td>
+                        <td><a href="#">4</a></td>
                         <td><a href="#">5</a></td>
                         <td><a href="#">6</a></td>
                         <td><a href="#">7</a></td>
@@ -72,16 +72,7 @@
                         <td><a href="#">10</a></td>
                     </tr>
                     <tr>
-                        <td><a href="#" class="text-danger">4</a></td>
-                        <td><a href="#" class="today" data-toggle="tooltip" data-placement="top" title="TODAY">5</a></td>
-                        <td><a href="#">6</a></td>
-                        <td><a href="#">7</a></td>
-                        <td><a href="#">8</a></td>
-                        <td><a href="#">9</a></td>
-                        <td><a href="#">10</a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" class="text-danger">4</a></td>
+                        <td><a href="#">4</a></td>
                         <td><a href="#">5</a></td>
                         <td><a href="#">6</a></td>
                         <td><a href="#">7</a></td>
@@ -90,7 +81,16 @@
                         <td><a href="#">10</a></td>
                     </tr>
                     <tr>
-                        <td><a href="#" class="text-danger">4</a></td>
+                        <td><a href="#">4</a></td>
+                        <td><a href="#">5</a></td>
+                        <td><a href="#">6</a></td>
+                        <td><a href="#">7</a></td>
+                        <td><a href="#">8</a></td>
+                        <td><a href="#">9</a></td>
+                        <td><a href="#">10</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="#">4</a></td>
                         <td><a href="#">5</a></td>
                         <td><a href="#">6</a></td>
                         <td><a href="#">7</a></td>
@@ -118,10 +118,12 @@
                 <h3><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> <span>1차 요구사항</span></h3>
                 <ul class="text-left">
                     <li>TODAY 표시</li>
+                    <li>여러날짜 선택 가능</li>
                     <li>시작날짜와 종료날짜 각각 선택가능하며 하단 입력창에 표시</li>
                     <li>클릭한 날짜 색상구분</li>
                     <li>마우스오버시 색상구분</li>
                     <li>클릭한 날짜 하단 박스에 표기</li>
+                    <li>날짜가 아닌 칸은 선택불가능</li>
                 </ul>
             </div>
         </div>
