@@ -2,7 +2,7 @@
 ## 여러가지 javascript 기능 직접 구현.
 
 
-1. Paging
+1. Paging 기능 구현
 [paging] : https://oeso.github.io/try/paging
 
 2. 모바일웹에서 카메라 접근
