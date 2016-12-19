@@ -1,6 +1,6 @@
 var calendar = {
     slider : function(obj, date){
-        function id(v){ return document.getElementById(v)};
+        function getElId(v){ return document.getElementById(v)};
 
 
         var date = ( typeof date == "undefined" )? new Date() : date;
@@ -8,7 +8,7 @@ var calendar = {
             this.month = date.getMonth();
             this.today = date.getDate();
 
-        var calendarBox = id(obj.id)
+        var calendarBox = getElId(obj.id)
         ,   blank = calendarBox.getElementsByTagName("td")
         ,   links = calendarBox.getElementsByTagName("a")
         ,   endDate = new Array(31,28,31,30,31,30,31,31,30,31,30,31)
@@ -39,7 +39,7 @@ var calendar = {
 
         //td 빈값 또는 a 엘리먼트 세팅
         for(var i=0; i<42; i++){
-            if( i < startDayOfWeek || i > lastDate + startDayOfWeek ){
+            if( i < startDayOfWeek || i >= lastDate + startDayOfWeek ){
                 blank[i].innerHTML = "";
             }else{
                 blank[i].innerHTML = "<a href='#none'></a>";
@@ -55,8 +55,8 @@ var calendar = {
         //today 표시
         links[this.today-1].className="today";
 
-        var formStart = id("startDay")
-        var formEnd = id("endDay");
+        var formStart = getElId("startDay")
+        var formEnd = getElId("endDay");
 
         //선택날짜 색상변경
         for(var i=0, length=links.length; i<length;i++){
@@ -70,11 +70,11 @@ var calendar = {
             };
         };
 
-        var first = id("first")
-        ,   prev = id("prev")
-        ,   next = id("next")
-        ,   last = id("last")
-        ,   today = id("today")
+        var first = getElId("first")
+        ,   prev = getElId("prev")
+        ,   next = getElId("next")
+        ,   last = getElId("last")
+        ,   today = getElId("today")
         ,   that = this
         ,   cnt = this.month
         ,   prevMonth = that.month -1
