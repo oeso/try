@@ -53,17 +53,25 @@ var calendar = {
         //선택날짜 색상변경
         for(var i=0, length=links.length; i<length;i++){
             links[i].onclick = function(){
-                // for(var k=0; k<length;k++){
-                //     links[k].classList.remove("on");
-                // }
-                this.classList.add("on")
+                var onSize = calendarBox.getElementsByClassName("on").length;
+                var firstOn = parseInt(calendarBox.getElementsByClassName("on")[0].innerHTML);
+                var lastOn = parseInt(calendarBox.getElementsByClassName("on")[1].innerHTML);
 
-                if(calendarBox.getElementsByClassName("on").length >= 1){
-                    console.log(typeof parseInt(calendarBox.getElementsByClassName("on")[1].innerHTML))
-                    for(var j=parseInt(calendarBox.getElementsByClassName("on")[0].innerHTML), size=parseInt(calendarBox.getElementsByClassName("on")[1].innerHTML); j< size-1; j++ ){
+                for(var k=0;k<length;k++){
+                    links[k].classList.remove("on");
+                };
+                this.classList.add("on");
+
+                if(onSize > 1){
+
+                }else if( onSize === 1 ){
+
+                    for(var j=firstOn; j< lastOn-1; j++ ){
                         links[j].classList.add("active");
                     }
-                }
+
+                };
+
                 //선택날짜 하단 폼에 입력
                 formStart.value = that.year+"-"+(that.month+1)+"-"+this.innerHTML;
             };
