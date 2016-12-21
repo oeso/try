@@ -6,16 +6,19 @@ var calendar = {
             this.year = date.getFullYear();
             this.month = date.getMonth();
             this.today = date.getDate();
-
         var calendarBox = getElId(obj.id)
         ,   blank = calendarBox.getElementsByTagName("td")
         ,   links = calendarBox.getElementsByTagName("a")
         ,   endDate = new Array(31,28,31,30,31,30,31,31,30,31,30,31)
         ,   title = obj.lang == "en" ? ["sun","mon","tue","wed","tue","fri","sat"] : ["일","월","화","수","목","금","토"]
-        ,   lastDate;
-        //이 달의 마지막날짜. (마지막날을 모아둔 배열에서 현재 달 넘버에 해당하는 값)
+        ,   lastDate//이 달의 마지막날짜. (마지막날을 모아둔 배열에서 현재 달 넘버에 해당하는 값)
+        ,   start = date;
+            start.setDate(1);//1일 세팅
+        var startDayOfWeek = start.getDay()//1일의 요일
+        ,   formStart = getElId("startDay")
+        ,   formEnd = getElId("endDay");
 
-        //윤년계산 ( 서력 기원 연수가 4로 나누어 떨어지는 해, 이 중에서 100으로 나누어 떨어지는 해는 평년, 400으로 나누어 떨어지는 해는 윤년 )
+        //윤년계산 ( 서력 기원 연수가 4로 나누어 떨어지는 해는 윤년. 이 중 100으로 나누어 떨어지는 해는 평년이며, 그 중 400으로 나누어 떨어지는 해는 윤년 )
         if( this.year % 4 === 0 ){
             if(this.year % 100 === 0){
                 if(this.year % 400 === 0){
@@ -26,11 +29,6 @@ var calendar = {
             };
         };
         lastDate = endDate[this.month];
-
-        //1일 세팅
-        var start = date;
-        start.setDate(1);
-        var startDayOfWeek = start.getDay()//1일의 요일
 
         //현재 연도와 월 표시
         document.getElementById("yearTitle").innerHTML = date.getFullYear() + " " + parseInt( date.getMonth()+1);
@@ -44,7 +42,6 @@ var calendar = {
             }
         };
 
-        var j=1;
         //삽입한 a에 날짜 삽입
         for(var i=1;i<=lastDate;i++){
             links[i-1].innerHTML = i;
@@ -53,16 +50,13 @@ var calendar = {
         //today 표시
         links[this.today-1].className="today";
 
-        var formStart = getElId("startDay")
-        var formEnd = getElId("endDay");
-
         //선택날짜 색상변경
         for(var i=0, length=links.length; i<length;i++){
             links[i].onclick = function(){
                 for(var k=0; k<length;k++){
                     links[k].classList.remove("on");
                 }
-                this.classList.add("on")//element.classList.toggle() : toggle()은 classList 프로퍼티의 메소드
+                this.classList.add("on")
                 //선택날짜 하단 폼에 입력
                 formStart.value = that.year+"-"+(that.month+1)+"-"+this.innerHTML;
             };
