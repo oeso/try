@@ -10,7 +10,6 @@ var calendar = {
         ,   blank = calendarBox.getElementsByTagName("td")
         ,   links = calendarBox.getElementsByTagName("a")
         ,   endDate = new Array(31,28,31,30,31,30,31,31,30,31,30,31)
-        ,   title = obj.lang == "en" ? ["sun","mon","tue","wed","tue","fri","sat"] : ["일","월","화","수","목","금","토"]
         ,   lastDate//이 달의 마지막날짜. (마지막날을 모아둔 배열에서 현재 달 넘버에 해당하는 값)
         ,   start = date;
             start.setDate(1);//1일 세팅
@@ -114,7 +113,6 @@ var calendar = {
     }
 };
 calendar.slider({
-    id : "calendar",
-    lang : "ko"
+    id : "calendar"
 });
 
