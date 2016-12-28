@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title> 날짜 셀렉터 </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script defer src="js/calendar.js"></script>
+    <style type="text/css">
+        ul,li {padding:0}
+        .hide {position:absolute;left:-9000px;height:0;}
+        .wrap {width:310px;margin:0 auto}
+        .btn-today {margin:0 auto}
+        .calendar {position:relative;width:310px;margin:0 auto}
+        caption {font-size:20px;font-weight:bold;height:30px;line-height:30px;margin-bottom:20px}
+        .calendar .btn {position:absolute;min-width:35px;height:35px;padding:0 !important;line-height:1}
+        .calendar a {display:block;margin:0;padding:0;text-align:center;text-decoration:none;height:40px;line-height:40px;color:#666;}
+        .calendar th {text-align:center !important}
+        .calendar td {height:41px; padding:0 !important}
+        .calendar td:first-child a{color:red}
+        .calendar td:last-child a {color:steelblue}
+        .calendar a:hover {background-color:palevioletred;color:#fff !important}
+        .calendar .today {background:lightslategray;color:#fff !important}
+        .calendar .on {background-color:deepskyblue;color:#fff !important}
+        .calendar .active {background-color:dodgerblue;color:#fff !important}
+        .text-danger a {color:red }
+        span {vertical-align:middle}
+        .btn.first {left:0;}
+        .btn.prev{left:40px}
+        .btn.next{right:40px}
+        .btn.last{right:0}
+    </style>
+</head>
+<body>
+    <h1 class="page-header text-center">Calendar Function <small>by Ottori</small></h1>
+    <div class="wrap">
+        <button type="button" id="today" class="btn btn-info btn-danger" title="오늘로 돌아가기">TODAY</button>
+        <div id="calendar" class="calendar">
+            <button class="btn btn-primary first" id="first" title="이전년도"><span class="glyphicon glyphicon-backward"></span></button>
+            <button class="btn btn-info prev" id="prev" title="이전 달"><span class="glyphicon glyphicon-chevron-left"></span></button>
+            <button class="btn btn-info next" id="next" title="다음 달"><span class="glyphicon glyphicon-chevron-right"></span></button>
+            <button class="btn btn-primary last" id="last" title="다음년도"><span class="glyphicon glyphicon-forward"></span></button>
+
+            <h2 id="yearTitle" class="text-center">2016 12</h2>
+            <table class="table table-bordered">
+                <caption class="hide">Calendar</caption>
+                <thead>
+                    <tr>
+                        <th class="text-center text-danger">일</th>
+                        <th class="text-center">월</th>
+                        <th class="text-center">화</th>
+                        <th class="text-center">수</th>
+                        <th class="text-center">목</th>
+                        <th class="text-center">금</th>
+                        <th class="text-center text-primary">토</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="#">1</a></td>
+                        <td><a href="#">2</a></td>
+                        <td><a href="#">3</a></td>
+                        <td><a href="#">4</a></td>
+                        <td><a href="#">5</a></td>
+                        <td><a href="#">6</a></td>
+                        <td><a href="#">7</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="#">8</a></td>
+                        <td><a href="#">9</a></td>
+                        <td><a href="#">10</a></td>
+                        <td><a href="#">7</a></td>
+                        <td><a href="#">8</a></td>
+                        <td><a href="#">9</a></td>
+                        <td><a href="#">10</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="#">4</a></td>
+                        <td><a href="#">5</a></td>
+                        <td><a href="#">6</a></td>
+                        <td><a href="#">7</a></td>
+                        <td><a href="#">8</a></td>
+                        <td><a href="#">9</a></td>
+                        <td><a href="#">10</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="#">4</a></td>
+                        <td><a href="#">5</a></td>
+                        <td><a href="#">6</a></td>
+                        <td><a href="#">7</a></td>
+                        <td><a href="#">8</a></td>
+                        <td><a href="#">9</a></td>
+                        <td><a href="#">10</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="#">4</a></td>
+                        <td><a href="#">5</a></td>
+                        <td><a href="#">6</a></td>
+                        <td><a href="#">7</a></td>
+                        <td><a href="#">8</a></td>
+                        <td><a href="#">9</a></td>
+                        <td><a href="#">10</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="#">4</a></td>
+                        <td><a href="#">5</a></td>
+                        <td><a href="#">6</a></td>
+                        <td><a href="#">7</a></td>
+                        <td><a href="#">8</a></td>
+                        <td><a href="#">9</a></td>
+                        <td><a href="#">10</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="width:310px;margin:0 auto">
+            <div class="input-group">
+                <span class="input-group-addon">시작날짜</span>
+                <input type="text" id="startDay" class="form-control" placeholder="시작날짜" aria-describedby="basic-addon1">
+            </div><br>
+            <div class="input-group">
+                <span class="input-group-addon">종료날짜</span>
+                <input type="text" id="endDay" class="form-control" placeholder="종료날짜" aria-describedby="basic-addon1">
+            </div>
+
+            <div class="ex text-center">
+                <h3><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> <span>1차 요구사항</span></h3>
+                <ul class="text-left">
+                    <li>pure javascript</li>
+                    <li>오늘 날짜를 default 표시</li>
+                    <li>상단 TODAY 버튼 클릭시 현재 날짜로 돌아감</li>
+                    <li>클릭한 날짜 색상구분</li>
+                    <li>마우스오버시 색상구분</li>
+                    <li>클릭한 날짜 하단 박스에 표기</li>
+                    <li>날짜가 아닌 칸은 선택불가능하게.</li>
+                </ul><br>
+                <h3><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> <span>2차 요구사항</span></h3>
+                <ul class="text-left">
+                    <li>날짜를 두개 선택가능하도록 추가</li>
+                    <li>시작날짜에서 종료날짜까지 색상표시</li>
+                    <li>당월 이전 날짜와 이후 날짜도 연하게 표시</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
