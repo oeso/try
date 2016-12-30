@@ -5,7 +5,7 @@ body {padding:10px}
 caption {font-size:20px;font-weight:bold;height:30px;line-height:30px;margin-bottom:20px}
 span {vertical-align:middle}
 .hide {position:absolute;left:-9000px;height:0;}
-.btn-today {}
+h2 {padding:0 80px} a{cursor:pointer}
 .calendar {position:relative;width:310px; margin:0 auto}
 .calendar > .btn {position:absolute;overflow:hidden;width:35px;height:35px;padding:0 !important;line-height:1}
 .calendar .btn span {}
@@ -19,6 +19,7 @@ span {vertical-align:middle}
 .calendar .today {background:lightslategray;color:#fff !important}
 .calendar .on {background-color:deepskyblue;color:#fff !important}
 .calendar .active {background-color:dodgerblue;color:#fff !important}
+.table td {width:14.285%}
 .text-danger a {color:red }
 .btn.first {left:0;}
 .btn.prev{left:40px}
