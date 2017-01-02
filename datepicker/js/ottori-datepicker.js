@@ -94,6 +94,16 @@ var calendar = {
         ,   formEnd = getElId("endDay")
         ,   title = getElId("yearTitle");
 
+        var prevYearBtn = getElId("prevYear")
+        ,   prevMonthBtn = getElId("prevMonth")
+        ,   nextMonthBtn = getElId("nextMonth")
+        ,   nextYearBtn = getElId("nextYear")
+        ,   todayLink = getElId("today")
+        ,   thisCalendar = this
+        ,   monthCount = this.month
+        ,   prevMonth = thisCalendar.month -1
+        ,   nextMonth = thisCalendar.month +1
+
         //윤년계산 ( 서력 기원 연수가 4로 나누어 떨어지는 해는 윤년. 이 중 100으로 나 누어 떨어지는 해는 평년이며, 그 중 400으로 나누어 떨어지는 해는 윤년 )
         if( this.year % 4 === 0 ){
             if(this.year % 100 === 0){
@@ -112,12 +122,15 @@ var calendar = {
         for(var i=0; i<42; i++){
             if( i < startDayOfWeek || i >= lastDate + startDayOfWeek ){
                 calendarTd[i].innerHTML = "";
-            }else{ console.log( calendarTd[i].hasChildNodes() )
+            }else{
                 if( !calendarTd[i].hasChildNodes() ){
                     addCreateTxtNode( appendCreateEl(calendarTd[i],"a"), days );
                 }else{
-                    var linkText = calendarTd[i].children[0].childNodes[0];
-                    if( linkText != null ){ linkText.remove() };
+                    var linkText = calendarTd[i].children[0].childNodes[0];//td > a > Text 노드.
+                    calendarTd[i].children[0].classList.remove("today");
+                    if( linkText != null ){
+                        linkText.remove();//Text 노드 있으면 제거 후 아랫줄에서 days(날짜)를 새로 뿌려줌.
+                    };
                     addCreateTxtNode( calendarTd[i].children[0], days );
                 };
                 days++;
@@ -142,52 +155,45 @@ var calendar = {
         //현재 연도와 월 표시
         title.innerHTML = this.year + " " + (this.month+1);//이건 걍 innerHTML로 두겠음
 
-        var prevYearBtn = getElId("prevYear")
-        ,   prevMonthBtn = getElId("prevMonth")
-        ,   nextMonthBtn = getElId("nextMonth")
-        ,   nextYearBtn = getElId("nextYear")
-        ,   todayLink = getElId("today")
-        ,   thisCalendar = this
-        ,   monthCount = this.month
-        ,   prevMonth = thisCalendar.month -1
-        ,   nextMonth = thisCalendar.month +1
-
-        //이전년도 클릭
-        prevYearBtn.onclick = function(){
-            date = new Date(thisCalendar.year -1, thisCalendar.month, thisCalendar.today);
-            calendar.slider(obj, date);
-        };
-        //이전달 클릭
-        prevMonthBtn.onclick = function(){
-            monthCount--;
-            if( monthCount === -1){
-                thisCalendar.year = thisCalendar.year - 1;//이전달을 눌렀을 때 현재 달이 1월인경우 전년도 12월로 세팅
-                prevMonth = 11;
-                monthCount = 11;
-            }
-            date = new Date(thisCalendar.year, prevMonth, thisCalendar.today)
-            calendar.slider(obj, date);
-        };
-        //다음달 클릭
-        nextMonthBtn.onclick = function(){
-            monthCount++;
-            if( monthCount === 12 ){
-                thisCalendar.year = thisCalendar.year + 1;//다음달을 눌렀을 때 현재 달이 12월인경우 내년도 1월로 세팅
-                nextMonth = 0;
-                monthCount = 0;
+        //이전다음 컨트롤 버튼 클릭 이벤트
+        function controlBtnEvent(btnEl){
+            btnEl.onclick = function(){
+                switch( btnEl.id ){
+                    case "prevYear" :
+                        date = new Date(thisCalendar.year -1, thisCalendar.month, thisCalendar.today);
+                        break;
+                    case "prevMonth" :
+                        monthCount--;
+                        if( monthCount === -1){
+                            thisCalendar.year = thisCalendar.year - 1;//이전달 클릭시 현재 달이 1월인경우 전년 12월로 세팅
+                            prevMonth = 11;
+                            monthCount = 11;
+                        };
+                        date = new Date(thisCalendar.year, prevMonth, thisCalendar.today);
+                        break;
+                    case "nextMonth" :
+                        monthCount++;
+                        if( monthCount === 12 ){
+                            thisCalendar.year = thisCalendar.year + 1;//다음달 클릭시 현재 달이 12월인경우 내년 1월로 세팅
+                            nextMonth = 0;
+                            monthCount = 0;
+                        };
+                        date = new Date(thisCalendar.year, nextMonth, thisCalendar.today)
+                        break;
+                    case "nextYear" :
+                        date = new Date(thisCalendar.year +1, thisCalendar.month, thisCalendar.today);
+                        break;
+                    case "today" :
+                        date = new Date();
+                };
+                calendar.slider(obj, date)
             };
-            date = new Date(thisCalendar.year, nextMonth, thisCalendar.today)
-            calendar.slider(obj, date);
         };
-        //다음년도 클릭
-        nextYearBtn.onclick = function(){
-            date = new Date(thisCalendar.year +1, thisCalendar.month, thisCalendar.today);
-            calendar.slider(obj, date);
+        function call(ControlButtonObjectName){
+            for(var i=0;i<arguments.length;i++){
+                controlBtnEvent(arguments[i]);
+            };
         };
-        //TODAY 버튼 클릭
-        todayLink.onclick = function(){
-            date = new Date();
-            calendar.slider(obj, date);
-        }
+        call( prevYearBtn, prevMonthBtn, nextMonthBtn, nextYearBtn, todayLink);
     }
 };
