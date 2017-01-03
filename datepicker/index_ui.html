@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>스케줄 캘린더 UI</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/ottori-datepicker.css">
+    <script src="http://code.jquery.com/jquery-2.2.2.min.js"></script>
+    <script>
+        $(function(){
+            var calWidth = $("#calendar").width();
+            sizeSet();
+            function sizeSet(){
+                $("#tableElement").css({
+                    "height" : calWidth
+                });
+            };
+            $(window).resize(function(){
+                calWidth = $("#calendar").width();
+                sizeSet();
+            })
+        });
+    </script>
+</head>
+<body>
+
+
+<div id="calendar" class="calendar">
+    <button class="btn btn-primary first" id="first" title="이전년도"><span class="glyphicon glyphicon-backward"></span></button>
+    <button class="btn btn-info prev" id="prev" title="이전 달"><span class="glyphicon glyphicon-chevron-left"></span></button>
+    <button class="btn btn-info next" id="next" title="다음 달"><span class="glyphicon glyphicon-chevron-right"></span></button>
+    <button class="btn btn-primary last" id="last" title="다음년도"><span class="glyphicon glyphicon-forward"></span></button>
+
+    <h2 id="yearTitle" class="text-center">2016 12</h2>
+    <table id="tableElement" class="table table-bordered">
+        <caption class="hide">Calendar</caption>
+        <thead>
+            <tr>
+                <th class="text-center text-danger">일</th>
+                <th class="text-center">월</th>
+                <th class="text-center">화</th>
+                <th class="text-center">수</th>
+                <th class="text-center">목</th>
+                <th class="text-center">금</th>
+                <th class="text-center text-primary">토</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="#">1</a></td>
+                <td><a href="#">2</a></td>
+                <td><a href="#">3</a></td>
+                <td><a href="#">4</a></td>
+                <td><a href="#">5</a></td>
+                <td><a href="#">6</a></td>
+                <td><a href="#">7</a></td>
+            </tr>
+            <tr>
+                <td><a href="#">8</a></td>
+                <td><a href="#">9</a></td>
+                <td><a href="#">10</a></td>
+                <td><a href="#">7</a></td>
+                <td><a href="#">8</a></td>
+                <td><a href="#">9</a></td>
+                <td><a href="#">10</a></td>
+            </tr>
+            <tr>
+                <td><a href="#">4</a></td>
+                <td><a href="#">5</a></td>
+                <td><a href="#">6</a></td>
+                <td><a href="#">7</a></td>
+                <td><a href="#">8</a></td>
+                <td><a href="#">9</a></td>
+                <td><a href="#">10</a></td>
+            </tr>
+            <tr>
+                <td><a href="#">4</a></td>
+                <td><a href="#">5</a></td>
+                <td><a href="#">6</a></td>
+                <td><a href="#">7</a></td>
+                <td><a href="#">8</a></td>
+                <td><a href="#">9</a></td>
+                <td><a href="#">10</a></td>
+            </tr>
+            <tr>
+                <td><a href="#">4</a></td>
+                <td><a href="#">5</a></td>
+                <td><a href="#">6</a></td>
+                <td><a href="#">7</a></td>
+                <td><a href="#">8</a></td>
+                <td><a href="#">9</a></td>
+                <td><a href="#">10</a></td>
+            </tr>
+            <tr>
+                <td><a href="#">4</a></td>
+                <td><a href="#">5</a></td>
+                <td><a href="#">6</a></td>
+                <td><a href="#">7</a></td>
+                <td><a href="#">8</a></td>
+                <td><a href="#">9</a></td>
+                <td><a href="#">10</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="function-guide">
+    <div class="input-group">
+        <span class="input-group-addon">시작날짜</span>
+        <input type="text" id="startDay" class="form-control" placeholder="시작날짜" aria-describedby="basic-addon1">
+    </div><br>
+    <div class="input-group">
+        <span class="input-group-addon">종료날짜</span>
+        <input type="text" id="endDay" class="form-control" placeholder="종료날짜" aria-describedby="basic-addon1">
+    </div>
+
+    <div class="ex text-center">
+        <h3><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> <span>1차 요구사항</span></h3>
+        <ul class="text-left">
+            <li>pure javascript</li>
+            <li>오늘 날짜를 default 표시</li>
+            <li>상단 TODAY 버튼 클릭시 현재 날짜로 돌아감</li>
+            <li>클릭한 날짜 색상구분</li>
+            <li>마우스오버시 색상구분</li>
+            <li>클릭한 날짜 하단 박스에 표기</li>
+            <li>날짜가 아닌 칸은 선택불가능하게.</li>
+        </ul><br>
+        <h3><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> <span>2차 요구사항</span></h3>
+        <ul class="text-left">
+            <li>날짜를 두개 선택가능하도록 추가</li>
+            <li>시작날짜에서 종료날짜까지 색상표시</li>
+            <li>당월 이전 날짜와 이후 날짜도 연하게 표시</li>
+        </ul>
+    </div>
+</div>
+
+<div id="float" class="float-memo">
+    <h2 class="float-memo-title">Schedule</h2>
+    <div class="float-content">Calendar Schedule line</div>
+    <div class="text-right">
+        <button id="float-edit" class="btn btn-default">edit</button>
+        <button id="float-save" class="btn btn-primary">save</button>
+    </div>
+    <button id="float-close" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span></button>
+</div>
+
+
+</body>
+</html>

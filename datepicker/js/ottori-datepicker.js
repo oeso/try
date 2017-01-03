@@ -7,6 +7,42 @@ function addCreateTxtNode(el, elName){
 function getElId(v){
     return document.getElementById(v);
 };
+function calendarSize( el, target ){
+    target.style.height = el.offsetWidth + "px";
+};
+function floating(data){
+    var floatBox = appendCreateEl(document.body, "div");
+        floatBox.className = "float-memo";
+        floatBox.id = "float";
+
+    var floatTitle = appendCreateEl( floatBox ,"h2");
+        floatTitle.className = "float-memo-title";//플로팅 레이어 제목
+        floatTitle.innerHTML = "Schedule"
+
+    var contents = appendCreateEl( floatBox ,"div")
+        contents.className = "float-content";
+        contents.innerHTML = data;//메모한 내용
+
+    var floatBoxContent = appendCreateEl( floatBox ,"div");
+        floatBoxContent.className = "text-right";//버튼 박스
+
+    var floatBoxButton1 = appendCreateEl(floatBoxContent, "button");
+        floatBoxButton1.className = "btn btn-default" //
+        floatBoxButton1.innerHTML = "Edit"
+
+    var floatBoxButton2 = appendCreateEl(floatBoxContent, "button");
+        floatBoxButton2.className = "btn btn-primary" //
+        floatBoxButton2.innerHTML = "Save"
+
+    var floatBoxClose = appendCreateEl( floatBox ,"button");
+        floatBoxClose.className = "btn btn-default";
+        floatBoxClose.id = "float-close"
+    var floatBoxCloseText = appendCreateEl( floatBoxClose ,"span");
+        floatBoxCloseText.className = "glyphicon glyphicon-remove";
+};
+
+
+
 //본질이 무엇인지 파악하면서 짤 것.
 var calendar = {
     //calendar DOM 구조 만드는 함수
@@ -18,7 +54,6 @@ var calendar = {
         function buttonSetting(btnId, btnClass, btnChildClass){
             var ControlBtn = appendCreateEl(calendar.calendarBox,"button");
             var ControlBtnFont = appendCreateEl(ControlBtn,"span");
-
             ControlBtn.id = btnId;
             ControlBtn.className = btnClass;
             ControlBtnFont.className = btnChildClass;
@@ -69,6 +104,11 @@ var calendar = {
         todayBtn.id = "today";
         todayBtn.className = "btn btn-danger btn-today";
         todayBtn.innerHTML = "TODAY";
+
+        calendarSize(this.calendarBox, this.table);
+        window.onresize = function(){
+            calendarSize(calendar.calendarBox, calendar.table);
+        };
 
         calendar.slider(obj, date);
     },
@@ -194,5 +234,9 @@ var calendar = {
             };
         };
         call( prevYearBtn, prevMonthBtn, nextMonthBtn, nextYearBtn, todayLink);
+
+
+
+        floating("오후 2시에 레드티 미팅");
     }
 };

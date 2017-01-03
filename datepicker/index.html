@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title> 날짜 셀렉터 </title>
+    <title>스케줄 캘린더 구현</title>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/ottori-datepicker.css">
-    <script defer src="js/ottori-datepicker.js"></script>
+    <script src="js/ottori-datepicker.js"></script>
 </head>
 <body>
 
+<div id="calendar" class="calendar"></div>
 
-<div id="calendar" class="calendar">
-
-</div>
 <div class="function-guide">
     <div class="input-group">
         <span class="input-group-addon">시작날짜</span>
@@ -43,6 +41,13 @@
         </ul>
     </div>
 </div>
+
+<script>
+    calendar.action({
+        "id" : "calendar"
+    })
+</script>
+
 
 </body>
 </html>

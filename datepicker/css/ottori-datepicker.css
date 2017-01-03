@@ -5,13 +5,14 @@ body {padding:10px}
 caption {font-size:20px;font-weight:bold;height:30px;line-height:30px;margin-bottom:20px}
 span {vertical-align:middle}
 .hide {position:absolute;left:-9000px;height:0;}
-.btn-today {}
-.calendar {position:relative;width:310px; margin:0 auto}
+.btn {padding:3px 12px 6px}
+.calendar {position:relative; margin:0 auto}
 .calendar > .btn {position:absolute;overflow:hidden;width:35px;height:35px;padding:0 !important;line-height:1}
 .calendar .btn span {}
 .calendar .btn-today {margin:0 0 20px; width:100%; position:static}
-.calendar a {display:block;margin:0;padding:0;text-align:center;text-decoration:none;height:40px;line-height:40px;color:#666;}
-.calendar th {text-align:center !important}
+.calendar a {display:block;margin:0;padding:0;text-align:center;text-decoration:none;height:100%;line-height:40px;color:#666;cursor:pointer}
+.table > thead > tr > th {vertical-align:middle}
+
 .calendar td {height:41px; padding:0 !important}
 .calendar td:first-child a{color:red}
 .calendar td:last-child a {color:steelblue}
@@ -19,9 +20,30 @@ span {vertical-align:middle}
 .calendar .today {background:lightslategray;color:#fff !important}
 .calendar .on {background-color:deepskyblue;color:#fff !important}
 .calendar .active {background-color:dodgerblue;color:#fff !important}
-.text-danger a {color:red }
+
+.calendar .table {height:100%}
+.calendar .table thead {height:30px}
+.calendar .table tbody {height:90%}
+
+.text-danger a {color:red}
 .btn.first {left:0;}
 .btn.prev{left:40px}
 .btn.next{right:40px}
 .btn.last{right:0}
 .function-guide {width:310px;margin:0 auto}
+
+
+.float-memo {position:absolute; left:0; top:0; width:300px; height:150px; padding:20px 20px 50px; background:#fff; border:1px solid #e1e1e1; border-radius:2px}
+.float-memo-title {margin-top:0; font-size:18px}
+.float-content {margin:0; font-size:13px}
+.float-memo .text-right {position:absolute; right:10px; bottom:10px}
+.float-memo .text-right .btn {margin-left:5px}
+.float-memo #float-close {position:absolute; right:10px; top:10px}
+
+
+
+
+
+
+
+
