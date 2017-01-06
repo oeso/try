@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>Regist | O Schedule</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/ottori-datepicker.css">
+    <script src="http://code.jquery.com/jquery-2.2.2.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+<nav class="nav form-inline bg-primary text-center">
+    <button class="btn btn-primary glyphicon glyphicon-bell"><em class="new text-center">3</em></button>
+    <button class="btn btn-primary glyphicon glyphicon-calendar"></button>
+    <button class="btn btn-primary glyphicon glyphicon-log-out"></button>
+    <button class="btn btn-primary glyphicon glyphicon-menu-hamburger"></button>
+    <button class="btn btn-primary glyphicon glyphicon-cog"></button>
+</nav>
+<div class="visual bg-info text-white">
+    <div class="container">
+        <h1><span class="glyphicon glyphicon-calendar"></span>New Schedule Registration</h1>
+        <p>Make your Schedule here</p>
+    </div>
+</div>
+
+
+<section class="container">
+    <form action="" id="formBox" class="form-horizontal">
+        <div class="form-group">
+            <label for="" class="col-sm-2 control-label"><span class="glyphicon glyphicon-bookmark"></span> Title</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="Title">
+            </div>
+        </div>
+        <div class="form-group form-inline">
+            <label for="" class="col-sm-2 control-label"><span class="glyphicon glyphicon-time"></span> Start</label>
+            <div class="col-sm-10">
+                <input type="date" class="form-control" id="" placeholder="Start Date">
+                time <input type="time" class="form-control" id="">
+            </div>
+        </div>
+        <div class="form-group form-inline">
+            <label for="" class="col-sm-2 control-label"><span class="glyphicon glyphicon-time"></span> Finish</label>
+            <div class="col-sm-10">
+                <input type="date" class="form-control" id="" placeholder="Finish Date">
+                time <input type="time" class="form-control" id="">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="" class="col-sm-2 control-label"><span class="glyphicon glyphicon-map-marker"></span> Place</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="Title">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="" class="col-sm-2 control-label"><span class="glyphicon glyphicon-edit"></span> Memo</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="" class="col-sm-2 control-label"><span class="glyphicon glyphicon-cloud-upload"></span> File</label>
+            <div class="col-sm-10">
+                <label class="btn btn-primary btn-file"><span class="glyphicon glyphicon-inbox"></span> Browse<input type="file" class="hidden"></label>
+            </div>
+        </div>
+    </form>
+
+    <div class="alert alert-danger">Make your schedule here ~ !</div>
+
+    <div>
+        <button class="btn btn-default">BACK</button>
+        <button class="btn btn-default">SAVE</button>
+        <button class="btn btn-danger">DEL</button>
+    </div>
+</section>
+</body>
+</html>

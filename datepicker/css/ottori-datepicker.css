@@ -1,46 +1,66 @@
 @charset "utf-8";
 
 ul,li {padding:0}
-body {padding:10px}
 caption {font-size:20px;font-weight:bold;height:30px;line-height:30px;margin-bottom:20px}
 span {vertical-align:middle}
+.nav .btn {position:relative}
+.new {display:block; position:absolute; left:-5px;top:-5px; width:19px;height:19px;line-height:15px;font-size:13px; color:#fff;font-weight:bold;font-style:normal;-webkit-border-radius:50%; -moz-border-radius:50%; border-radius:50%; background:#d9534f}
+.top-menu {padding:5px 0}
+.title  {border-bottom:1px solid #eee;margin:0 auto 20px;padding-bottom:10px; text-align:center;color:transparent;font-size:1px}
+.title img {width:85px}
+.date-title .form-control {font-size:30px; border:0; height:auto;padding:3px 3px 3px 5px}
 .hide {position:absolute;left:-9000px;height:0;}
 .btn {padding:3px 12px 6px}
-.calendar {position:relative; margin:0 auto}
+.calendar {position:relative; max-width:1000px; margin:0 auto}
 .calendar > .btn {position:absolute;overflow:hidden;width:35px;height:35px;padding:0 !important;line-height:1}
-.calendar .btn span {}
 .calendar .btn-today {margin:0 0 20px; width:100%; position:static}
-.calendar a {display:block;margin:0;padding:0;text-align:center;text-decoration:none;height:100%;line-height:40px;color:#666;cursor:pointer}
+.calendar a {display:block;margin:0;padding:0;text-align:left;text-decoration:none;height:100%;line-height:40px;color:#666;cursor:pointer}
 .table > thead > tr > th {vertical-align:middle}
-
-.calendar td {height:41px; padding:0 !important}
+.calendar .table {height:100%; table-layout:fixed}
+.calendar .table thead {height:30px}
+.calendar .table tbody {height:90%}
+.calendar .table tr {height:16.666666666%}
+.calendar td {padding:0 !important}
 .calendar td:first-child a{color:red}
 .calendar td:last-child a {color:steelblue}
 .calendar a:hover {background-color:palevioletred;color:#fff !important}
 .calendar .today {background:lightslategray;color:#fff !important}
 .calendar .on {background-color:deepskyblue;color:#fff !important}
 .calendar .active {background-color:dodgerblue;color:#fff !important}
-
-.calendar .table {height:100%}
-.calendar .table thead {height:30px}
-.calendar .table tbody {height:90%}
-
 .text-danger a {color:red}
 .btn.first {left:0;}
 .btn.prev{left:40px}
 .btn.next{right:40px}
 .btn.last{right:0}
 .function-guide {width:310px;margin:0 auto}
-
+.schedule {display:block; color:#fff}
 
 .float-memo {position:absolute; left:0; top:0; width:300px; height:150px; padding:20px 20px 50px; background:#fff; border:1px solid #e1e1e1; border-radius:2px}
-.float-memo-title {margin-top:0; font-size:18px}
-.float-content {margin:0; font-size:13px}
+.float-memo-title {height:20px; margin-top:0; font-size:18px}
+.float-memo .float-content {overflow:hidden; position:relative; text-overflow:ellipsis; white-space:nowrap; height:28px; line-height:28px; margin:0; font-size:13px}
+.float-memo .float-content input {display:block; position:absolute; left:0;top:0;right:0; height:28px; line-height:28px; width:100%; padding:3px 10px; border:1px solid #eee}
 .float-memo .text-right {position:absolute; right:10px; bottom:10px}
 .float-memo .text-right .btn {margin-left:5px}
-.float-memo #float-close {position:absolute; right:10px; top:10px}
+.float-memo #memoClose {position:absolute; right:10px; top:10px}
+.float-memo .text-danger {margin-left:10px}
+#formBox {padding:30px 0 40px}
+#yearTitle {font-size:25px; padding-bottom:20px}
+
+/* edit page */
+.nav {padding:10px 0}
+.visual {height:170;}
+.container {max-width:800px; margin:0 auto; padding:30px 0}
+.container h1 {font-size:37px}
+.container h1 .glyphicon {font-size:50px; vertical-align:top; position:relative; top:-4px; margin-right:10px}
+.container  p {padding-left:62px; font-size:21px}
+.form-horizontal .control-label {text-align:left}
+.form-horizontal .glyphicon {vertical-align:top; position:relative; top:3px}
 
 
+@media all and (max-width:640px){
+    #formBox {width:auto}
+    .float-memo {width:250px; padding:10px 10px 40px}
+}
 
 
 

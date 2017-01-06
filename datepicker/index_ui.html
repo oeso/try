@@ -24,7 +24,15 @@
     </script>
 </head>
 <body>
+<nav class="nav form-inline bg-primary text-center">
+    <button class="btn btn-primary glyphicon glyphicon-bell"><em class="new text-center">3</em></button>
+    <button class="btn btn-primary glyphicon glyphicon-log-out"></button>
+    <button class="btn btn-primary text-white glyphicon glyphicon-home"></button>
+    <button class="btn btn-primary glyphicon glyphicon-menu-hamburger"></button>
+    <button class="btn btn-primary glyphicon glyphicon-cog"></button>
+</nav>
 
+<h1 class="title"><img src="http://i.gzcdn.net/mui/img/main/new/btn_logo_golfzon.png" alt=""></h1>
 
 <div id="calendar" class="calendar">
     <button class="btn btn-primary first" id="first" title="이전년도"><span class="glyphicon glyphicon-backward"></span></button>
@@ -32,7 +40,35 @@
     <button class="btn btn-info next" id="next" title="다음 달"><span class="glyphicon glyphicon-chevron-right"></span></button>
     <button class="btn btn-primary last" id="last" title="다음년도"><span class="glyphicon glyphicon-forward"></span></button>
 
-    <h2 id="yearTitle" class="text-center">2016 12</h2>
+    <div id="yearTitle" class="date-title form-group form-inline text-center">
+        <select id="startDate" class="form-control year-control" name="" id="selectYear">
+            <option value="">2017</option>
+            <option value="">2016</option>
+            <option value="">2015</option>
+            <option value="">2014</option>
+            <option value="">2013</option>
+            <option value="">2012</option>
+            <option value="">2011</option>
+            <option value="">2010</option>
+            <option value="">2009</option>
+            <option value="">2008</option>
+        </select>
+        <select id="finishDate" class="form-control month-control" name="" id="selectMonth">
+            <option value="">1</option>
+            <option value="">2</option>
+            <option value="">3</option>
+            <option value="">4</option>
+            <option value="">5</option>
+            <option value="">6</option>
+            <option value="">7</option>
+            <option value="">8</option>
+            <option value="">9</option>
+            <option value="">10</option>
+            <option value="">11</option>
+            <option value="">12</option>
+        </select>
+    </div>
+
     <table id="tableElement" class="table table-bordered">
         <caption class="hide">Calendar</caption>
         <thead>
@@ -77,7 +113,7 @@
             <tr>
                 <td><a href="#">4</a></td>
                 <td><a href="#">5</a></td>
-                <td><a href="#">6</a></td>
+                <td><a href="#"><span class="schedule label-primary">Workshop 07:00</span></a></td>
                 <td><a href="#">7</a></td>
                 <td><a href="#">8</a></td>
                 <td><a href="#">9</a></td>
@@ -118,7 +154,7 @@
     <div class="ex text-center">
         <h3><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> <span>1차 요구사항</span></h3>
         <ul class="text-left">
-            <li>pure javascript</li>
+            <li>Pure javascript</li>
             <li>오늘 날짜를 default 표시</li>
             <li>상단 TODAY 버튼 클릭시 현재 날짜로 돌아감</li>
             <li>클릭한 날짜 색상구분</li>
@@ -137,12 +173,13 @@
 
 <div id="float" class="float-memo">
     <h2 class="float-memo-title">Schedule</h2>
-    <div class="float-content">Calendar Schedule line</div>
+    <div class="float-content" title="더블 클릭하여 변경 가능">Calendar Schedule line</div>
+    <span>time : </span><span class="text-danger">2014-12-26 18:00</span>
     <div class="text-right">
         <button id="float-edit" class="btn btn-default">edit</button>
         <button id="float-save" class="btn btn-primary">save</button>
     </div>
-    <button id="float-close" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span></button>
+    <button id="memoClose" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span></button>
 </div>
 
 

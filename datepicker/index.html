@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>스케줄 캘린더 구현</title>
+    <title>O Schedule</title>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -9,6 +9,15 @@
     <script src="js/ottori-datepicker.js"></script>
 </head>
 <body>
+<nav class="nav form-inline bg-primary text-center">
+    <button class="btn btn-primary glyphicon glyphicon-bell"><em class="new text-center">3</em></button>
+    <button class="btn btn-primary glyphicon glyphicon-log-out"></button>
+    <button class="btn btn-primary text-white glyphicon glyphicon-home"></button>
+    <button class="btn btn-primary glyphicon glyphicon-menu-hamburger"></button>
+    <button class="btn btn-primary glyphicon glyphicon-cog"></button>
+</nav>
+
+<h1 class="title"><img src="http://i.gzcdn.net/mui/img/main/new/btn_logo_golfzon.png" alt=""></h1>
 
 <div id="calendar" class="calendar"></div>
 
@@ -41,6 +50,20 @@
         </ul>
     </div>
 </div>
+
+<form action="action" onsubmit="" id="svaeActionForm">
+    <input type="text" id="memo" name="memo"/>
+    <input type="hidden" id="" name=""/>
+    <input type="hidden" id="" name=""/>
+    <input type="hidden" id="" name=""/>
+    <input type="hidden" id="" name=""/>
+    <input type="hidden" id="" name=""/>
+    <input type="hidden" id="" name=""/>
+    <input type="hidden" id="" name=""/>
+    <input type="hidden" id="" name=""/>
+    <input type="hidden" id="" name=""/>
+</form>
+
 
 <script>
     calendar.action({

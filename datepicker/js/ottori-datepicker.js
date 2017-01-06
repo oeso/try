@@ -10,38 +10,98 @@ function getElId(v){
 function calendarSize( el, target ){
     target.style.height = el.offsetWidth + "px";
 };
-function floating(data){
-    var floatBox = appendCreateEl(document.body, "div");
-        floatBox.className = "float-memo";
-        floatBox.id = "float";
 
-    var floatTitle = appendCreateEl( floatBox ,"h2");
-        floatTitle.className = "float-memo-title";//플로팅 레이어 제목
-        floatTitle.innerHTML = "Schedule"
+var floatBox;
+function firstObjectSetting(){
+    floatBox = appendCreateEl(document.body, "div");
+    floatBox.className = "float-memo";
+    floatBox.id = "float";
+};
+function settingElement( el, elAttr, callAgainObjArray ){
+    //el : 부모 엘리먼트, elName : 생성해서 붙일 엘리먼트명, clsName, idName : 생성한 노트에 붙일 클래스네임, inText, attr, attrValue
+    var element = appendCreateEl(el, elAttr.elName );
+    if(!elAttr.clsName){
+    }else{
+        element.className = elAttr.clsName;
+    }
+    if(!elAttr.idName){
+    }else{
+        element.id = elAttr.idName;
+    };
+    if( !elAttr.inText ){
+    }else{
+        element.innerHTML = elAttr.inText;
+    };
+    if( !elAttr.attr ){
+    }else{
+        element.setAttribute(elAttr.attr, elAttr.attrValue);
+    };
 
-    var contents = appendCreateEl( floatBox ,"div")
-        contents.className = "float-content";
-        contents.innerHTML = data;//메모한 내용
+    if(!callAgainObjArray){
+    }else{
+        for(var i=0;i<callAgainObjArray.length;i++){
+            settingElement( element, callAgainObjArray[i]);
+        };
+    }
+};
+//floating 요소를 만듦
+function makeFloatMemo(dataMemo,dataTime,x,y){
+    if( getElId("float") ){
+        getElId("float").remove();
+    };
+    firstObjectSetting();
+    settingElement(floatBox, {elName : "h2", clsName : "float-memo-title", inText : "Schedule"});
+    settingElement(floatBox, {elName : "div", clsName : "float-content", idName :"floatLabel", inText : dataMemo, attr : "title", attrValue : "클릭하여 수정" });
+    settingElement(floatBox, {elName : "span", inText : "time"});
+    settingElement(floatBox, {elName : "span", clsName : "text-danger", inText : dataTime});
+    settingElement(floatBox, {elName : "div", clsName : "text-right"},[{elName : "button", idName:"btnEdit", clsName : "btn btn-default", inText : "Edit"},{elName : "button", idName : "btnSave", clsName : "btn btn-primary", inText : "Save"}]);
+    settingElement(floatBox, {elName : "button", clsName : "btn btn-default", idName : "memoClose"}, [{elName : "span", clsName : "glyphicon glyphicon-remove"}]);
+    positionFloat( getElId("float") );
 
-    var floatBoxContent = appendCreateEl( floatBox ,"div");
-        floatBoxContent.className = "text-right";//버튼 박스
+    var floatEl = getElId("float");
+    var floatLabel = getElId("floatLabel");
 
-    var floatBoxButton1 = appendCreateEl(floatBoxContent, "button");
-        floatBoxButton1.className = "btn btn-default" //
-        floatBoxButton1.innerHTML = "Edit"
-
-    var floatBoxButton2 = appendCreateEl(floatBoxContent, "button");
-        floatBoxButton2.className = "btn btn-primary" //
-        floatBoxButton2.innerHTML = "Save"
-
-    var floatBoxClose = appendCreateEl( floatBox ,"button");
-        floatBoxClose.className = "btn btn-default";
-        floatBoxClose.id = "float-close"
-    var floatBoxCloseText = appendCreateEl( floatBoxClose ,"span");
-        floatBoxCloseText.className = "glyphicon glyphicon-remove";
+    getElId("memoClose").addEventListener("click",function(){
+        closefloatBox(floatEl);
+    });
+    getElId("floatLabel").addEventListener("dblclick",function(){
+        editMemo(floatLabel);
+    });
+    getElId("btnEdit").addEventListener("click",function(){
+        editMemo(floatLabel);
+    });
+    getElId("btnSave").addEventListener("click",function(){
+        if( !floatLabel.children[0] ){
+            return false;
+        }else{
+            var target = floatLabel.children[0];
+        };
+        saveMemo(floatLabel, target.value);
+    });
+};
+function positionFloat(el){
+    var maxWidth = document.body.offsetWidth-float.offsetWidth-5;
+    x = x > (maxWidth) ? x = maxWidth : x;
+    y = ( y-230 <= 0) ? 10 : y-230;
+    el.style.left = x + "px";
+    el.style.top = y + "px";
+};
+function closefloatBox(el){
+    el.remove();
 };
 
-
+function editMemo(el){
+    var newInput = appendCreateEl(el,"input");
+    newInput.setAttribute("type","text");
+    newInput.focus();
+    newInput.addEventListener("blur",function(){//fodusout 은 불가.
+        saveMemo(el, newInput.value);
+    });
+};
+function saveMemo(target, targetValue){
+    targetValue =  (targetValue == "" || !targetValue) ? "No Schedule" : targetValue;
+    target.innerHTML = targetValue;
+};
 
 //본질이 무엇인지 파악하면서 짤 것.
 var calendar = {
@@ -64,7 +124,7 @@ var calendar = {
         buttonSetting("nextYear", "btn btn-primary last", "glyphicon glyphicon-forward");
 
         //캘린더 연도와 월 표시할 엘리먼트 생성, 클래스 붙임. 사용자 옵션을 다양하게 받아 구현할 수 있도로 따로 함수로 뺄 예정.
-        var calendarTitle = appendCreateEl(this.calendarBox,"h2");
+        var calendarTitle = appendCreateEl(this.calendarBox,"div");
         calendarTitle.className = "text-center";
         calendarTitle.id = "yearTitle";
 
@@ -75,6 +135,7 @@ var calendar = {
         this.table.className = "table table-bordered";//this.table의 클래스 붙임.
         var head = this.table.createTHead();//table에 <head>생성하여 변수 head에 담음
         var row =  head.insertRow();//<head>에 <tr> 생성하여 변수 row에 담음
+
 
         //thead의 tr에 th 생성하고 class 부여.
         for(var i=0; i<7; i++){
@@ -233,10 +294,37 @@ var calendar = {
                 controlBtnEvent(arguments[i]);
             };
         };
-        call( prevYearBtn, prevMonthBtn, nextMonthBtn, nextYearBtn, todayLink);
+        call(prevYearBtn, prevMonthBtn, nextMonthBtn, nextYearBtn, todayLink);
 
+        var datamemo = "오후 2시에 리베라 호텔 7층 레드티 세미나 개최예정"; //임시
+        var datatime = "2016-07-6 18:00"; //임시
 
+        for(var i=0, length=calendarLink.length; i<length;i++){
+            calendarLink[i].addEventListener("click",floatMemoEvent);
+            calendarLink[i].addEventListener("dblclick",function(){
+                if( !this.href ){
+                    window.open("schedule_regist.html","Regist Schedule","");
+                }else{
+                    window.open(this.href,"View Schedule","");
+                }
+            });
+        };
 
-        floating("오후 2시에 레드티 미팅");
+        function floatMemoEvent(e){
+            x = e.pageX;
+            y = e.pageY;
+            makeFloatMemo(datamemo, datatime, x, y );
+        };
     }
 };
+
+
+
+
+
+
+
+
+
+
+
