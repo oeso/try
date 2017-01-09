@@ -62,7 +62,7 @@ function makeFloatMemo(dataMemo,dataTime,x,y){
     var floatLabel = getElId("floatLabel");
 
     getElId("memoClose").addEventListener("click",function(){
-        closefloatBox(floatEl);
+        closeFloatBox(floatEl);
     });
     getElId("floatLabel").addEventListener("dblclick",function(){
         editMemo(floatLabel);
@@ -86,7 +86,7 @@ function positionFloat(el){
     el.style.left = x + "px";
     el.style.top = y + "px";
 };
-function closefloatBox(el){
+function closeFloatBox(el){
     el.remove();
 };
 
@@ -105,7 +105,7 @@ function saveMemo(target, targetValue){
 
 //본질이 무엇인지 파악하면서 짤 것.
 var calendar = {
-    //calendar DOM 구조 만드는 함수
+    //calendar.action : calendar DOM 구조 만드는 함수
     action : function(obj, date){
         this.calendarBox = getElId(obj.id);
         this.lang = (obj.lang != "en") ? ["일","월","화","수","목","금","토"] : ["sun","mon","tue","wed","thu","fri","sat"];
@@ -128,10 +128,10 @@ var calendar = {
         calendarTitle.className = "text-center";
         calendarTitle.id = "yearTitle";
 
-        var table = document.createElement("table");//table 엘리먼트 생성
+        var tableEl = document.createElement("table");//table 엘리먼트 생성
 
-        this.calendarBox.appendChild(table).setAttribute("id","table");//생성한 table을 div#calendar에 꽂아넣고 id="table" 부여함
-        this.table = getElId("table");//this.table에 꽂아넣은 table 엘리먼트를 담음.
+        this.calendarBox.appendChild(tableEl).setAttribute("id","tableElBox");//생성한 table을 div#calendar에 꽂아넣고 id="table" 부여함
+        this.table = getElId("tableElBox");//this.table에 꽂아넣은 table 엘리먼트를 담음.
         this.table.className = "table table-bordered";//this.table의 클래스 붙임.
         var head = this.table.createTHead();//table에 <head>생성하여 변수 head에 담음
         var row =  head.insertRow();//<head>에 <tr> 생성하여 변수 row에 담음
@@ -150,10 +150,24 @@ var calendar = {
         var tbodyEl= this.table.getElementsByTagName("tbody")[0];
         var tbodyRow = tbodyEl.insertRow();//tbody에 tr 생성
 
-        //tbody의 tr에 td 생성
+        //tbody의 tr에 td 생성.하면서 데이터도 같이 뿌림
         for(var i=0; i<7; i++){
             var cell = tbodyRow.insertCell();
-            appendCreateEl(cell,"a");
+            var cellDiv = appendCreateEl(cell,"div");//td > div
+            var dayNumber = appendCreateEl(cellDiv, "a");// td > div > a.txt-day
+            dayNumber.className = "txt-day";
+            appendCreateEl(dayNumber,"span")
+
+            //var schdule = appendCreateEl(cellDiv, "a");
+            //schdule.className = "schedule label-primary";// td > div > a.schedule className
+            //schdule.innerHTML = "Workshop 07:00"//임시 데이터
+
+            //var weatherEl = appendCreateEl(cellDiv, "a");
+            //data에 관련된 클래스가 뿌려져야 함 - 날씨 관련 클래스 : fa fa-sun-o : 맑음, fa fa-umbrella : 비옴, fa fa-snowflake-o : 눈, fa fa-cloud : 구름, fa fa-bolt : 천둥
+            //weatherEl.className = "weather fa fa-umbrella";
+            //var weatherIco = appendCreateEl(weatherEl, "span");
+            //weatherIco.innerHTML = "clody"//임시. 실제 날씨에 관련된 data가 뿌려져야 함
+            //weatherIco.className = "hide"
         };
 
         //해당 tr을 5번 복제하여 tbody에 꽂아넣음
@@ -173,19 +187,19 @@ var calendar = {
 
         calendar.slider(obj, date);
     },
-    //만든 DOM 구조에 날짜를 뿌려주는 함수
+    //calendar.slider : calendar.action()에서 만든 DOM 구조에 날짜를 뿌려주는 함수
     slider : function(obj, date){
 
         var date = ( typeof date == "undefined" )? new Date() : date;
+        date = new Date(2016,11)//test를 위해 임시로 덮어씀. 2017-01-09
             this.year = date.getFullYear();
             this.month = date.getMonth();
             this.today = date.getDate();
             this.obj = obj;
 
-        var calendarTd = this.calendarBox.getElementsByTagName("td")
-        ,   calendarLink = this.calendarBox.getElementsByTagName("a")
+        var tdInDivEl = getElId("tableElBox").getElementsByTagName("div")
+        ,   calendarLink = getElId("tableElBox").getElementsByClassName("txt-day")
         ,   endDate = new Array(31,28,31,30,31,30,31,31,30,31,30,31)
-        ,   lastDate//이 달의 마지막날짜. (마지막날을 모아둔 배열에서 현재 달 넘버에 해당하는 값)
         ,   start = date;
             start.setDate(1);//1일 세팅
 
@@ -194,15 +208,17 @@ var calendar = {
         ,   formEnd = getElId("endDay")
         ,   title = getElId("yearTitle");
 
+
+
         var prevYearBtn = getElId("prevYear")
         ,   prevMonthBtn = getElId("prevMonth")
         ,   nextMonthBtn = getElId("nextMonth")
         ,   nextYearBtn = getElId("nextYear")
         ,   todayLink = getElId("today")
         ,   thisCalendar = this
-        ,   monthCount = this.month
         ,   prevMonth = thisCalendar.month -1
         ,   nextMonth = thisCalendar.month +1
+        ,   monthCount = this.month;
 
         //윤년계산 ( 서력 기원 연수가 4로 나누어 떨어지는 해는 윤년. 이 중 100으로 나 누어 떨어지는 해는 평년이며, 그 중 400으로 나누어 떨어지는 해는 윤년 )
         if( this.year % 4 === 0 ){
@@ -214,31 +230,52 @@ var calendar = {
                 endDate[1] = 29;
             };
         };
-        lastDate = endDate[this.month];
+
+        var lastDate;
+        var end = date;
+        lastDate = endDate[this.month];//이 달의 마지막날짜. (마지막날을 모아둔 배열에서 현재 달 넘버에 해당하는 값)
+        end.setDate(lastDate);
+        var endDayOfweek = end.getDay()//마지막날짜(31일 또는 30일)의 요일
 
         var days = 1;
 
-        //td에 a 엘리먼트 세팅 날짜 삽입
+        //현재 달력에 뿌려질 이전 달 날짜 구하기
+        var prevMonthDayList = []
+        ,   monthCounts = calendar.month -1;
+
+        if( monthCounts == -1){
+            monthCounts = 11;
+        }else if( monthCounts == 12 ){
+            monthCounts = 0;
+        }
+        var prevEndDate = endDate[monthCounts]
+
+        for( var i=0; i< startDayOfWeek; i++){
+            prevMonthDayList.push(prevEndDate - i);
+        };
+
+        //현재 달력 각 날짜영역에 클래스 세팅 & 날짜 삽입
         for(var i=0; i<42; i++){
-            if( i < startDayOfWeek || i >= lastDate + startDayOfWeek ){
-                calendarTd[i].innerHTML = "";
+            var txtDays = tdInDivEl[i].getElementsByClassName("txt-day")[0];
+            txtDays.children[0].innerHTML = "";
+
+            if( i < startDayOfWeek ){
+                //이전 달 날짜 뿌림
+                txtDays.className = "txt-day before-month-day";
+                txtDays.children[0].innerHTML = prevMonthDayList.pop();
+            }else if( i >= lastDate ){
+                //다음달 날짜 뿌림
+                txtDays.className = "txt-day after-month-day";
+                txtDays.children[0].innerHTML = i - (lastDate-1);
             }else{
-                if( !calendarTd[i].hasChildNodes() ){
-                    addCreateTxtNode( appendCreateEl(calendarTd[i],"a"), days );
-                }else{
-                    var linkText = calendarTd[i].children[0].childNodes[0];//td > a > Text 노드.
-                    calendarTd[i].children[0].classList.remove("today");
-                    if( linkText != null ){
-                        linkText.remove();//Text 노드 있으면 제거 후 아랫줄에서 days(날짜)를 새로 뿌려줌.
-                    };
-                    addCreateTxtNode( calendarTd[i].children[0], days );
-                };
+                //현재 달 날짜 뿌림
+                addCreateTxtNode( txtDays.children[0], days );
                 days++;
             };
         };
 
         //today 표시
-        calendarLink[this.today-1].className="today";
+        tdInDivEl[this.today-1].className="today";
 
         //선택날짜 색상변경
         for(var i=0, length=calendarLink.length; i<length;i++){
@@ -257,6 +294,7 @@ var calendar = {
 
         //이전다음 컨트롤 버튼 클릭 이벤트
         function controlBtnEvent(btnEl){
+            console.log(123)
             btnEl.onclick = function(){
                 switch( btnEl.id ){
                     case "prevYear" :
@@ -315,6 +353,10 @@ var calendar = {
             y = e.pageY;
             makeFloatMemo(datamemo, datatime, x, y );
         };
+    },
+    //사용자 데이터 뿌리기
+    dataBinding : function(){
+
     }
 };
 
