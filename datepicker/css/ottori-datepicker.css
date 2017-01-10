@@ -8,7 +8,7 @@ span {vertical-align:middle}
 .top-menu {padding:5px 0}
 .title  {border-bottom:1px solid #eee; margin:0 auto 20px; padding-bottom:10px; text-align:center; color:transparent; font-size:1px}
 .title img {width:85px}
-.date-title .form-control {font-size:30px; border:0; height:auto; padding:3px 3px 3px 5px}
+.date-title .form-control {font-size:26px; border:0; height:auto; padding:3px 3px 3px 5px}
 .hide {position:absolute; left:-9000px; height:0}
 .btn {padding:3px 12px 6px}
 .calendar {position:relative; max-width:1000px; margin:0 auto}
@@ -73,7 +73,8 @@ span {vertical-align:middle}
 .float-memo #memoClose {position:absolute; right:10px; top:10px}
 .float-memo .text-danger {margin-left:10px}
 #formBox {padding:30px 0 40px}
-#yearTitle {font-size:30px; padding-bottom:20px}
+#yearTitle {min-height:35px; font-size:26px}
+#yearTitle select:first-child {min-width:80px; margin-right:5px}
 
 /* 등록하기 page */
 .nav {padding:10px 0}
@@ -87,8 +88,10 @@ span {vertical-align:middle}
 
 
 @media all and (max-width:640px){
+    body{min-width:320px}
     #formBox {width:auto}
     .float-memo {width:250px; padding:10px 10px 40px}
+    .calendar .txt-day span {font-size:14px}
 }
 
 

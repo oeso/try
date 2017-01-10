@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>O Schedule</title>
+    <title>GSC</title>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="http://image.golfzon.com/global/ca/golfzon.ico" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/ottori-datepicker.css">
     <script src="https://use.fontawesome.com/ab543bb152.js"></script>
@@ -19,7 +20,7 @@
     <button class="btn btn-primary glyphicon glyphicon-cog"></button>
 </nav>
 
-<h1 class="title"><img src="http://i.gzcdn.net/mui/img/main/new/btn_logo_golfzon.png" alt=""></h1>
+<h1 class="title"><img src="http://i.gzcdn.net/mui/img/main/new/btn_logo_golfzon.png" alt="GSC : Golfzon Schedule Calendar"></h1>
 
 <div id="calendar" class="calendar"></div>
 
@@ -66,11 +67,12 @@
     <input type="hidden" id="" name=""/>
 </form>
 
-
 <script>
     calendar.action({
-        "id" : "calendar"
-    })
+        "id" : "calendar",
+        "titleOption" : "select",
+        "sundayDir" : "right"
+    });
 </script>
 
 
