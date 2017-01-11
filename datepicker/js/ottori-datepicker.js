@@ -195,6 +195,21 @@ var calendar = {
         };
 
         calendar.writingDate(obj, date);
+        calendar.dataJson();
+    },
+    dataJson : function(){
+        if(window.XMLHttpRequest){
+            var jsonhttp =  new XMLHttpRequest();
+            jsonhttp.onreadystatechange = function(){
+                if(this.readyState == 4 && this.status ==  200){
+                    this.userData = JSON.parse(this.responseText);
+                    console.log(this.userData[0].id)
+                }
+            };
+            jsonhttp.open("GET", "https://oeso.github.io/try/datepicker/data/events.json", true);
+            jsonhttp.send();
+        }
+
     },
     //calendar.writingDate() -> calendar.action()에서 만든 DOM 구조에 날짜를 뿌려주는 함수
     writingDate : function(obj, date){
