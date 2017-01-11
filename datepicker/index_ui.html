@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>GSC UI</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="http://image.golfzon.com/global/ca/golfzon.ico" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/ottori-datepicker.css">
+    <script src="http://code.jquery.com/jquery-2.2.2.min.js"></script>
+    <script>
+        $(function(){
+            var calWidth = $("#calendar").width();
+            sizeSet();
+            function sizeSet(){
+                $("#tableElement").css({
+                    "height" : calWidth
+                });
+            };
+            $(window).resize(function(){
+                calWidth = $("#calendar").width();
+                sizeSet();
+            })
+        });
+    </script>
+</head>
+<body>
+<nav class="nav form-inline bg-primary text-center">
+    <button class="btn btn-primary glyphicon glyphicon-bell"><em class="new text-center">3</em></button>
+    <button class="btn btn-primary glyphicon glyphicon-log-out"></button>
+    <button class="btn btn-primary text-white glyphicon glyphicon-home"></button>
+    <button class="btn btn-primary glyphicon glyphicon-menu-hamburger"></button>
+    <button class="btn btn-primary glyphicon glyphicon-cog"></button>
+</nav>
+
+<h1 class="title"><img src="http://i.gzcdn.net/mui/img/main/new/btn_logo_golfzon.png" alt=""></h1>
+
+<div id="calendar" class="calendar">
+    <button class="btn btn-primary first" id="first" title="이전년도"><span class="glyphicon glyphicon-backward"></span></button>
+    <button class="btn btn-info prev" id="prev" title="이전 달"><span class="glyphicon glyphicon-chevron-left"></span></button>
+    <button class="btn btn-info next" id="next" title="다음 달"><span class="glyphicon glyphicon-chevron-right"></span></button>
+    <button class="btn btn-primary last" id="last" title="다음년도"><span class="glyphicon glyphicon-forward"></span></button>
+
+    <div id="yearTitle" class="date-title form-group form-inline text-center">
+        <select id="startDate" class="form-control year-control" name="" id="selectYear">
+            <option value="">2017</option>
+            <option value="">2016</option>
+            <option value="">2015</option>
+            <option value="">2014</option>
+            <option value="">2013</option>
+            <option value="">2012</option>
+            <option value="">2011</option>
+            <option value="">2010</option>
+            <option value="">2009</option>
+            <option value="">2008</option>
+        </select>
+        <select id="finishDate" class="form-control month-control" name="" id="selectMonth">
+            <option value="">1</option>
+            <option value="">2</option>
+            <option value="">3</option>
+            <option value="">4</option>
+            <option value="">5</option>
+            <option value="">6</option>
+            <option value="">7</option>
+            <option value="">8</option>
+            <option value="">9</option>
+            <option value="">10</option>
+            <option value="">11</option>
+            <option value="">12</option>
+        </select>
+    </div>
+
+    <table id="tableElement" class="table table-bordered">
+        <caption class="hide">Calendar</caption>
+        <thead>
+            <tr>
+                <th class="text-center text-danger">일</th>
+                <th class="text-center">월</th>
+                <th class="text-center">화</th>
+                <th class="text-center">수</th>
+                <th class="text-center">목</th>
+                <th class="text-center">금</th>
+                <th class="text-center text-primary">토</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div>
+                        <a href="#none" class="txt-day">1</a>
+                        <a href="#none" class="schedule label-primary">Workshop 07:00</a>
+                        <a href="#none" class="weather glyphicon glyphicon-cloud"><span class="hide">cloudy</span></a>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <a href="#none" class="txt-day">2</a>
+                        <a href="#none" class="schedule label-info">Workshop 07:00</a>
+                        <a href="#none" class="schedule label-primary">Workshop 07:00</a>
+                        <a href="#none" class="schedule label-success">Workshop 07:00</a>
+                        <a href="#none" class="schedule label-danger">Workshop 07:00</a>
+                        <a href="#none" class="weather glyphicon glyphicon-cloud"><span class="hide">cloudy</span></a>
+                    </div>
+                </td>
+                <td>
+                    <div class="today">
+                        <a href="#none" class="txt-day">3</a>
+                        <a href="#none" class="schedule label-info">Workshop 07:00</a>
+                        <a href="#none" class="schedule label-primary">Workshop 07:00</a>
+                        <a href="#none" class="weather glyphicon glyphicon-cloud"><span class="hide">cloudy</span></a>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <a href="#none" class="txt-day">4</a>
+                        <a href="#none" class="weather glyphicon glyphicon-cloud"><span class="hide">cloudy</span></a>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <a href="#none" class="txt-day">5</a>
+                        <a href="#none" class="weather glyphicon glyphicon-cloud"><span class="hide">cloudy</span></a>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <a href="#none" class="txt-day">6</a>
+                        <a href="#none" class="weather glyphicon glyphicon-cloud"><span class="hide">cloudy</span></a>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <a href="#none" class="txt-day">7</a>
+                        <a href="#none" class="weather glyphicon glyphicon-cloud"><span class="hide">cloudy</span></a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div><a href="#none" class="txt-day">8</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">9</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+                <td>
+                    <div><a href="#none" class="txt-day">12</a></div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="function-guide">
+    <div class="input-group">
+        <span class="input-group-addon">시작날짜</span>
+        <input type="text" id="startDay" class="form-control" placeholder="시작날짜" aria-describedby="basic-addon1">
+    </div><br>
+    <div class="input-group">
+        <span class="input-group-addon">종료날짜</span>
+        <input type="text" id="endDay" class="form-control" placeholder="종료날짜" aria-describedby="basic-addon1">
+    </div>
+
+    <div class="ex text-center">
+        <h3><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> <span>1차 요구사항</span></h3>
+        <ul class="text-left">
+            <li>Pure javascript</li>
+            <li>오늘 날짜를 default 표시</li>
+            <li>상단 TODAY 버튼 클릭시 현재 날짜로 돌아감</li>
+            <li>클릭한 날짜 색상구분</li>
+            <li>마우스오버시 색상구분</li>
+            <li>클릭한 날짜 하단 박스에 표기</li>
+            <li>날짜가 아닌 칸은 선택불가능하게.</li>
+        </ul><br>
+        <h3><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> <span>2차 요구사항</span></h3>
+        <ul class="text-left">
+            <li>날짜를 두개 선택가능하도록 추가</li>
+            <li>시작날짜에서 종료날짜까지 색상표시</li>
+            <li>당월 이전 날짜와 이후 날짜도 연하게 표시</li>
+        </ul>
+    </div>
+</div>
+
+<div id="float" class="float-memo">
+    <h2 class="float-memo-title">Schedule</h2>
+    <div class="float-content" title="더블 클릭하여 변경 가능">Calendar Schedule line</div>
+    <span>time : </span><span class="text-danger">2014-12-26 18:00</span>
+    <div class="text-right">
+        <button id="float-edit" class="btn btn-default">edit</button>
+        <button id="float-save" class="btn btn-primary">save</button>
+    </div>
+    <button id="memoClose" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span></button>
+</div>
+
+
+</body>
+</html>

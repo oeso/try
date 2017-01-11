@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title> 날짜 셀렉터 </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/ottori-datepicker_before.css">
+    <script src="js/ottori-datepicker_before.js"></script>
+</head>
+<body>
+
+
+<div id="calendar" class="calendar">
+
+</div>
+<div class="function-guide">
+    <div class="input-group">
+        <span class="input-group-addon">시작날짜</span>
+        <input type="text" id="startDay" class="form-control" placeholder="시작날짜" aria-describedby="basic-addon1">
+    </div><br>
+    <div class="input-group">
+        <span class="input-group-addon">종료날짜</span>
+        <input type="text" id="endDay" class="form-control" placeholder="종료날짜" aria-describedby="basic-addon1">
+    </div>
+
+    <div class="ex text-center">
+        <h3><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> <span>1차 요구사항</span></h3>
+        <ul class="text-left">
+            <li>pure javascript</li>
+            <li>오늘 날짜를 default 표시</li>
+            <li>상단 TODAY 버튼 클릭시 현재 날짜로 돌아감</li>
+            <li>클릭한 날짜 색상구분</li>
+            <li>마우스오버시 색상구분</li>
+            <li>클릭한 날짜 하단 박스에 표기</li>
+            <li>날짜가 아닌 칸은 선택불가능하게.</li>
+        </ul>
+    </div>
+</div>
+<script>
+    calendar.action({
+        id : "calendar",
+        lang : "ko"
+    });
+</script>
+</body>
+</html>

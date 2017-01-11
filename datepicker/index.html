@@ -1,19 +1,29 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title> 날짜 셀렉터 </title>
+    <title>GSC</title>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="http://image.golfzon.com/global/ca/golfzon.ico" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/ottori-datepicker.css">
+    <script src="https://use.fontawesome.com/ab543bb152.js"></script>
     <script src="js/ottori-datepicker.js"></script>
+    <noscript>브라우저가 자바스크립트를 지원해야 합니다</noscript>
 </head>
 <body>
+<nav class="nav form-inline bg-primary text-center">
+    <button class="btn btn-primary glyphicon glyphicon-bell"><em class="new text-center">3</em></button>
+    <button class="btn btn-primary glyphicon glyphicon-log-out"></button>
+    <button class="btn btn-primary text-white glyphicon glyphicon-home"></button>
+    <button class="btn btn-primary glyphicon glyphicon-menu-hamburger"></button>
+    <button class="btn btn-primary glyphicon glyphicon-cog"></button>
+</nav>
 
+<h1 class="title"><img src="http://i.gzcdn.net/mui/img/main/new/btn_logo_golfzon.png" alt="GSC : Golfzon Schedule Calendar"></h1>
 
-<div id="calendar" class="calendar">
+<div id="calendar" class="calendar"></div>
 
-</div>
 <div class="function-guide">
     <div class="input-group">
         <span class="input-group-addon">시작날짜</span>
@@ -43,10 +53,24 @@
         </ul>
     </div>
 </div>
+<form action="action" onsubmit="" id="svaeActionForm">
+    <input type="text" id="memo" name="memo"/>
+    <input type="hidden" id="" name=""/>
+    <input type="hidden" id="" name=""/>
+    <input type="hidden" id="" name=""/>
+    <input type="hidden" id="" name=""/>
+    <input type="hidden" id="" name=""/>
+    <input type="hidden" id="" name=""/>
+    <input type="hidden" id="" name=""/>
+    <input type="hidden" id="" name=""/>
+    <input type="hidden" id="" name=""/>
+</form>
+
 <script>
     calendar.action({
         id : "calendar",
-        lang : "ko"
+        titleOption : "select",
+        direction : "left"
     });
 </script>
 </body>

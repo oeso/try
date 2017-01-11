@@ -1,0 +1,28 @@
+@charset "utf-8";
+
+ul,li {padding:0}
+body {padding:10px}
+caption {font-size:20px;font-weight:bold;height:30px;line-height:30px;margin-bottom:20px}
+span {vertical-align:middle}
+.hide {position:absolute;left:-9000px;height:0;}
+h2 {padding:0 80px} a{cursor:pointer}
+.calendar {position:relative;width:310px; margin:0 auto}
+.calendar > .btn {position:absolute;overflow:hidden;width:35px;height:35px;padding:0 !important;line-height:1}
+.calendar .btn span {}
+.calendar .btn-today {margin:0 0 20px; width:100%; position:static}
+.calendar a {display:block;margin:0;padding:0;text-align:center;text-decoration:none;height:40px;line-height:40px;color:#666;}
+.calendar th {text-align:center !important}
+.calendar td {height:41px; padding:0 !important}
+.calendar td:first-child a{color:red}
+.calendar td:last-child a {color:steelblue}
+.calendar a:hover {background-color:palevioletred;color:#fff !important}
+.calendar .today {background:lightslategray;color:#fff !important}
+.calendar .on {background-color:deepskyblue;color:#fff !important}
+.calendar .active {background-color:dodgerblue;color:#fff !important}
+.table td {width:14.285%}
+.text-danger a {color:red }
+.btn.first {left:0;}
+.btn.prev{left:40px}
+.btn.next{right:40px}
+.btn.last{right:0}
+.function-guide {width:310px;margin:0 auto}
