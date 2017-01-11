@@ -1,7 +1,4 @@
-{
-	"jihong" : { "id": "date1", "weather": "cloudy", "start": "2017-01-17", "title": "Event 1 등록" },
-	"eunji" : { "id": "date2", "weather": "rainy", "start": "2017-01-26", "title": "Event 2 등록" },
-	"jiwon" : { "id": "date3", "weather": "sunny", "start": "2017-02-30", "title": "Event 3 세미나 개최 진행" },
-	"nick" : { "id": "date4", "weather": "snowy", "start": "2017-03-15", "title": "Event 4 더미 " }
-}
-
+{ "id": "date1", "weather": "cloudy", "start": "2017-01-17", "title": "Event 1 등록" }
+{ "id": "date2", "weather": "rainy", "start": "2017-01-26", "title": "Event 2 등록" }
+{ "id": "date3", "weather": "sunny", "start": "2017-02-30", "title": "Event 3 세미나 개최 진행" }
+{ "id": "date4", "weather": "snowy", "start": "2017-03-15", "title": "Event 4 더미 " }

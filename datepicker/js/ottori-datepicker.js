@@ -94,7 +94,6 @@ function positionFloat(el){
 function closeFloatBox(el){
     el.remove();
 };
-
 function editMemo(el){
     var newInput = appendCreateEl(el,"input");
     newInput.setAttribute("type","text");
@@ -107,7 +106,6 @@ function saveMemo(target, targetValue){
     targetValue =  (targetValue == "" || !targetValue) ? "No Schedule" : targetValue;
     target.innerHTML = targetValue;
 };
-
 var calendar = {
     //calendar.action() -> calendar DOM 구조 만드는 함수
     action : function(obj, date){
@@ -145,13 +143,11 @@ var calendar = {
         var head = this.table.createTHead();//table에 <head>생성하여 변수 head에 담음
         var row =  head.insertRow();//<head>에 <tr> 생성하여 변수 row에 담음
 
-        //thead의 tr에 th 생성하고 class 부여.
+        //thead의 tr에 th 생성하고 class 부여, 요일명 생성
         for(var i=0; i<7; i++){
             var dayNameLink = appendCreateEl(row,"th");
             dayNameLink.className = "text-center";
-            addCreateTxtNode(dayNameLink,this.lang[i]);//요일명은 임시
-
-            //이 위치에 사용자 옵션선택에 따른 요일을 한글 또는 영문으로 뿌려주는 함수 호출 예정.
+            addCreateTxtNode(dayNameLink,this.lang[i]);
         };
 
         //table에 tbody 꽂아넣음
@@ -159,24 +155,14 @@ var calendar = {
         var tbodyEl= this.table.getElementsByTagName("tbody")[0];
         var tbodyRow = tbodyEl.insertRow();//tbody에 tr 생성
 
-        //tbody의 tr에 td 생성.하면서 데이터도 같이 뿌림
+        //tbody의 tr에 td > div > a > span 생성
         for(var i=0; i<7; i++){
             var cell = tbodyRow.insertCell();
             var cellDiv = appendCreateEl(cell,"div");//td > div
             var dayNumber = appendCreateEl(cellDiv, "a");// td > div > a.txt-day
+            cellDiv.className = "link-wrap";
             dayNumber.className = "txt-day";
-            appendCreateEl(dayNumber,"span")
-
-            var schdule = appendCreateEl(cellDiv, "a");
-            schdule.className = "schedule label-primary";// td > div > a.schedule className
-            schdule.innerHTML = "Workshop 07:00"//임시 데이터
-
-            var weatherEl = appendCreateEl(cellDiv, "a");
-            //data에 관련된 클래스가 뿌려져야 함 - 날씨 관련 클래스 : fa fa-sun-o : 맑음, fa fa-umbrella : 비옴, fa fa-snowflake-o : 눈, fa fa-cloud : 구름, fa fa-bolt : 천둥
-            weatherEl.className = "weather fa fa-umbrella";
-            var weatherIco = appendCreateEl(weatherEl, "span");
-            weatherIco.innerHTML = "clody"//임시. 실제 날씨에 관련된 data가 뿌려져야 함
-            weatherIco.className = "hide"
+            appendCreateEl(dayNumber,"span");
         };
 
         //해당 tr을 5번 복제하여 tbody에 꽂아넣음
@@ -197,19 +183,42 @@ var calendar = {
         calendar.writingDate(obj, date);
         calendar.dataJson();
     },
+    //data AJAX로 가져오기
     dataJson : function(){
         if(window.XMLHttpRequest){
             var jsonhttp =  new XMLHttpRequest();
             jsonhttp.onreadystatechange = function(){
                 if(this.readyState == 4 && this.status ==  200){
                     this.userData = JSON.parse(this.responseText);
-                    console.log(this.userData[0].id)
+                    calendar.dataJsonBind(this.userData)
                 }
             };
             jsonhttp.open("GET", "https://oeso.github.io/try/datepicker/data/events.json", true);
             jsonhttp.send();
         }
+    },
+    //AJAX로 가져온 data 뿌리기
+    dataJsonBind : function(data){//해당 data obj 내 약속된 프로퍼티명을 가져와서 for돌려서 뿌림.
+        for(var k=0; k<data.length;k++){
+            //var obj = JSON.stringify(data[k].start)//JSON.stringify()로 가져온 값은 string이지만 "가 포함되어있어 비교가 안됨.
+            var obj = data[k].start;
 
+            for(var i=0; i<this.tdInDivEl.length;i++){
+                var day = this.tdInDivEl[i].children[0].getAttribute("data-date");
+                if( obj == day ){
+                    var schdule = appendCreateEl(this.tdInDivEl[i], "a");
+                    schdule.className = "schedule label-primary";
+                    schdule.innerHTML = data[k].title //JSON에 있는 title 값
+
+                    var weatherEl = appendCreateEl(this.tdInDivEl[i], "a");
+                    //data에 관련된 클래스가 뿌려져야 함 - 날씨 관련 클래스 : fa fa-sun-o : 맑음, fa fa-umbrella : 비옴, fa fa-snowflake-o : 눈, fa fa-cloud : 구름, fa fa-bolt : 천둥
+                    weatherEl.className = "weather fa fa-umbrella";
+                    var weatherIco = appendCreateEl(weatherEl, "span");
+                    weatherIco.innerHTML = data[k].weather//JSON에 있는 weather 값
+                    weatherIco.className = "hide"
+                }
+            }
+        };
     },
     //calendar.writingDate() -> calendar.action()에서 만든 DOM 구조에 날짜를 뿌려주는 함수
     writingDate : function(obj, date){
@@ -218,7 +227,7 @@ var calendar = {
         this.month = date.getMonth();
         this.today = date.getDate();
         this.obj = obj;
-        this.tdInDivEl = getElId("tableElBox").getElementsByTagName("div")
+        this.tdInDivEl = getElId("tableElBox").getElementsByClassName("link-wrap")
         this.calendarLink = getElId("tableElBox").getElementsByClassName("txt-day")
 
         var endDate = new Array(31,28,31,30,31,30,31,31,30,31,30,31)
@@ -227,7 +236,11 @@ var calendar = {
         var startDayOfWeek = start.getDay()//1일의 요일
         ,   formStart = getElId("startDay")
         ,   formEnd = getElId("endDay")
-        ,   title = getElId("yearTitle")
+        ,   title = getElId("yearTitle");
+
+        if(obj.direction == "right"){//일요일이 우측에 오게 뿌리기 위하여 1일을 앞으로 한칸 당김
+            startDayOfWeek = (startDayOfWeek == 0 ) ? 6 : startDayOfWeek-1
+        };
 
         //윤년계산 ( 서력 기원 연수가 4로 나누어 떨어지는 해는 윤년. 이 중 100으로 나 누어 떨어지는 해는 평년이며, 그 중 400으로 나누어 떨어지는 해는 윤년 )
         if( this.year % 4 === 0 ){
@@ -248,40 +261,68 @@ var calendar = {
         var days = 1, afterDay=1;
 
         //현재 달력에 뿌려질 이전 달 날짜 구하기
-        var prevMonthDayList = []
-        ,   monthCounts = calendar.month -1;
+        var prevMonthDayList = [], monthCounts = calendar.month -1;
 
         if( monthCounts == -1){
             monthCounts = 11;
         }else if( monthCounts == 12 ){
             monthCounts = 0;
-        }
+        };
         var prevEndDate = endDate[monthCounts];
 
         for( var i=0; i< startDayOfWeek; i++){
             prevMonthDayList.push(prevEndDate - i);
         };
 
+        var markYear = this.year
+        var dateValue;
         //현재 달력 각 날짜영역에 클래스 세팅 & 날짜 삽입
         for(var i=0; i<42; i++){
             var txtDays = this.tdInDivEl[i].getElementsByClassName("txt-day")[0];
             txtDays.children[0].innerHTML = "";
+            this.tdInDivEl[i].classList.remove("today");
+
             if( i < startDayOfWeek ){//이전 달 날짜 뿌림
                 txtDays.className = "txt-day before-month-day";
                 txtDays.children[0].innerHTML = prevMonthDayList.pop();
+                if( this.month == 0 ){
+                    var markYear = this.year - 1
+                    var markMonth = 12
+                }else{
+                    var markMonth = this.month;
+                };
             }else if( i >= lastDate+startDayOfWeek ){//다음달 날짜 뿌림
                 txtDays.className = "txt-day after-month-day";
                 txtDays.children[0].innerHTML = afterDay;
-                afterDay++
+                afterDay++;
+
+                if( this.month == 11 ){
+                    var markYear = this.year +1
+                    var markMonth = 1
+                }else{
+                    var markMonth = this.month+2
+                };
             }else{//현재 달 날짜 뿌림
                 addCreateTxtNode( txtDays.children[0], days );
                 txtDays.classList.remove("before-month-day", "after-month-day");
+                if( days == this.today ){
+                    this.tdInDivEl[i].classList.add("today");
+                }
                 days++;
+                var markYear = this.year;
+                var markMonth = this.month+1;
             };
-        };
+            dayNumber = txtDays.children[0].innerHTML;
 
+            markMonth = String(markMonth);
+            markMonth = (markMonth.length == 1 ) ? ("0"+markMonth) : markMonth;
+            dayNumber = (dayNumber.length == 1) ? ("0"+dayNumber) : dayNumber;
+            dateValue = markYear+"-"+markMonth+"-"+ dayNumber;
+            txtDays.setAttribute("data-date", dateValue);
+        };
+console.log(this.today)
         //today 표시
-        this.tdInDivEl[this.today-1].className="today";
+        //this.tdInDivEl[this.today-1].classList.add("today");
 
         //선택날짜 색상변경
         for(var i=0, length=calendar.calendarLink.length; i<length;i++){
@@ -290,27 +331,9 @@ var calendar = {
                     calendar.calendarLink[k].classList.remove("on");
                 };
                 this.classList.add("on");
-
-                var markYear = thisCalendar.year;
-                var markMonth = thisCalendar.month+1;
-                if( this.classList.contains("after-month-day") ){
-                    if( thisCalendar.month == 11 ){
-                        markMonth = 1
-                        markYear = thisCalendar.year +1
-                    }else{
-                        markMonth = thisCalendar.month+2
-                    }
-                }else if( this.classList.contains("before-month-day") ){
-                    if( thisCalendar.month == 0 ){
-                        markYear = thisCalendar.year - 1
-                        markMonth = 12
-                    }else{
-                        markMonth = thisCalendar.month;
-                    }
-                }else{
-                };
-                formStart.value = (markYear) +"-"+ (markMonth) +"-"+this.children[0].innerHTML;//선택날짜 하단 폼에 입력
+                formStart.value = this.getAttribute("data-date");//선택날짜 하단 폼에 입력
             };
+
         };
         calendar.connectAction();
         calendar.buttonControl();

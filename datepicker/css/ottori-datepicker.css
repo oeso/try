@@ -21,11 +21,12 @@ span {vertical-align:middle}
 .calendar .txt-day:hover {background-color:lightsteelblue}
 .calendar .txt-day span {overflow:hidden; display:block; max-width:50px;position:absolute; left:6px; top:2px; font-size:18px; color:#666}
 
-.calendar .schedule {display:block; position:relative; z-index:3; color:#fff; font-size:12px; margin-bottom:3px; height:25px; line-height:25px; padding:0 5px}
+.calendar .schedule {overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:block; position:relative; z-index:3; color:#fff; font-size:12px; margin-bottom:3px; height:25px; line-height:25px; padding:0 5px}
 .calendar .weather {position:absolute;z-index:2;right:0;top:0;width:25px;height:25px; line-height:25px; text-align:center}
 .calendar .table > thead > tr > th {vertical-align:middle}
 .calendar .table {height:100%; table-layout:fixed}
-.calendar .table thead {height:30px}
+.calendar .table thead,
+.calendar .table thead tr {height:30px}
 .calendar .table tbody {height:90%}
 .calendar .table tr {height:16.666666666%}
 .calendar td {padding:0 !important}
@@ -34,6 +35,10 @@ span {vertical-align:middle}
 .calendar.right .table thead th:first-child {color:#333}
 .calendar.right .table thead th:nth-child(6) {color:mediumblue}
 .calendar.right .table thead th:last-child {color:#f00}
+.calendar.right .table td:first-child .txt-day span {color:#333}
+.calendar.right .table td:nth-child(6) .txt-day span {color:mediumblue}
+.calendar.right .table td:last-child .txt-day span {color:#f00}
+
 
 /* today, click, active */
 .calendar .today div {color:#fff !important}
@@ -49,6 +54,11 @@ span {vertical-align:middle}
 .calendar .after-month-day.active,
 .calendar .before-month-day.on,
 .calendar .after-month-day.on {background-color:#eee; color:#fff}
+.calendar .after-month-day + .schedule {background:#888}
+.calendar .before-month-day + .fa:before,
+.calendar .before-month-day + .schedule + .fa:before,
+.calendar .after-month-day + .fa:before,
+.calendar .after-month-day + .schedule + .fa:before {color:#888}
 
 /* default : 맨우측 날짜는 토요일 */
 .calendar td:first-child .txt-day span {color:#f00}
