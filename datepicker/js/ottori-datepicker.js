@@ -112,8 +112,12 @@ var calendar = {
     //calendar.action() -> calendar DOM 구조 만드는 함수
     action : function(obj, date){
         this.calendarBox = getElId(obj.id);
-        this.lang = (obj.lang != "en") ? ["일","월","화","수","목","금","토"] : ["sun","mon","tue","wed","thu","fri","sat"];
-        (obj.sundayDir== "right")
+        this.lang = ["sun","mon","tue","wed","thu","fri","sat"];
+
+        if(obj.direction == "right"){
+            this.lang = ["mon","tue","wed","thu","fri","sat","sun"];
+            this.calendarBox.classList.add("right");
+        }
 
         //컨트롤 버튼과 년도월 표시 엘리먼트 생성하여 뿌림. 사용자 옵션을 다양하게 받아 구현할 수 있도록 수정 예정.
         function buttonSetting(btnId, btnClass, btnChildClass){
@@ -162,16 +166,16 @@ var calendar = {
             dayNumber.className = "txt-day";
             appendCreateEl(dayNumber,"span")
 
-            //var schdule = appendCreateEl(cellDiv, "a");
-            //schdule.className = "schedule label-primary";// td > div > a.schedule className
-            //schdule.innerHTML = "Workshop 07:00"//임시 데이터
+            var schdule = appendCreateEl(cellDiv, "a");
+            schdule.className = "schedule label-primary";// td > div > a.schedule className
+            schdule.innerHTML = "Workshop 07:00"//임시 데이터
 
-            //var weatherEl = appendCreateEl(cellDiv, "a");
+            var weatherEl = appendCreateEl(cellDiv, "a");
             //data에 관련된 클래스가 뿌려져야 함 - 날씨 관련 클래스 : fa fa-sun-o : 맑음, fa fa-umbrella : 비옴, fa fa-snowflake-o : 눈, fa fa-cloud : 구름, fa fa-bolt : 천둥
-            //weatherEl.className = "weather fa fa-umbrella";
-            //var weatherIco = appendCreateEl(weatherEl, "span");
-            //weatherIco.innerHTML = "clody"//임시. 실제 날씨에 관련된 data가 뿌려져야 함
-            //weatherIco.className = "hide"
+            weatherEl.className = "weather fa fa-umbrella";
+            var weatherIco = appendCreateEl(weatherEl, "span");
+            weatherIco.innerHTML = "clody"//임시. 실제 날씨에 관련된 data가 뿌려져야 함
+            weatherIco.className = "hide"
         };
 
         //해당 tr을 5번 복제하여 tbody에 꽂아넣음
@@ -189,10 +193,10 @@ var calendar = {
             calendarSize(calendar.calendarBox, calendar.table);
         };
 
-        calendar.slider(obj, date);
+        calendar.writingDate(obj, date);
     },
-    //calendar.slider() -> calendar.action()에서 만든 DOM 구조에 날짜를 뿌려주는 함수
-    slider : function(obj, date){
+    //calendar.writingDate() -> calendar.action()에서 만든 DOM 구조에 날짜를 뿌려주는 함수
+    writingDate : function(obj, date){
         var date = ( typeof date == "undefined" )? new Date() : date;
         this.year = date.getFullYear();
         this.month = date.getMonth();
@@ -270,14 +274,33 @@ var calendar = {
                     calendar.calendarLink[k].classList.remove("on");
                 };
                 this.classList.add("on");
-                formStart.value = thisCalendar.year+"-"+(thisCalendar.month+1)+"-"+this.innerHTML;//선택날짜 하단 폼에 입력. 이건 걍 innerHTML로 두겠음
+
+                var markYear = thisCalendar.year;
+                var markMonth = thisCalendar.month+1;
+                if( this.classList.contains("after-month-day") ){
+                    if( thisCalendar.month == 11 ){
+                        markMonth = 1
+                        markYear = thisCalendar.year +1
+                    }else{
+                        markMonth = thisCalendar.month+2
+                    }
+                }else if( this.classList.contains("before-month-day") ){
+                    if( thisCalendar.month == 0 ){
+                        markYear = thisCalendar.year - 1
+                        markMonth = 12
+                    }else{
+                        markMonth = thisCalendar.month;
+                    }
+                }else{
+                };
+                formStart.value = (markYear) +"-"+ (markMonth) +"-"+this.children[0].innerHTML;//선택날짜 하단 폼에 입력
             };
         };
         calendar.connectAction();
         calendar.buttonControl();
         calendar.settingYearAndMonth(obj.titleOption);
     },
-    //사용자 옵션을 받아서 연,월 콤보박스(셀렉박스) 구현. 일단 사용자 옵션은 한 종류로 정해놓고 구현.
+    //사용자 옵션을 받아서 연,월 콤보박스(셀렉박스) 구현
     settingYearAndMonth : function(titleOption){
         if( titleOption == "select" ){
             if( !getElId("selectYearEl") ){
@@ -285,52 +308,70 @@ var calendar = {
                 var selectOptionYear = settingElement(calendar.calendarTitle, {elName : "select", clsName : "form-control year-control", idName : "selectYearEl", names : "selectYearEl"})
                 var selectOptionMonth = settingElement(calendar.calendarTitle, {elName : "select", clsName : "form-control month-control", idName : "selectMonthEl", names : "selectMonthEl"})
 
-                var y = calendar.year - 10
-                var selectYearCollection = new Array();
-                for( var i=0;i<21;i++ ){
-                    selectYearCollection.push(y);
-                    y++;
-                };
-                var selectMonthCollection = new Array(1,2,3,4,5,6,7,8,9,10,11,12);
-                for(var i=0;i<selectYearCollection.length; i++){
-                    var setYear = appendCreateEl(getElId("selectYearEl"),"option")
-                    setYear.text = selectYearCollection[i];
-                    setYear.value = selectYearCollection[i];
-                    if(selectYearCollection[i] == this.year){
-                        setYear.selected = "selected"
-                    }
-                }
-                for(var i=0;i<selectMonthCollection.length; i++){
-                    var setMonth = appendCreateEl(getElId("selectMonthEl"), "option");
-                    setMonth.text = selectMonthCollection[i];
-                    setMonth.value = selectMonthCollection[i];
-                    if(i == this.month){
-                        setMonth.selected = "selected"
-                    }
-                }
             }else{
                 //select, option DOM이 있으면 값만 바꿈
                 getElId("selectYearEl").value = this.year;
                 getElId("selectMonthEl").value = this.month+1;
             };
             //중앙상단 연,월 셀렉박스를 수동으로 변경할 경우 해당 함수 호출
-            calendar.handOpratedSelecttingDate();
+            calendar.selectingDate();
+            calendar.selectCalculate();
         }else{
             //사용자 옵션이 없을 경우 현재 연도와 월을 텍스트로 표시
             calendar.calendarTitle.innerHTML = this.year + " " + (this.month+1);//이건 걍 innerHTML로 두겠음
         }
     },
+    //셀렉박스 내용 계산하여 뿌림
+    selectCalculate : function(){
+        var y = calendar.year - 10;
+        this.yearSelect = new Array();
+        for( var i=0;i<21;i++ ){
+            this.yearSelect[i] = y
+            y++;
+        };
+        this.monthSelect = new Array(1,2,3,4,5,6,7,8,9,10,11,12);
+
+        if(getElId("selectYearEl").options.length == 0){
+            for(var i=0;i<this.yearSelect.length; i++){
+                var setYear = appendCreateEl(getElId("selectYearEl"),"option");
+                setYear.text = this.yearSelect[i];
+                setYear.value = this.yearSelect[i];
+                if(this.yearSelect[i] == this.year){
+                    setYear.selected = "selected"
+                };
+            };
+        }else{
+            var setYear = getElId("selectYearEl").options;
+            for(var i=0;i<setYear.length; i++){
+                setYear[i].text = this.yearSelect[i];
+                setYear[i].value = this.yearSelect[i];
+                if(this.yearSelect[i] == this.year){
+                    setYear[i].selected = "selected"
+                };
+            };
+        };
+        if(getElId("selectMonthEl").options.length == 0){
+            for(var i=0;i<this.monthSelect.length; i++){
+                var setMonth = appendCreateEl(getElId("selectMonthEl"), "option");
+                setMonth.text = this.monthSelect[i];
+                setMonth.value = this.monthSelect[i];
+                if(i == this.month){
+                    setMonth.selected = "selected"
+                }
+            };
+        };
+    },
     //중앙상단 연,월 셀렉박스 수동 변경시 액션
-    handOpratedSelecttingDate : function(){
+    selectingDate : function(){
         getElId("selectYearEl").onchange = function(){
-            date = new Date(this.value, calendar.month, calendar.today )
-            calendar.slider(calendar.obj, date);
+            date = new Date(this.value, calendar.month, calendar.today );
+            calendar.writingDate(calendar.obj, date);
         };
         getElId("selectMonthEl").onchange = function(){
-            date = new Date(calendar.year, this.value-1, calendar.today )
-            console.log(calendar.today)
-            calendar.slider(calendar.obj, date);
-        }
+            date = new Date(calendar.year, this.value-1, calendar.today );
+            console.log(calendar.today);
+            calendar.writingDate(calendar.obj, date);
+        };
     },
     //양쪽상단 전년,전월,다음월,다음년 컨트롤 버튼
     buttonControl : function(){
@@ -344,6 +385,7 @@ var calendar = {
                 switch( btnEl.id ){
                     case "prevYear" :
                         date = new Date(thisCalendar.year -1, thisCalendar.month, thisCalendar.today);
+                        //calendar.selectCalculate();
                         break;
                     case "prevMonth" :
                         monthCount--;
@@ -365,11 +407,12 @@ var calendar = {
                         break;
                     case "nextYear" :
                         date = new Date(thisCalendar.year +1, thisCalendar.month, thisCalendar.today);
+                        //calendar.selectCalculate();
                         break;
                     case "today" :
                         date = new Date();
                 };
-                calendar.slider(calendar.obj, date)
+                calendar.writingDate(calendar.obj, date)
             };
         };
         controlBtnEvent(getElId("prevYear"));
@@ -402,10 +445,5 @@ function floatMemoEvent(e){
 
 var datamemo = "오후 2시에 리베라 호텔 7층 레드티 세미나 개최예정"; //임시 DATA
 var datatime = "2016-07-6 18:00"; //임시 DATA
-
-
-
-
-
 
 

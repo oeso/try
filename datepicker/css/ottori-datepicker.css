@@ -29,6 +29,11 @@ span {vertical-align:middle}
 .calendar .table tbody {height:90%}
 .calendar .table tr {height:16.666666666%}
 .calendar td {padding:0 !important}
+.calendar .table thead th:first-child {color:#f00}
+.calendar .table thead th:last-child {color:mediumblue}
+.calendar.right .table thead th:first-child {color:#333}
+.calendar.right .table thead th:nth-child(6) {color:mediumblue}
+.calendar.right .table thead th:last-child {color:#f00}
 
 /* today, click, active */
 .calendar .today div {color:#fff !important}
@@ -75,6 +80,7 @@ span {vertical-align:middle}
 #formBox {padding:30px 0 40px}
 #yearTitle {min-height:35px; font-size:26px}
 #yearTitle select:first-child {min-width:80px; margin-right:5px}
+#yearTitle .form-control {display:inline-block; width:auto}
 
 /* 등록하기 page */
 .nav {padding:10px 0}
