@@ -19,7 +19,7 @@ function firstObjectSetting(){
     floatBox.id = "float";
 };
 function settingElement( el, elAttr, callAgainObjArray ){
-    //인자 없이 호출되는 경우에 대한 방어코딩은 하지 않았음.
+    //인자 없이 호출되는 경우에 대한 방어코딩은 하지 않았습니다.
     //el : 부모 엘리먼트, elName : 생성해서 붙일 엘리먼트명, clsName, idName : 생성한 노트에 붙일 클래스네임, inText, attr, attrValue
     var element = appendCreateEl(el, elAttr.elName );
     for(var i in elAttr){
@@ -52,13 +52,11 @@ function memoBoxRemove(el){
     if(el){ el.remove(); };
 };
 //floating 요소를 만듦
-function makeFloatMemo(dataMemo,dataTime,x,y){
+function makeFloatMemo(dataMemo,x,y,targetA){
     memoBoxRemove( getElId("float") );
     firstObjectSetting();
     settingElement(floatBox, {elName : "h2", clsName : "float-memo-title", inText : "Schedule"});
     settingElement(floatBox, {elName : "div", clsName : "float-content", idName :"floatLabel", inText : dataMemo, attr : "title", attrValue : "클릭하여 수정" });
-    settingElement(floatBox, {elName : "span", inText : "time"});
-    settingElement(floatBox, {elName : "span", clsName : "text-danger", inText : dataTime});
     settingElement(floatBox, {elName : "div", clsName : "text-right"},[{elName : "button", idName:"btnEdit", clsName : "btn btn-default", inText : "Edit"},{elName : "button", idName : "btnSave", clsName : "btn btn-primary", inText : "Save"}]);
     settingElement(floatBox, {elName : "button", clsName : "btn btn-default", idName : "memoClose"}, [{elName : "span", clsName : "glyphicon glyphicon-remove"}]);
     positionFloat( getElId("float") );
@@ -69,20 +67,19 @@ function makeFloatMemo(dataMemo,dataTime,x,y){
     getElId("memoClose").addEventListener("click",function(){
         closeFloatBox(window.floatEl);
     });
-    getElId("floatLabel").addEventListener("dblclick",function(){
-        editMemo(floatLabel);
+    getElId("floatLabel").addEventListener("click",function(){
+        editMemo(floatLabel,targetA);
     });
     getElId("btnEdit").addEventListener("click",function(){
-        editMemo(floatLabel);
+        editMemo(floatLabel,targetA);
     });
     getElId("btnSave").addEventListener("click",function(){
-        if( !floatLabel.children[0] ){
-            return false;
-        }else{
-            var target = floatLabel.children[0];
-        };
-        saveMemo(floatLabel, target.value);
+        calendar.makeScheduleTag(targetA, calendar.memo);
+        closeFloatBox(floatEl)
     });
+    if(dataMemo == ""){
+        editMemo(floatLabel,targetA);
+    }
 };
 function positionFloat(el){
     var maxWidth = document.body.offsetWidth-float.offsetWidth-5;
@@ -94,15 +91,16 @@ function positionFloat(el){
 function closeFloatBox(el){
     el.remove();
 };
-function editMemo(el){
+function editMemo(el,targetA){
     var newInput = appendCreateEl(el,"input");
     newInput.setAttribute("type","text");
     newInput.focus();
-    newInput.addEventListener("blur",function(){//fodusout 은 불가.
-        saveMemo(el, newInput.value);
+    newInput.addEventListener("blur",function(){//focusout 은 불가.
+        calendar.memo = newInput.value;
+        saveMemo(el, newInput.value, targetA);
     });
 };
-function saveMemo(target, targetValue){
+function saveMemo(target, targetValue, targetA){
     targetValue =  (targetValue == "" || !targetValue) ? "No Schedule" : targetValue;
     target.innerHTML = targetValue;
 };
@@ -110,12 +108,6 @@ var calendar = {
     //calendar.action() -> calendar DOM 구조 만드는 함수
     action : function(obj, date){
         this.calendarBox = getElId(obj.id);
-        this.lang = ["sun","mon","tue","wed","thu","fri","sat"];
-
-        if(obj.direction == "right"){
-            this.lang = ["mon","tue","wed","thu","fri","sat","sun"];
-            this.calendarBox.classList.add("right");
-        }
 
         //컨트롤 버튼과 년도월 표시 엘리먼트 생성하여 뿌림. 사용자 옵션을 다양하게 받아 구현할 수 있도록 수정 예정.
         function buttonSetting(btnId, btnClass, btnChildClass){
@@ -143,7 +135,10 @@ var calendar = {
         var head = this.table.createTHead();//table에 <head>생성하여 변수 head에 담음
         var row =  head.insertRow();//<head>에 <tr> 생성하여 변수 row에 담음
 
-        //thead의 tr에 th 생성하고 class 부여, 요일명 생성
+        //thead의 th 요일명 세팅
+        calendar.theadWriting(obj)
+
+        //thead의 tr > th 생성하고 class 부여
         for(var i=0; i<7; i++){
             var dayNameLink = appendCreateEl(row,"th");
             dayNameLink.className = "text-center";
@@ -179,9 +174,7 @@ var calendar = {
         window.onresize = function(){
             calendarSize(calendar.calendarBox, calendar.table);
         };
-
         calendar.writingDate(obj, date);
-        calendar.dataJson();
     },
     //data AJAX로 가져오기
     dataJson : function(){
@@ -197,32 +190,58 @@ var calendar = {
             jsonhttp.send();
         }
     },
+    //AJAX로 가져온 data 삭제
+    deleteDataJsonBind : function(){//해당 jsonData obj 내 약속된 프로퍼티명을 가져와서 for돌려서 뿌림.
+        if( !document.getElementsByClassName("schedule") ){
+        }else{
+            for(var i=0; i<this.schedule.length;i++){
+                this.schedule[i].parentNode.id = "removeItem" + i;
+                var parentId = getElId("removeItem" + i);
+                var removetems = parentId.getElementsByClassName("schedule")[0];
+                parentId.removeChild( removetems );
+                parentId.removeAttribute("id");
+            };
+        };
+    },
     //AJAX로 가져온 data 뿌리기
-    dataJsonBind : function(data){//해당 data obj 내 약속된 프로퍼티명을 가져와서 for돌려서 뿌림.
-        for(var k=0; k<data.length;k++){
-            //var obj = JSON.stringify(data[k].start)//JSON.stringify()로 가져온 값은 string이지만 "가 포함되어있어 비교가 안됨.
-            var obj = data[k].start;
-
+    dataJsonBind : function(jsonData){//해당 jsonData obj 내 약속된 프로퍼티명을 가져와서 for돌려서 뿌림.
+        this.schedule = [];
+        for(var k=0; k<jsonData.length;k++){
+            //var obj = JSON.stringify(jsonData[k].start)
+            var obj = jsonData[k].start;
             for(var i=0; i<this.tdInDivEl.length;i++){
                 var day = this.tdInDivEl[i].children[0].getAttribute("data-date");
                 if( obj == day ){
-                    var schdule = appendCreateEl(this.tdInDivEl[i], "a");
-                    schdule.className = "schedule label-primary";
-                    schdule.innerHTML = data[k].title //JSON에 있는 title 값
-
-                    var weatherEl = appendCreateEl(this.tdInDivEl[i], "a");
-                    //data에 관련된 클래스가 뿌려져야 함 - 날씨 관련 클래스 : fa fa-sun-o : 맑음, fa fa-umbrella : 비옴, fa fa-snowflake-o : 눈, fa fa-cloud : 구름, fa fa-bolt : 천둥
-                    weatherEl.className = "weather fa fa-umbrella";
-                    var weatherIco = appendCreateEl(weatherEl, "span");
-                    weatherIco.innerHTML = data[k].weather//JSON에 있는 weather 값
-                    weatherIco.className = "hide"
+                    calendar.makeScheduleTag(this.tdInDivEl[i], jsonData[k].title);
+                    // var weatherEl = appendCreateEl(this.tdInDivEl[i], "a");
+                    // weatherEl.className = "weather fa fa-umbrella";//jsonData 관련된 클래스가 뿌려져야 함 - 날씨 관련 클래스 : fa fa-sun-o : 맑음, fa fa-umbrella : 비옴, fa fa-snowflake-o : 눈, fa fa-cloud : 구름, fa fa-bolt : 천둥
+                    // var weatherIco = appendCreateEl(weatherEl, "span");
+                    // weatherIco.innerHTML = jsonData[k].weather//JSON에 있는 weather 값
+                    // weatherIco.className = "hide"
                 }
             }
+        };
+    },
+    makeScheduleTag : function(el, data){
+        var schedule = appendCreateEl(el, "a");
+        schedule.className = "schedule label-primary";
+        schedule.innerHTML = data;//JSON에 있는 title 값 또는 프로팅 메모에서 작성한 값
+        this.schedule.push(schedule)
+        console.log(data)
+    },
+    //요일명 세팅
+    theadWriting : function(obj){
+        if(obj.direction == "right"){
+            this.lang = ["mon","tue","wed","thu","fri","sat","sun"];
+            this.calendarBox.classList.add("right");
+        }else{
+            this.lang = ["sun","mon","tue","wed","thu","fri","sat"];
         };
     },
     //calendar.writingDate() -> calendar.action()에서 만든 DOM 구조에 날짜를 뿌려주는 함수
     writingDate : function(obj, date){
         var date = ( typeof date == "undefined" )? new Date() : date;
+        this.date = date;
         this.year = date.getFullYear();
         this.month = date.getMonth();
         this.today = date.getDate();
@@ -241,7 +260,6 @@ var calendar = {
         if(obj.direction == "right"){//일요일이 우측에 오게 뿌리기 위하여 1일을 앞으로 한칸 당김
             startDayOfWeek = (startDayOfWeek == 0 ) ? 6 : startDayOfWeek-1
         };
-
         //윤년계산 ( 서력 기원 연수가 4로 나누어 떨어지는 해는 윤년. 이 중 100으로 나 누어 떨어지는 해는 평년이며, 그 중 400으로 나누어 떨어지는 해는 윤년 )
         if( this.year % 4 === 0 ){
             if(this.year % 100 === 0){
@@ -309,7 +327,7 @@ var calendar = {
                     this.tdInDivEl[i].classList.add("today");
                 }
                 days++;
-                var markYear = this.year;
+                var markYear = this.year
                 var markMonth = this.month+1;
             };
             dayNumber = txtDays.children[0].innerHTML;
@@ -320,9 +338,6 @@ var calendar = {
             dateValue = markYear+"-"+markMonth+"-"+ dayNumber;
             txtDays.setAttribute("data-date", dateValue);
         };
-console.log(this.today)
-        //today 표시
-        //this.tdInDivEl[this.today-1].classList.add("today");
 
         //선택날짜 색상변경
         for(var i=0, length=calendar.calendarLink.length; i<length;i++){
@@ -338,6 +353,7 @@ console.log(this.today)
         calendar.connectAction();
         calendar.buttonControl();
         calendar.settingYearAndMonth(obj.titleOption);
+        calendar.dataJson();
     },
     //사용자 옵션을 받아서 연,월 콤보박스(셀렉박스) 구현
     settingYearAndMonth : function(titleOption){
@@ -403,13 +419,15 @@ console.log(this.today)
     //중앙상단 연,월 셀렉박스 수동 변경시 액션
     selectingDate : function(){
         getElId("selectYearEl").onchange = function(){
-            date = new Date(this.value, calendar.month, calendar.today );
+            var date = new Date(this.value, calendar.month, calendar.today );
             calendar.writingDate(calendar.obj, date);
+            calendar.deleteDataJsonBind();
         };
         getElId("selectMonthEl").onchange = function(){
-            date = new Date(calendar.year, this.value-1, calendar.today );
+            var date = new Date(calendar.year, this.value-1, calendar.today );
             console.log(calendar.today);
             calendar.writingDate(calendar.obj, date);
+            calendar.deleteDataJsonBind();
         };
     },
     //양쪽상단 전년,전월,다음월,다음년 컨트롤 버튼
@@ -421,9 +439,10 @@ console.log(this.today)
         //이전다음 컨트롤 버튼 클릭 이벤트
         function controlBtnEvent(btnEl){
             btnEl.onclick = function(){
+            calendar.deleteDataJsonBind();
                 switch( btnEl.id ){
                     case "prevYear" :
-                        date = new Date(thisCalendar.year -1, thisCalendar.month, thisCalendar.today);
+                        var date = new Date(thisCalendar.year -1, thisCalendar.month, thisCalendar.today);
                         //calendar.selectCalculate();
                         break;
                     case "prevMonth" :
@@ -433,7 +452,7 @@ console.log(this.today)
                             prevMonth = 11;
                             monthCount = 11;
                         };
-                        date = new Date(thisCalendar.year, prevMonth, thisCalendar.today);
+                        var date = new Date(thisCalendar.year, prevMonth, thisCalendar.today);
                         break;
                     case "nextMonth" :
                         monthCount++;
@@ -442,14 +461,14 @@ console.log(this.today)
                             nextMonth = 0;
                             monthCount = 0;
                         };
-                        date = new Date(thisCalendar.year, nextMonth, thisCalendar.today)
+                        var date = new Date(thisCalendar.year, nextMonth, thisCalendar.today)
                         break;
                     case "nextYear" :
-                        date = new Date(thisCalendar.year +1, thisCalendar.month, thisCalendar.today);
+                        var date = new Date(thisCalendar.year +1, thisCalendar.month, thisCalendar.today);
                         //calendar.selectCalculate();
                         break;
                     case "today" :
-                        date = new Date();
+                        var date = new Date();
                 };
                 calendar.writingDate(calendar.obj, date)
             };
@@ -463,7 +482,10 @@ console.log(this.today)
     //날짜 클릭시 메모창 팝업 또는 등록하기 페이지 이동
     connectAction : function(){
         for(var i=0, length=calendar.calendarLink.length; i<length;i++){
-            calendar.calendarLink[i].addEventListener("click",floatMemoEvent);
+            calendar.calendarLink[i].addEventListener("click",function(e){
+                dataTxt = (this.nextSibling != null ) ? this.nextSibling.innerHTML : "";
+                floatMemoEvent(e, dataTxt, this.parentNode)
+            });
             calendar.calendarLink[i].addEventListener("dblclick",function(){
                 if( !this.href ){
                     window.open("schedule_regist.html","Regist Schedule","");
@@ -476,13 +498,12 @@ console.log(this.today)
 };
 
 var thisCalendar =  calendar;
-function floatMemoEvent(e){
+function floatMemoEvent(e,dataTxt,targetA){
     x = e.pageX;
     y = e.pageY;
-    makeFloatMemo(datamemo, datatime, x, y );
+    makeFloatMemo(dataTxt,x,y,targetA);
 };
 
 var datamemo = "오후 2시에 리베라 호텔 7층 레드티 세미나 개최예정"; //임시 DATA
 var datatime = "2016-07-6 18:00"; //임시 DATA
-
 

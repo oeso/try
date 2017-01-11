@@ -13,11 +13,11 @@
 </head>
 <body>
 <nav class="nav form-inline bg-primary text-center">
-    <button class="btn btn-primary glyphicon glyphicon-bell"><em class="new text-center">3</em></button>
-    <button class="btn btn-primary glyphicon glyphicon-log-out"></button>
-    <a href="index.html" class="btn btn-primary text-white glyphicon glyphicon-home"></a>
-    <button class="btn btn-primary glyphicon glyphicon-menu-hamburger"></button>
+    <button class="btn btn-primary glyphicon glyphicon-bell" title="new"><em class="new text-center">3</em></button>
+    <button class="btn btn-primary glyphicon glyphicon-log-out" title="logout"></button>
+    <a href="index.html" class="btn btn-primary text-white glyphicon glyphicon-home" title="home"></a>
     <button class="btn btn-primary glyphicon glyphicon-cog"></button>
+    <a href="index.html"  class="btn btn-primary glyphicon glyphicon-repeat" id="rightAlign" title="refesh"></a>
 </nav>
 
 <h1 class="title"><img src="http://i.gzcdn.net/mui/img/main/new/btn_logo_golfzon.png" alt="GSC : Golfzon Schedule Calendar"></h1>
@@ -70,7 +70,7 @@
     calendar.action({
         id : "calendar",
         titleOption : "select",
-        direction : "right"
+        direction : "left"
     });
 </script>
 </body>
