@@ -75,6 +75,7 @@ function makeFloatMemo(dataMemo,x,y,targetA){
     });
     getElId("btnSave").addEventListener("click",function(){
         calendar.makeScheduleTag(targetA, calendar.memo);
+        calendar.saveMemoForm(targetA, calendar.memo)
         closeFloatBox(floatEl)
     });
     if(dataMemo == ""){
@@ -100,7 +101,10 @@ function editMemo(el,targetA){
         saveMemo(el, newInput.value, targetA);
     });
 };
-function saveMemo(target, targetValue, targetA){
+var memoTxt = {
+  cnt : 0
+};
+function saveMemo(target, targetValue){
     targetValue =  (targetValue == "" || !targetValue) ? "No Schedule" : targetValue;
     target.innerHTML = targetValue;
 };
@@ -222,12 +226,24 @@ var calendar = {
             }
         };
     },
+    //save button 클릭시 달력표시 생성
     makeScheduleTag : function(el, data){
         var schedule = appendCreateEl(el, "a");
         schedule.className = "schedule label-primary";
         schedule.innerHTML = data;//JSON에 있는 title 값 또는 프로팅 메모에서 작성한 값
         this.schedule.push(schedule)
-        console.log(data)
+    },
+    //save button 클릭시 폼에 저장
+    saveMemoForm : function( targetA, memo ){
+      var dataDate = targetA.getElementsByClassName("txt-day")[0].getAttribute("data-date")
+      var newput = appendCreateEl(getElId("saveActionForm"), "input");
+      newput.setAttribute("type","hidden")
+      newput.setAttribute("id","memo" + (memoTxt.cnt+1))
+      newput.setAttribute("value",memo )
+      newput.setAttribute("data-date", dataDate)
+      memoTxt.cnt++;
+
+      getElId("saveActionForm").onsubmit();
     },
     //요일명 세팅
     theadWriting : function(obj){
@@ -425,7 +441,6 @@ var calendar = {
         };
         getElId("selectMonthEl").onchange = function(){
             var date = new Date(calendar.year, this.value-1, calendar.today );
-            console.log(calendar.today);
             calendar.writingDate(calendar.obj, date);
             calendar.deleteDataJsonBind();
         };
@@ -481,6 +496,18 @@ var calendar = {
     },
     //날짜 클릭시 메모창 팝업 또는 등록하기 페이지 이동
     connectAction : function(){
+        document.body.addEventListener("click",function(e){ ectClick(e); }, true );
+        function ectClick(e){
+            var event = e || window.event;
+            var target = event.target;
+            parents(target , "id", "float")
+            // if( floatEl && parents(target , "id", "tableElBox").length == 0 ){
+            //     if(parents(target , "id", "float")){
+            //     }else{
+            //       closeFloatBox(floatEl);
+            //     };
+            // };
+        };
         for(var i=0, length=calendar.calendarLink.length; i<length;i++){
             calendar.calendarLink[i].addEventListener("click",function(e){
                 dataTxt = (this.nextSibling != null ) ? this.nextSibling.innerHTML : "";
@@ -497,13 +524,35 @@ var calendar = {
     }
 };
 
-var thisCalendar =  calendar;
+var thisCalendar = calendar;
 function floatMemoEvent(e,dataTxt,targetA){
     x = e.pageX;
     y = e.pageY;
     makeFloatMemo(dataTxt,x,y,targetA);
 };
-
-var datamemo = "오후 2시에 리베라 호텔 7층 레드티 세미나 개최예정"; //임시 DATA
-var datatime = "2016-07-6 18:00"; //임시 DATA
-
+function search( el,elAttr,elAtrName,orderNode ) {
+	var matched = [];
+	while ( (el = el[orderNode]) && el.nodeType !== 9 ) {
+		if ( el.nodeType === 1 ) {
+        if( elAttr == "class" ){
+          if( el.classList.contains( elAtrName ) ){
+            matched.push(el);
+          };
+        }else{
+            console.log(elAttr)
+            console.log(elAtrName)
+            if(!el.getAttribute(elAttr)){
+            }else{
+              if( el.getAttribute(elAttr) == elAtrName ){
+                matched.push(el);
+              };
+            };
+      };
+		}
+	};
+  console.log(matched)
+	return matched;
+};
+function parents(el,elAttr,elAtrName){//element 의 attribute 속성이  targetAtrName인 부모 Element를 리턴하는 함수
+    return search(el,elAttr,elAtrName,"parentNode")
+};
