@@ -74,9 +74,23 @@ function makeFloatMemo(dataMemo,x,y,targetA){
         editMemo(floatLabel,targetA);
     });
     getElId("btnSave").addEventListener("click",function(){
-        calendar.makeScheduleTag(targetA, calendar.memo);
-        calendar.saveMemoForm(targetA, calendar.memo)
-        closeFloatBox(floatEl)
+      //ajax 로 등록 요청
+      // if(window.XMLHttpRequest){
+      //     var anwserHttp =  new XMLHttpRequest();
+      //     anwserHttp.onreadystatechange = function(){
+      //         if(this.readyState == 4 && this.status ==  200){
+      //            this.userData = JSON.parse(this.responseText);
+                    calendar.makeScheduleTag(targetA, calendar.memo);
+                    calendar.saveMemoForm(targetA, calendar.memo)
+                    closeFloatBox(floatEl)
+      //         }else{
+      //           //alert("스케줄 등록이 실패하였습니다.");
+      //         };
+      //     };
+      //     jsonhttp.open("GET", "https://oeso.github.io/try/datepicker/data/events.json", true);
+      //     jsonhttp.send();
+      // }
+
     });
     if(dataMemo == ""){
         editMemo(floatLabel,targetA);
@@ -101,9 +115,7 @@ function editMemo(el,targetA){
         saveMemo(el, newInput.value, targetA);
     });
 };
-var memoTxt = {
-  cnt : 0
-};
+var memoTxt = { cnt : 0 };
 function saveMemo(target, targetValue){
     targetValue =  (targetValue == "" || !targetValue) ? "No Schedule" : targetValue;
     target.innerHTML = targetValue;
@@ -364,7 +376,6 @@ var calendar = {
                 this.classList.add("on");
                 formStart.value = this.getAttribute("data-date");//선택날짜 하단 폼에 입력
             };
-
         };
         calendar.connectAction();
         calendar.buttonControl();
@@ -458,7 +469,6 @@ var calendar = {
                 switch( btnEl.id ){
                     case "prevYear" :
                         var date = new Date(thisCalendar.year -1, thisCalendar.month, thisCalendar.today);
-                        //calendar.selectCalculate();
                         break;
                     case "prevMonth" :
                         monthCount--;
@@ -480,7 +490,6 @@ var calendar = {
                         break;
                     case "nextYear" :
                         var date = new Date(thisCalendar.year +1, thisCalendar.month, thisCalendar.today);
-                        //calendar.selectCalculate();
                         break;
                     case "today" :
                         var date = new Date();
@@ -496,42 +505,43 @@ var calendar = {
     },
     //날짜 클릭시 메모창 팝업 또는 등록하기 페이지 이동
     connectAction : function(){
-        document.body.addEventListener("click",function(e){ ectClick(e); }, true );
+        document.body.addEventListener("click",function(e){
+          ectClick(e);
+        }, true );
         function ectClick(e){
             var event = e || window.event;
             var target = event.target;
-            parents(target , "id", "float")
-            // if( floatEl && parents(target , "id", "tableElBox").length == 0 ){
-            //     if(parents(target , "id", "float")){
-            //     }else{
-            //       closeFloatBox(floatEl);
-            //     };
-            // };
+            if( floatEl && parents(target , "id", "tableElBox").length == 0 ){
+                if(target.id == "float" || parents(target , "id", "float").length > 0){
+                }else{
+                  closeFloatBox(floatEl);
+                };
+            };
         };
         for(var i=0, length=calendar.calendarLink.length; i<length;i++){
             calendar.calendarLink[i].addEventListener("click",function(e){
                 dataTxt = (this.nextSibling != null ) ? this.nextSibling.innerHTML : "";
-                floatMemoEvent(e, dataTxt, this.parentNode)
+                floatMemoEvent(e, dataTxt, this.parentNode);
             });
             calendar.calendarLink[i].addEventListener("dblclick",function(){
                 if( !this.href ){
                     window.open("schedule_regist.html","Regist Schedule","");
                 }else{
                     window.open(this.href,"View Schedule","");
-                }
+                };
             });
         };
     }
 };
 
 var thisCalendar = calendar;
-function floatMemoEvent(e,dataTxt,targetA){
+function floatMemoEvent(e, dataTxt, targetA){
     x = e.pageX;
     y = e.pageY;
-    makeFloatMemo(dataTxt,x,y,targetA);
+    makeFloatMemo(dataTxt, x, y, targetA);
 };
 function search( el,elAttr,elAtrName,orderNode ) {
-	var matched = [];
+	var matchedEl = [];
 	while ( (el = el[orderNode]) && el.nodeType !== 9 ) {
 		if ( el.nodeType === 1 ) {
         if( elAttr == "class" ){
@@ -539,19 +549,17 @@ function search( el,elAttr,elAtrName,orderNode ) {
             matched.push(el);
           };
         }else{
-            console.log(elAttr)
-            console.log(elAtrName)
-            if(!el.getAttribute(elAttr)){
-            }else{
-              if( el.getAttribute(elAttr) == elAtrName ){
-                matched.push(el);
-              };
+          var atrname = el.getAttribute(elAttr);
+          if(!atrname){
+          }else{
+            if( atrname == elAtrName ){
+              matched.push(el);
             };
+          };
       };
 		}
 	};
-  console.log(matched)
-	return matched;
+	return matchedEl;
 };
 function parents(el,elAttr,elAtrName){//element 의 attribute 속성이  targetAtrName인 부모 Element를 리턴하는 함수
     return search(el,elAttr,elAtrName,"parentNode")
