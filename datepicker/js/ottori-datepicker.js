@@ -74,24 +74,23 @@ function makeFloatMemo(dataMemo,x,y,targetA){
         editMemo(floatLabel,targetA);
     });
     getElId("btnSave").addEventListener("click",function(){
-      //ajax 로 등록 요청
-      // if(window.XMLHttpRequest){
-      //     var anwserHttp =  new XMLHttpRequest();
-      //     anwserHttp.onreadystatechange = function(){
-      //         if(this.readyState == 4 && this.status ==  200){
-      //            this.userData = JSON.parse(this.responseText);
+    //   ajax 로 등록 요청
+    //   if(window.XMLHttpRequest){
+    //       var anwserHttp =  new XMLHttpRequest();
+    //       anwserHttp.onreadystatechange = function(){
+    //           if(this.readyState == 4 && this.status ==  200){
+    //              this.userData = JSON.parse(this.responseText);
                     calendar.makeScheduleTag(targetA, calendar.memo);
                     calendar.saveMemoForm(targetA, calendar.memo)
                     closeFloatBox(floatEl)
-      //         }else{
-      //           //alert("스케줄 등록이 실패하였습니다.");
-      //         };
-      //     };
-      //     jsonhttp.open("GET", "https://oeso.github.io/try/datepicker/data/events.json", true);
-      //     jsonhttp.send();
-      // }
-
-    });
+    //           }else{
+    //             alert("스케줄 등록이 실패하였습니다.");
+    //           };
+    //       };
+    //       anwserHttp.open("GET", "url", true);
+    //       anwserHttp.send();
+    //   }
+    // });
     if(dataMemo == ""){
         editMemo(floatLabel,targetA);
     }
@@ -115,7 +114,9 @@ function editMemo(el,targetA){
         saveMemo(el, newInput.value, targetA);
     });
 };
-var memoTxt = { cnt : 0 };
+var memoTxt = {
+  cnt : 0
+};
 function saveMemo(target, targetValue){
     targetValue =  (targetValue == "" || !targetValue) ? "No Schedule" : targetValue;
     target.innerHTML = targetValue;
@@ -229,11 +230,6 @@ var calendar = {
                 var day = this.tdInDivEl[i].children[0].getAttribute("data-date");
                 if( obj == day ){
                     calendar.makeScheduleTag(this.tdInDivEl[i], jsonData[k].title);
-                    // var weatherEl = appendCreateEl(this.tdInDivEl[i], "a");
-                    // weatherEl.className = "weather fa fa-umbrella";//jsonData 관련된 클래스가 뿌려져야 함 - 날씨 관련 클래스 : fa fa-sun-o : 맑음, fa fa-umbrella : 비옴, fa fa-snowflake-o : 눈, fa fa-cloud : 구름, fa fa-bolt : 천둥
-                    // var weatherIco = appendCreateEl(weatherEl, "span");
-                    // weatherIco.innerHTML = jsonData[k].weather//JSON에 있는 weather 값
-                    // weatherIco.className = "hide"
                 }
             }
         };
@@ -376,6 +372,7 @@ var calendar = {
                 this.classList.add("on");
                 formStart.value = this.getAttribute("data-date");//선택날짜 하단 폼에 입력
             };
+
         };
         calendar.connectAction();
         calendar.buttonControl();
@@ -469,6 +466,7 @@ var calendar = {
                 switch( btnEl.id ){
                     case "prevYear" :
                         var date = new Date(thisCalendar.year -1, thisCalendar.month, thisCalendar.today);
+                        //calendar.selectCalculate();
                         break;
                     case "prevMonth" :
                         monthCount--;
@@ -490,6 +488,7 @@ var calendar = {
                         break;
                     case "nextYear" :
                         var date = new Date(thisCalendar.year +1, thisCalendar.month, thisCalendar.today);
+                        //calendar.selectCalculate();
                         break;
                     case "today" :
                         var date = new Date();
@@ -541,7 +540,7 @@ function floatMemoEvent(e, dataTxt, targetA){
     makeFloatMemo(dataTxt, x, y, targetA);
 };
 function search( el,elAttr,elAtrName,orderNode ) {
-	var matchedEl = [];
+	var matched = [];
 	while ( (el = el[orderNode]) && el.nodeType !== 9 ) {
 		if ( el.nodeType === 1 ) {
         if( elAttr == "class" ){
@@ -559,7 +558,7 @@ function search( el,elAttr,elAtrName,orderNode ) {
       };
 		}
 	};
-	return matchedEl;
+	return matched;
 };
 function parents(el,elAttr,elAtrName){//element 의 attribute 속성이  targetAtrName인 부모 Element를 리턴하는 함수
     return search(el,elAttr,elAtrName,"parentNode")
