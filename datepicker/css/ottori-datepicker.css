@@ -87,7 +87,7 @@ span {vertical-align:middle}
 .float-memo {position:absolute; z-index:50; left:0; top:0; width:300px; height:150px; padding:20px 20px 50px; background:#fff; border:1px solid #e1e1e1; border-radius:2px}
 .float-memo-title {height:20px; margin-top:0; font-size:18px}
 .float-memo .float-content {overflow:hidden; position:relative; text-overflow:ellipsis; white-space:nowrap; height:28px; line-height:28px; margin:0; font-size:13px}
-.float-memo .float-content input {display:block; position:absolute; left:0; top:0; right:0; height:28px; line-height:28px; width:100%; padding:3px 10px; border:1px solid #eee}
+.float-memo .float-content input {display:block; position:absolute; left:0; top:0; right:0; height:28px; line-height:1; width:100%; padding:3px 10px; border:1px solid #eee}
 .float-memo .text-right {position:absolute; right:10px; bottom:10px}
 .float-memo .text-right .btn {margin-left:5px}
 .float-memo #memoClose {position:absolute; right:10px; top:10px}

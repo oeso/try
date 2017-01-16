@@ -11,8 +11,18 @@ function calendarSize( el, target ){
     target.style.height = el.offsetWidth + "px";
 };
 
+//자식요소 모두 삭제 함수
+function removeChildAll(el){
+  if(el){
+    while( el.hasChildNodes() ){
+        el.removeChild(el.lastChild)
+    }
+  }
+}
+
 var floatBox, floatEl;
 
+//메모박스 세팅
 function firstObjectSetting(){
     floatBox = appendCreateEl(document.body, "div");
     floatBox.className = "float-memo";
@@ -49,10 +59,13 @@ function settingElement( el, elAttr, callAgainObjArray ){
     };
 };
 function memoBoxRemove(el){
-    if(el){ el.remove(); };
+  if(el){
+    var removeItem = el;
+    el.parentNode.removeChild(removeItem)
+  };
 };
 //floating 요소를 만듦
-function makeFloatMemo(dataMemo,x,y,targetA){
+function makeFloatMemo(dataMemo,x,y,targetA,target){
     memoBoxRemove( getElId("float") );
     firstObjectSetting();
     settingElement(floatBox, {elName : "h2", clsName : "float-memo-title", inText : "Schedule"});
@@ -65,7 +78,7 @@ function makeFloatMemo(dataMemo,x,y,targetA){
     var floatLabel = getElId("floatLabel");
 
     getElId("memoClose").addEventListener("click",function(){
-        closeFloatBox(window.floatEl);
+        memoBoxRemove(getElId("float"));
     });
     getElId("floatLabel").addEventListener("click",function(){
         editMemo(floatLabel,targetA);
@@ -74,22 +87,13 @@ function makeFloatMemo(dataMemo,x,y,targetA){
         editMemo(floatLabel,targetA);
     });
     getElId("btnSave").addEventListener("click",function(){
-    //   ajax 로 등록 요청
-    //   if(window.XMLHttpRequest){
-    //       var anwserHttp =  new XMLHttpRequest();
-    //       anwserHttp.onreadystatechange = function(){
-    //           if(this.readyState == 4 && this.status ==  200){
-    //              this.userData = JSON.parse(this.responseText);
-                    calendar.makeScheduleTag(targetA, calendar.memo);
-                    calendar.saveMemoForm(targetA, calendar.memo)
-                    closeFloatBox(floatEl)
-    //           }else{
-    //             alert("스케줄 등록이 실패하였습니다.");
-    //           };
-    //       };
-    //       anwserHttp.open("GET", "url", true);
-    //       anwserHttp.send();
-    //   }
+        //target : 클릭한 요소
+        if( target.classList.contains("schedule")){//기존 스케줄 수정
+          calendar.saveMemoEditForm(target, targetA, calendar.memo)
+        }else{//새 스케줄 등록
+          calendar.makeScheduleTag( targetA, calendar.memo);
+          calendar.saveMemoForm( targetA, calendar.memo)
+        }
     });
     if(dataMemo == ""){
         editMemo(floatLabel,targetA);
@@ -101,9 +105,6 @@ function positionFloat(el){
     y = ( y-230 <= 0) ? 10 : y-230;
     el.style.left = x + "px";
     el.style.top = y + "px";
-};
-function closeFloatBox(el){
-    el.remove();
 };
 function editMemo(el,targetA){
     var newInput = appendCreateEl(el,"input");
@@ -207,7 +208,7 @@ var calendar = {
             jsonhttp.send();
         }
     },
-    //AJAX로 가져온 data 삭제
+    //달 이동시 AJAX로 가져온 일정 + 수정/삭제한 일정 화면에서 제거
     deleteDataJsonBind : function(){//해당 jsonData obj 내 약속된 프로퍼티명을 가져와서 for돌려서 뿌림.
         if( !document.getElementsByClassName("schedule") ){
         }else{
@@ -226,32 +227,84 @@ var calendar = {
         for(var k=0; k<jsonData.length;k++){
             //var obj = JSON.stringify(jsonData[k].start)
             var obj = jsonData[k].start;
+            var jonId = jsonData[k].id;
             for(var i=0; i<this.tdInDivEl.length;i++){
                 var day = this.tdInDivEl[i].children[0].getAttribute("data-date");
                 if( obj == day ){
-                    calendar.makeScheduleTag(this.tdInDivEl[i], jsonData[k].title);
+                    calendar.makeScheduleTag(this.tdInDivEl[i], jsonData[k].title, jonId);
                 }
-            }
+            };[]
         };
     },
     //save button 클릭시 달력표시 생성
-    makeScheduleTag : function(el, data){
+    makeScheduleTag : function(el, data, jsonId){
+      if( data == "" ){ return false }
         var schedule = appendCreateEl(el, "a");
         schedule.className = "schedule label-primary";
         schedule.innerHTML = data;//JSON에 있는 title 값 또는 프로팅 메모에서 작성한 값
+        if(jsonId){
+          schedule.id = jsonId;//JSON에 있는 id 값
+        }else{
+          schedule.id = "newMemo" + (memoTxt.cnt);//추가로 만든 id 값
+        };
         this.schedule.push(schedule)
+        schedule.addEventListener("click",function(e){
+            floatMemoEditEvent(e, data, this.parentNode, this);
+        });
     },
-    //save button 클릭시 폼에 저장
-    saveMemoForm : function( targetA, memo ){
-      var dataDate = targetA.getElementsByClassName("txt-day")[0].getAttribute("data-date")
-      var newput = appendCreateEl(getElId("saveActionForm"), "input");
-      newput.setAttribute("type","hidden")
-      newput.setAttribute("id","memo" + (memoTxt.cnt+1))
-      newput.setAttribute("value",memo )
-      newput.setAttribute("data-date", dataDate)
-      memoTxt.cnt++;
+    //일정 수정 : save button 클릭시 변경사항 폼에 저장
+    saveMemoEditForm : function(target, targetA, memo ){
+      var dataDate = target.getAttribute("data-date");
+      var inputExist = document.getElementsByName(target.id)[0];
+      var newput = inputExist ? inputExist : appendCreateEl(getElId("saveActionForm"), "input");
+      calendar.newInputMake( newput, "hidden", target.id, memo, dataDate ); //FORM에 변경 사항 반영
+      target.innerHTML = memo;
 
+      if( memo == "" ){
+        targetA.removeChild(getElId(target.id));//빈 내용으로 수정시 해당하는 스케쥴 삭제
+        for( var i =0; i<this.schedule.length;i++){//스케쥴리스트 중 해당 스케줄 삭제
+          if(this.schedule[i].id == target.id){
+            this.schedule.splice(i,1)
+          }
+        }
+      };
       getElId("saveActionForm").onsubmit();
+      calendar.result();//전송결과 가져오는 함수
+      memoBoxRemove(getElId("float"));
+    },
+    //일정 신규 등록 : save button 클릭시 등록사항 폼에 저장
+    saveMemoForm : function(targetA, memo ){
+      var txtDay = targetA.getElementsByClassName("txt-day")[0]
+      var dataDate = txtDay.getAttribute("data-date")
+      var newput = appendCreateEl(getElId("saveActionForm"), "input");
+      var ids = "newMemo" + (memoTxt.cnt);
+      calendar.newInputMake( newput, "hidden", ids , memo, dataDate ); //FORM에 등록 사항 추가
+      memoTxt.cnt++;
+      getElId("saveActionForm").onsubmit();
+      calendar.result();//전송결과 가져오는 함수
+      memoBoxRemove(getElId("float"));
+    },
+    result : function(){ //전송결과 가져오는 함수
+    //   ajax 로 전송결과 (Y 혹은 N 값 - 이 값은 Y/N 또는 1/0으로 할 지 협의) 요청
+    //   if(window.XMLHttpRequest){
+    //       var anwserHttp =  new XMLHttpRequest();
+    //       anwserHttp.onreadystatechange = function(){
+    //           if(this.readyState == 4 && this.status ==  200){
+                    //성공
+    //           }else{
+    //             alert("스케줄 등록이 실패하였습니다.");
+    //           };
+    //       };
+    //       anwserHttp.open("GET", "전송결과가 담긴 URL", true);
+    //       anwserHttp.send();
+    //   }
+    },
+    //form 세팅
+    newInputMake : function(el,type,name,value,dataDate){
+      el.setAttribute("type", type )
+      el.setAttribute("name", name )
+      el.setAttribute("value", value )
+      el.setAttribute("data-date", dataDate)
     },
     //요일명 세팅
     theadWriting : function(obj){
@@ -272,6 +325,7 @@ var calendar = {
         this.obj = obj;
         this.tdInDivEl = getElId("tableElBox").getElementsByClassName("link-wrap")
         this.calendarLink = getElId("tableElBox").getElementsByClassName("txt-day")
+        this.calendarTag = getElId("tableElBox").getElementsByClassName("schedule")
 
         var endDate = new Array(31,28,31,30,31,30,31,31,30,31,30,31)
         ,   start = date;
@@ -323,6 +377,7 @@ var calendar = {
             var txtDays = this.tdInDivEl[i].getElementsByClassName("txt-day")[0];
             txtDays.children[0].innerHTML = "";
             this.tdInDivEl[i].classList.remove("today");
+            console.log( startDayOfWeek,  lastDate+startDayOfWeek )
 
             if( i < startDayOfWeek ){//이전 달 날짜 뿌림
                 txtDays.className = "txt-day before-month-day";
@@ -462,11 +517,11 @@ var calendar = {
         //이전다음 컨트롤 버튼 클릭 이벤트
         function controlBtnEvent(btnEl){
             btnEl.onclick = function(){
-            calendar.deleteDataJsonBind();
+              removeChildAll(getElId("saveActionForm"));
+              calendar.deleteDataJsonBind();
                 switch( btnEl.id ){
                     case "prevYear" :
                         var date = new Date(thisCalendar.year -1, thisCalendar.month, thisCalendar.today);
-                        //calendar.selectCalculate();
                         break;
                     case "prevMonth" :
                         monthCount--;
@@ -488,7 +543,6 @@ var calendar = {
                         break;
                     case "nextYear" :
                         var date = new Date(thisCalendar.year +1, thisCalendar.month, thisCalendar.today);
-                        //calendar.selectCalculate();
                         break;
                     case "today" :
                         var date = new Date();
@@ -502,8 +556,9 @@ var calendar = {
         controlBtnEvent(getElId("nextYear"));
         controlBtnEvent(getElId("today"));
     },
-    //날짜 클릭시 메모창 팝업 또는 등록하기 페이지 이동
+    //날짜 클릭시 새 메모창 팝업 또는 등록하기 페이지 이동
     connectAction : function(){
+        //날짜가 아닌 곳 찍으면 메모 닫힘
         document.body.addEventListener("click",function(e){
           ectClick(e);
         }, true );
@@ -513,14 +568,14 @@ var calendar = {
             if( floatEl && parents(target , "id", "tableElBox").length == 0 ){
                 if(target.id == "float" || parents(target , "id", "float").length > 0){
                 }else{
-                  closeFloatBox(floatEl);
+                  memoBoxRemove(getElId("float"));
                 };
             };
         };
         for(var i=0, length=calendar.calendarLink.length; i<length;i++){
             calendar.calendarLink[i].addEventListener("click",function(e){
-                dataTxt = (this.nextSibling != null ) ? this.nextSibling.innerHTML : "";
-                floatMemoEvent(e, dataTxt, this.parentNode);
+                dataTxt ="";
+                floatMemoEvent(e, dataTxt, this.parentNode, this);
             });
             calendar.calendarLink[i].addEventListener("dblclick",function(){
                 if( !this.href ){
@@ -534,10 +589,15 @@ var calendar = {
 };
 
 var thisCalendar = calendar;
-function floatMemoEvent(e, dataTxt, targetA){
+function floatMemoEvent(e, dataTxt, targetA, target){
     x = e.pageX;
     y = e.pageY;
-    makeFloatMemo(dataTxt, x, y, targetA);
+    makeFloatMemo(dataTxt, x, y, targetA, target);
+};
+function floatMemoEditEvent(e, dataTxt, targetA, target){
+    x = e.pageX;
+    y = e.pageY;
+    makeFloatMemo(dataTxt, x, y, targetA, target);
 };
 function search( el,elAttr,elAtrName,orderNode ) {
 	var matched = [];
