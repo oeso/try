@@ -90,7 +90,7 @@ function makeFloatMemo(dataMemo,x,y,targetA){
     //       anwserHttp.open("GET", "url", true);
     //       anwserHttp.send();
     //   }
-    // });
+    });
     if(dataMemo == ""){
         editMemo(floatLabel,targetA);
     }
