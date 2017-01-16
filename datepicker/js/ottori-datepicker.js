@@ -284,7 +284,7 @@ var calendar = {
       calendar.result();//전송결과 가져오는 함수
       memoBoxRemove(getElId("float"));
     },
-    result : function(){ //전송결과 가져오는 함수
+    result : function(){//전송결과 가져오는 함수
     //   ajax 로 전송결과 (Y 혹은 N 값 - 이 값은 Y/N 또는 1/0으로 할 지 협의) 요청
     //   if(window.XMLHttpRequest){
     //       var anwserHttp =  new XMLHttpRequest();
@@ -377,8 +377,7 @@ var calendar = {
             var txtDays = this.tdInDivEl[i].getElementsByClassName("txt-day")[0];
             txtDays.children[0].innerHTML = "";
             this.tdInDivEl[i].classList.remove("today");
-            console.log( startDayOfWeek,  lastDate+startDayOfWeek )
-
+            
             if( i < startDayOfWeek ){//이전 달 날짜 뿌림
                 txtDays.className = "txt-day before-month-day";
                 txtDays.children[0].innerHTML = prevMonthDayList.pop();
