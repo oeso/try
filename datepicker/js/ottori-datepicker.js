@@ -178,6 +178,7 @@ var calendar = {
             var dayNumber = appendCreateEl(cellDiv, "a");// td > div > a.txt-day
             cellDiv.className = "link-wrap";
             dayNumber.className = "txt-day";
+            dayNumber.href = "#none";
             appendCreateEl(dayNumber,"span");
         };
 
