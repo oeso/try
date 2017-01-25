@@ -25,7 +25,7 @@ span {vertical-align:middle}
 .calendar .txt-day {display:block; position:absolute; z-index:1; left:0; top:0; right:0; bottom:0; text-align:left}
 .calendar .txt-day:hover {background-color:lightsteelblue}
 .calendar .txt-day span {overflow:hidden; display:block; max-width:50px;position:absolute; left:6px; top:1px; font-size:18px; color:#666}
-.calendar .omit {position:absolute; z-index:11; right:5px; bottom:3px; color:#333; font-size:11px}
+.calendar .omit {position:absolute; z-index:11; right:5px; bottom:3px; color:#333; font-size:11px; text-decoration:underline}
 
 .calendar .schedule {overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:block; position:relative; z-index:3; color:#fff; font-size:12px; margin-bottom:3px; height:25px; line-height:25px; padding:0 5px}
 .calendar .weather {position:absolute;z-index:2;right:0;top:0;width:25px;height:25px; line-height:25px; text-align:center}

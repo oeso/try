@@ -32,6 +32,7 @@ function settingElement( el, elAttr, callAgainObjArray ){
     //인자 없이 호출되는 경우에 대한 방어코딩은 하지 않았습니다.
     //el : 부모 엘리먼트, elName : 생성해서 붙일 엘리먼트명, clsName, idName : 생성한 노트에 붙일 클래스네임, inText, attr, attrValue
     var element = appendCreateEl(el, elAttr.elName );
+
     for(var i in elAttr){
         switch(i){
             case "clsName" :
@@ -64,6 +65,7 @@ function memoBoxRemove(el){
     el.parentNode.removeChild(removeItem)
   };
 };
+
 //floating 요소를 만듦
 function makeFloatMemo(dataMemo,x,y,targetA,target){
     memoBoxRemove( getElId("float") );
@@ -124,8 +126,8 @@ function saveMemo(target, targetValue){
     target.innerHTML = targetValue;
 };
 var calendar = {
-    //calendar.action() -> calendar DOM 구조 만드는 함수
-    action : function(obj, date){
+    //calendar.init() -> calendar DOM 구조 만드는 함수
+    init : function(obj, date){
         this.calendarBox = getElId(obj.id);
 
         //컨트롤 버튼과 년도월 표시 엘리먼트 생성하여 뿌림. 사용자 옵션을 다양하게 받아 구현할 수 있도록 수정 예정.
@@ -230,9 +232,12 @@ var calendar = {
             var obj = jsonData[k].start;
             var jonId = jsonData[k].id;
             for(var i=0; i<this.tdInDivEl.length;i++){
+                var n = 1;
                 var day = this.tdInDivEl[i].children[0].getAttribute("data-date");
                 if( obj == day ){
+                    this.tdInDivEl[i].setAttribute("key",n)
                     calendar.makeScheduleTag(this.tdInDivEl[i], jsonData[k].title, jonId);
+                    n++;
                 }
             };
         };
@@ -240,31 +245,26 @@ var calendar = {
     //SAVE 클릭시 스케줄 등록( 최초 로드시, 신규 등록시)
     makeScheduleTag : function(el, data, jsonId){
         if( data == "" ){ return false };
-        var size = el.getElementsByClassName("schedule").length;
-        if( size == 3 ){
+
+        if( el.getElementsByClassName("schedule").length >= 3 ){
           var omitTag = appendCreateEl(el, "a");
-          var schedule = "vv";
           omitTag.className = "omit";
-          el.setAttribute("key", 4 )
-          omitTag.innerHTML = (el.getAttribute("key"))+1;
-        } else if( size > 3){
-          var omitTag = appendCreateEl(el, "a");
-          var schedule = "vv";
-          omitTag.className = "omit";
-          omitTag.innerHTML = (el.getAttribute("key"))+1;
+          omitTag.innerHTML = "more";
+          omitTag.href = "http://www.google.com"//임시
+          omitTag.setAttribute("target","_blank")
         }else{
-          var schedule = appendCreateEl(el, "a");
-          schedule.className = "schedule label-primary";
-          schedule.innerHTML = data;//JSON의 title 값 또는 팝업 메모에서 작성한 값
-          if(jsonId){
+            var schedule = appendCreateEl(el, "a");
+            schedule.className = "schedule label-primary";
+            schedule.innerHTML = data;//JSON의 title 값 또는 팝업 메모에서 작성한 값
+            if(jsonId){
             schedule.id = jsonId;//JSON에 있는 id 값
-          }else{
+            }else{
             schedule.id = "newMemo" + (memoTxt.cnt);//추가로 만든 id 값
-          };
-          schedule.addEventListener("click",function(e){
-              floatMemoEditEvent(e, data, this.parentNode, this);
-          });
-        };
+            };
+            schedule.addEventListener("click",function(e){
+                floatMemoEditEvent(e, data, this.parentNode, this);
+            });
+        }
         this.schedule.push(schedule)
     },
     //SAVE 클릭시 스케쥴 수정
@@ -488,7 +488,6 @@ var calendar = {
             y++;
         };
         this.monthSelect = new Array(1,2,3,4,5,6,7,8,9,10,11,12);
-
         if(getElId("selectYearEl").options.length == 0){
             for(var i=0;i<this.yearSelect.length; i++){
                 var setYear = appendCreateEl(getElId("selectYearEl"),"option");
