@@ -13,6 +13,7 @@
   <link href="theme_files/bootstrap.css" rel="stylesheet">
   <link href="theme_files/dashboard.css" rel="stylesheet">
   <script src="https://use.fontawesome.com/ab543bb152.js"></script>
+  <script src="js/filenamer.js"></script>
 </head>
   <body>
     <a href="#content" class="skip">skip navigation</a>
@@ -34,7 +35,7 @@
         <form class="form-inline mt-2 mt-md-0">
           <!--<input class="form-control mr-sm-2" placeholder="Search" type="text" id="inputTxt">-->
           <label class="btn btn-default btn-filebtn btn-outline-success my-2 my-sm-0">
-              불러오기 <input type="file" id="inputFile" multiple >
+              불러오기 <input type="file" id="inputFile" multiple onchange="fileOpenStart(this);">
           </label>
         </form>
       </div>
@@ -45,8 +46,8 @@
         <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
           <h2 class="hidden">filenamer global navigation</h2>
           <ul class="nav nav-pills flex-column">
-            <li class="nav-item"><button id="deleteAll" onclick="fileNamerJS.deleteAll();" class="btn btn-default">전체 삭제 <span class="sr-only">(current)</span></button></li>
-            <li class="nav-item"><button id="deleteList" onclick="fileNamerJS.deleteList();" class="btn btn-default">선택 삭제 <span class="sr-only">(current)</span></button></li>
+            <li class="nav-item"><button id="deleteAll" onclick="deleteAll();" class="btn btn-default">전체 삭제 <span class="sr-only">(current)</span></button></li>
+            <li class="nav-item"><button id="deleteList" onclick="deleteList();" class="btn btn-default">선택 삭제 <span class="sr-only">(current)</span></button></li>
             <li class="nav-item"><button id="restore" class="btn btn-default">원래이름으로</button></li>
             <li class="nav-item"><button id="stringChange" class="btn btn-default">문자열 바꾸기</button></li>
             <li class="nav-item"><button id="pasteAfter" class="btn btn-default">뒷이름 붙이기</button></li>
@@ -67,16 +68,14 @@
                 <table id="fileListTable" class="table table-bordered">
                   <caption class="hidden">file name list</caption>
                   <colgroup>
-                    <col style="width:5%">
-                    <col style="width:5%">
-                    <col style="width:30%">
-                    <col style="width:30%">
-                    <col style="width:30%">
+                    <col style="width:4%">
+                    <col style="width:32%">
+                    <col style="width:32%">
+                    <col style="width:32%">
                   </colgroup>
                   <thead>
                     <tr>
-                      <th><input type="checkbox" name="" value="" title="total select!"></th>
-                      <th>No.</th>
+                      <th><input type="checkbox" onclick="checkAll(this);" value="" title="total select!"></th>
                       <th>Old Name <a class="btn btn-default fa fa-sort sortAsc" href="#"></a></th>
                       <th>New Name <a class="btn btn-default fa fa-sort sortDesc" href="#"></a></th>
                       <th>Result</th>
@@ -85,7 +84,6 @@
                   <tbody class="text-center">
                     <!-- <tr>
                       <td><input type="checkbox" name="" id="us"></td>
-                      <td>1</td>
                       <td><label class="oldName" for="us">oldName</label></td>
                       <td><a class="newName" href="#">newName</a></td>
                       <td><a class="resultName" href="#">resultName</a></td>
@@ -97,10 +95,7 @@
         </main>
       </div>
     </div>
-    <script src="js/filenamer.js"></script>
-    <script>
-        fileNamerJS.init();
-    </script>
+    <p id="counting" class="counting"></p>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

@@ -24,7 +24,7 @@
 .sidebar .nav-item {padding:5px 25px}
 .nav > li > button {display:block;width:100%;padding:10px 0;color:#666}
 .form-inline label {position:absolute;right:12px;top:10px;}
-
+.counting {position:absolute; left:17%; bottom:30px; font-size:12px}
 body {
   padding-top:62px;
 }
