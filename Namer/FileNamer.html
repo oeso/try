@@ -41,23 +41,25 @@
       </div>
     </nav>
 
+    <p id="openMessage" class="message">Open Your Files!</p>
+
     <div class="container-fluid">
       <div class="row">
         <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
           <h2 class="hidden">filenamer global navigation</h2>
-          <ul class="nav nav-pills flex-column">
-            <li class="nav-item"><button id="deleteAll" onclick="deleteAll();" class="btn btn-default">전체 삭제 <span class="sr-only">(current)</span></button></li>
-            <li class="nav-item"><button id="deleteList" onclick="deleteList();" class="btn btn-default">선택 삭제 <span class="sr-only">(current)</span></button></li>
-            <li class="nav-item"><button id="restore" class="btn btn-default">원래이름으로</button></li>
-            <li class="nav-item"><button id="stringChange" class="btn btn-default">문자열 바꾸기</button></li>
-            <li class="nav-item"><button id="pasteAfter" class="btn btn-default">뒷이름 붙이기</button></li>
-            <li class="nav-item"><button id="pasteBefore" class="btn btn-default">앞이름 붙이기</button></li>
-            <li class="nav-item"><button id="keepNumber" class="btn btn-default">숫자만 남기기</button></li>
-            <li class="nav-item"><button id="delExtension" class="btn btn-default">확장자 삭제</button></li>
-            <li class="nav-item"><button id="addExtension" class="btn btn-default">확장자 추가</button></li>
-            <li class="nav-item"><button id="changeExtension" class="btn btn-default">확장자 변경</button></li>
-            <li class="nav-item"><button id="sortAsc" class="btn btn-default"><i class="fa fa-sort"></i> 오름차순 정렬</a></li>
-            <li class="nav-item"><button id="sortDesc" class="btn btn-default"><i class="fa fa-sort"></i> 내림차순 정렬</a></li>
+          <ul id="nav" class="nav nav-pills flex-column">
+            <li class="nav-item"><button disabled id="deleteAll" onclick="deleteAll();" class="btn btn-default">전체 삭제 <span class="sr-only">(current)</span></button></li>
+            <li class="nav-item"><button disabled id="deleteList" onclick="deleteRows();" class="btn btn-default">선택 삭제 <span class="sr-only">(current)</span></button></li>
+            <li class="nav-item"><button disabled id="restore" onclick="restore();" class="btn btn-default">원래이름으로</button></li>
+            <li class="nav-item"><button disabled id="stringChange" onclick="stringChange();" class="btn btn-default">문자열 바꾸기</button></li>
+            <li class="nav-item"><button disabled id="pasteAfter" onclick="pasteAfter();" class="btn btn-default">뒷이름 붙이기</button></li>
+            <li class="nav-item"><button disabled id="pasteBefore" onclick="pasteBefore();" class="btn btn-default">앞이름 붙이기</button></li>
+            <li class="nav-item"><button disabled id="keepNumber" onclick="keepNumber();" class="btn btn-default">숫자만 남기기</button></li>
+            <li class="nav-item"><button disabled id="delExtension" onclick="delExtension();" class="btn btn-default">확장자 삭제</button></li>
+            <li class="nav-item"><button disabled id="addExtension" onclick="registExtension();" class="btn btn-default">확장자 추가</button></li>
+            <li class="nav-item"><button disabled id="changeExtension" onclick="changeExtension();" class="btn btn-default">확장자 변경</button></li>
+            <li class="nav-item"><button disabled id="sortAsc" onclick="sortAsc();" class="btn btn-default"><i class="fa fa-sort"></i> 오름차순 정렬</button></li>
+            <li class="nav-item"><button disabled id="sortDesc" onclick="sortDesc();" class="btn btn-default"><i class="fa fa-sort"></i> 내림차순 정렬</button></li>
           </ul>
         </nav>
 
@@ -69,33 +71,58 @@
                   <caption class="hidden">file name list</caption>
                   <colgroup>
                     <col style="width:4%">
-                    <col style="width:32%">
-                    <col style="width:32%">
-                    <col style="width:32%">
+                    <col style="width:35%">
+                    <col style="width:35%">
+                    <col style="width:26%">
                   </colgroup>
                   <thead>
                     <tr>
                       <th><input type="checkbox" onclick="checkAll(this);" value="" title="total select!"></th>
                       <th>Old Name <a class="btn btn-default fa fa-sort sortAsc" href="#"></a></th>
                       <th>New Name <a class="btn btn-default fa fa-sort sortDesc" href="#"></a></th>
-                      <th>Result</th>
+                      <th>Path</th>
                     </tr>
                   </thead>
                   <tbody class="text-center">
                     <!-- <tr>
                       <td><input type="checkbox" name="" id="us"></td>
                       <td><label class="oldName" for="us">oldName</label></td>
-                      <td><a class="newName" href="#">newName</a></td>
-                      <td><a class="resultName" href="#">resultName</a></td>
+                      <td><div class="newName" >newName</div></td>
+                      <td><a class="resultName" >resultName</a></td>
                     </tr> -->
                   </tbody>
                 </table>
               </div>
             </form>
         </main>
+        <div class="checklist">
+            <h2>Requriement 요구사항</h2>
+            <ul>
+                <li>다중선택가능. multiple / file list 객체 활용. IE9 이하는 다중선택 불가</li>
+                <li>선택한 체크박스 항목을 기준으로 왼쪽 지시에 따라 기능 동작</li>
+            </ul>
+        </div>
       </div>
     </div>
+
     <p id="counting" class="counting"></p>
+
+    <!-- layer for Edit -->
+    <div id="layer" class="layer" style="display:none">
+        <h3 id="layerTitle" class="title">문자열 바꾸기</h3>
+        <div class="layerbox">
+            <input type="text" id="beforeValue" class="inp-txt type1">
+            <label for="beforeValue">을</label>
+
+            <input type="text" id="afterValue" class="inp-txt">
+            <label for="afterValue">으로</label>
+        </div>
+        <div class="text-center">
+            <button type="button" class="btn btn-primary" onclick="returnResult();" >OK</button>
+            <button type="button" class="btn btn-info" onclick="closeLayer();" >CANCEL</button>
+        </div>
+    </div>
+    <!-- //layer for Edit -->
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
