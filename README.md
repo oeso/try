@@ -1,8 +1,8 @@
 # Pure Javascript
 ## 여러가지 javascript 기능 구현.
 ### 최근 결과물 :
-http://oeso.hithub.io/try/datepicker/
-http://oeso.hithub.io/try/datepicker/datepicker_right.html
+http://oeso.github.io/try/datepicker/
+http://oeso.github.io/try/datepicker/datepicker_right.html
 
 
 ### 현재 진행 사항
