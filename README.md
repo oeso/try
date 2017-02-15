@@ -1,8 +1,8 @@
 # Pure Javascript
 ## 여러가지 javascript 기능 구현.
 ### 최근 결과물 :
-http://oeso.github.io/try/datepicker/
-http://oeso.github.io/try/datepicker/datepicker_right.html
+1. [datepicker] : http://oeso.github.io/try/datepicker/
+2. [datepicker 일요일 우측에 정렬] : http://oeso.github.io/try/datepicker/datepicker_right.html
 
 
 ### 현재 진행 사항
