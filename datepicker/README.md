@@ -34,5 +34,5 @@ DOM을 JS로 그린 후 날짜 뿌리기.
 날짜 클릭하여 새 레이어 팝업, 새 스케줄 작성 후 SAVE 클릭시 해당 정보를 서버에 전송하며 전송된 서버에서는 받은 자료를 바탕으로 JSON 업데이트.
 다음달 또는 이전달 이동했다가 다시 현재 달로 돌아올 시 업데이트된 JSON을 뿌림.
 
-구현완료본 : http://oeso.hithub.io/try/
-일요일 우측정렬 : http://oeso.hithub.io/try/datepicker_right.html
+구현완료본 : http://oeso.hithub.io/try/datepicker/
+일요일 우측정렬 : http://oeso.hithub.io/try/datepicker/datepicker_right.html
