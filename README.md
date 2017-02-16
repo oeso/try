@@ -2,10 +2,10 @@
 ## 여러가지 javascript 기능 구현.
 ### 최근 결과물 :
 1. [datepicker] : http://oeso.github.io/try/datepicker/
-2. [datepicker 일요일 우측에 정렬] : http://oeso.github.io/try/datepicker/datepicker_right.html
+2. [datepicker 일요일 열을 우측에 정렬] : http://oeso.github.io/try/datepicker/datepicker_right.html
 
 
-### 현재 진행 사항
+### 현재 진행 중인 기능 [FileNamer] : http://oeso.github.io/try/Namer/
 
 #### 주제 : 파일네이머
 ( 다크네이머 기능을 웹상에서 구현해보고자 함 :  웹 브라우저상에서 javascript만으로는 실제 파일명, 확장자 변경 어려우므로 패스. 변경하고자 하는 파일을 불러와 파일명,확장자,경로등을 일괄 변경하는 프로그램. 단일파일도 변경 가능 )
