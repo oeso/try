@@ -11,6 +11,7 @@
 .table {table-layout:fixed; word-break:break-all}
 .table th {text-align:center;color:#666;vertical-align:middle}
 .table > tbody > tr > td {height:35px; margin:0; padding:0; vertical-align:middle}
+.table > thead > tr > th {vertical-align:middle}
 .table input[type="checkbox"] {width:20px;height:20px}
 .table label {display:block; margin:0; padding:5px 8px; cursor:pointer; font-weight:normal;color:dodgerblue}
 .table label:hover {text-decoration:underline}
@@ -40,13 +41,13 @@ main {
         top:700px;
 }
 .dimed {position:absolute;z-index:9998;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,.5)}
-.layer {position:absolute;left:50%;top:50%; z-index:9999; width:400px; min-height:200px; margin-left:-200px; margin-top:-150px; border:1px solid #101010; box-shadow:2px 2px 2px rgba(0,0,0,.3); background:#fff}
+.layer {position:absolute;left:50%;top:50%; z-index:9999; width:400px; min-height:250px; margin-left:-200px; margin-top:-150px; border:1px solid #101010; box-shadow:2px 2px 2px rgba(0,0,0,.3); background:#fff}
 .layer .title {background:#101010; color:#fff; height:40px; line-height:30px; margin:0; padding:5px 10px;}
 .layer .layerbox {padding:20px}
 .layer label {display:inline-block}
 .layer .inp-txt {display:inline-block; height:30px; width:88% }
 .layer .type1 {margin-bottom:15px}
-
+.layer ul,.layer li{margin:0;list-style:none}
 body {
   padding-top:62px;
 }
