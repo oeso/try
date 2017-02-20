@@ -1,6 +1,6 @@
 /**
  * Title : File Name Editor JS
- * Date : 2017 02 13
+ * Date : 2017 02 13~21
 **/
 var fileListTable; // 편집 테이블의 id
 var tbody; // 편집 테이블의 tbody
@@ -58,7 +58,6 @@ function fileOpenStart(input){
     }else{ // IE9 이하( File List 객체가 없음 )
         fileNameList = nameSort( input.value );
     };
-    document.getElementById("counting").innerHTML = "File open : " + fileNameList;
     writeInTable( input ); // Table에 삽입하는 함수 호출
 };
 
@@ -233,9 +232,6 @@ function keepNumber(){
 
 /* 확장자 추가 : prompt */
 function registExtension(){
-    // function validate( txt ){
-    // validate 펑션 따로 함수로 빼자
-    // }
     var addExtension = window.prompt( "추가할 확장자 입력" , "확장자" );
     if( !addExtension ){ return false; };
 
@@ -316,17 +312,19 @@ function listSorting() {
 /* 오름차순 정렬 : no layer */
 function sortAsc(){
     sortt = function(arr1, arr2){
-        arr1.sort( function(a,b){ return a-b } );
-        arr2.sort( function(a,b){ return a-b } );
+        arr1.sort();
+        arr2.sort();
     };
     listSorting();
 };
 
 /* 내림차순 정렬 : no layer */
 function sortDesc(){
-    sortt = function(arr1, arr2){
-        arr1.sort( function(a,b){ return b-a } );
-        arr2.sort( function(a,b){ return b-a } );
+    sortt = function(arr1, arr2) {
+        arr1.sort();
+        arr2.sort();
+        arr1.reverse();
+        arr2.reverse();
     };
     listSorting();
 };
@@ -420,7 +418,6 @@ function removeEvent(){
     btnOk.removeEventListener("click", beforeEvent );
 };
 
-//현재 beforeEvent 변수에 어떤 이벤트가 할당되어있는지 console창에서 감시
-document.onclick = function(){
-    console.log("현재 beforeEvent에 할당된 Event : ", beforeEvent);
-};
+function save(){
+    console.log("SAVE!!!!!!!! Fire BASE?????? What is it? hahaha ")
+}
