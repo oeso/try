@@ -13,18 +13,18 @@ var fileListTable // 편집 테이블의 id
    , btnOk // 레이어 확인 버튼
    , beforeEvent // 왼쪽메뉴버튼 클릭시 일어나는 이벤트를 담아둘 변수
    , cnt = 0 // checkbox 와 tr,  label id를 뿌릴때 사용. cnt는 계속 올라감
-   , openMessage
    , coreAction // selectAction 함수 안에서 처리되어지는 부분으로 핵심 함수
+   , fileObj // Fire Base로 넘길 객체
 
 //두 개 이상의함수에서 쓰는 변수들은 onload시 미리 초기화.
 window.onload = function(){
+    var openMessage   =  document.getElementById("openMessage"); // 레이어 확인 버튼
     fileListTable =  document.getElementById("fileListTable"); //table id
     tbody         =  fileListTable.tBodies[0]; // 편집 테이블의 tbody
     layer         =  document.getElementById("layer"); // 레이어
     beforeValue   =  document.getElementById("beforeValue"); // 변경전 입력폼
     afterValue    =  document.getElementById("afterValue"); // 변경할 입력폼
     btnOk         =  document.getElementById("btnOk"); // 레이어 확인 버튼
-    openMessage   =  document.getElementById("openMessage"); // 레이어 확인 버튼
     navBtns       =  document.getElementById("nav").getElementsByTagName("button"); // 왼쪽메뉴버튼
 
     closeLayer(); //새로고침시 문자열 바꾸기 레이어 입력폼 내용 초기화
@@ -50,6 +50,7 @@ var storageRef, imgRef,fileName ,mountainImagesRef, spaceRef, file,uploadTask, p
 
 /* file open시  */
 function fileOpenStart(input){
+	fileObj = input; // Fire Base로 넘길 객체에 file 정보를 담아둔다.나중에 설명
     navButtonEnable(); // left menu 버튼 활성화 한다.
     if( input.files ){ // IE9 이상 , 그 외 브라우저
         for(var i=0; i<input.files.length;i++){ // 불러오면 일단 원래 파일명 리스트를 저장해둔다. 원복 가능해야 하므로.
@@ -144,7 +145,7 @@ function checkAll(checkbox){
 
 /* 일괄삭제 함수 */
 function deleteAll(){
-    tbody.innerHTML = ""; //tbody 하위에있는 tr 전체를 빈문자열로 덮어씀으로써 제거.
+    tbody.innerHTML = ""; // tbody 하위에있는 tr 전체를 빈문자열로 덮어씀으로써 제거.
     navButtonDisable();
 };
 
@@ -202,7 +203,7 @@ function pasteAfter(){
         return false;
     };
     coreAction = function( labels, nextxt ){ // 뒷이름 붙이기 함수 정의
-        labels.innerHTML = returnFileName(labels.innerHTML) + nextxt + "." +ext(labels.innerHTML);
+        labels.innerHTML = returnFileName(labels.innerHTML) + nextxt + "." + ext(labels.innerHTML);
     };
     selectAction(nextxt);
 };
@@ -264,8 +265,8 @@ function delExtension(){
     selectAction();
 };
 
-/* 확장자만 리턴. 확장자 없을 시 원래 내용 리턴 */
-function ext(txt){ // 인자로 NewName의 innerHTML을 받음
+/* 확장자만 리턴 */
+function ext(txt){
     var start = txt.lastIndexOf("."); // 가장 마지막에 위치안 "."의 위치 값 number로 반환. lastIndexOf(), substr() 둘다 원래 문자열을 변경하지 않음
     var extension = txt.substr( start+1 , txt.length).toLowerCase(); // error 방지를 위하여 소문자로 ^^
     if( start != -1 ) { // txt (txt는 label.innerHTML) 내용 중에 "." 으로 구분되는 내용이 있을 경우  (없으면 -1 반환)
@@ -276,7 +277,7 @@ function ext(txt){ // 인자로 NewName의 innerHTML을 받음
 };
 
 /* 확장자 제외한 파일명만 리턴 */
-function returnFileName(txt){ // 인자로 NewName의 innerHTML을 받음
+function returnFileName(txt){
     var lastDot = txt.lastIndexOf("."); // 가장 마지막에 위치안 "."의 위치 값 number로 반환. lastIndexOf(), substr() 둘다 원래 문자열을 변경하지 않음
     var purename = txt.substr( 0 , lastDot).toLowerCase();
     if( lastDot != -1 ) { // txt (txt는 label.innerHTML) 내용 중에 "." 으로 구분되는 내용이 있을 경우  (없으면 -1 반환)
@@ -332,21 +333,9 @@ function selectAction( before,after ){
     };
 };
 
-/* SAVE 누를시 실행 함수 */
-function save(){
-//Fire Base database 연동 예정
-//   firebase.database().ref('filename/' + userId).set({
-//     filename : name,
-//     extension : email
-//   });
-};
-
 /* 문자열 바꾸는 함수 */
 function stringChangeAction(){
-    // beforeTxt = beforeValue.value; // 레이어의 첫번째 입력폼에 입력한 값
-    // afterTxt = afterValue.value; // 레이어의 두번째 입력폼에 입력한 값
     var discord = 0; // 밑에서 설명
-
     coreAction = function( labels , before , after ){
         if( labels.innerHTML.match( before ) ){ // 초기 값의 innerHTML 내용과 레이어의 첫번째 입력폼에 입력한 값 매칭 되면
             var matchTxt = labels.innerHTML.replace( before , after ); // 매칭된 값을 변경하고자 하는 값(afterTxt)으로 바꾸어 변수에 저장.
@@ -415,6 +404,34 @@ document.onkeydown = function(event) {
             beforeEvent(); // 왼쪽 메뉴 누를시 해당 기능에 해당하는 이벤트 실행 ( 왼쪽 메뉴 누를시 beforeEvent에 담아뒀던 이벤트)
         };
     };
+};
+
+/* 파일리스트의 확장자 종류 리턴 */
+function listArry(){
+	var extension = new String();
+	var extensionArry = new Array();
+
+	for( var i = 0 ; i < tbody.rows.length; i++ ){
+		var celltxt = tbody.rows[i].cells[2].getElementsByTagName("div")[0].innerHTML; // newName의 innerHTML (파일명 전체)
+        if( i == 0 ){ // 첫번째 확장자는 무조건 담음
+            extensionArry.push( ext( celltxt ) )
+        }else{ // 두번째 확장자부터 중복 체크하여 배열에 담음
+            if( ext( celltxt ) == celltxt ){  // 확장자가 없는 경우 "noExt" 라는 텍스트로 담음
+                extension = "noExt";
+            }else{
+                extension = ext( celltxt ); // 확장자가 있으면 해당 확장자를 담음
+            };
+            if( extensionArry.lastIndexOf( extension ) == -1   ){ // 이전에 담은 확장자가 extensionArry 리스트에 존재하지 않으면 실행
+                extensionArry.push( extension );
+            };
+        };
+	};
+	return extensionArry; // 파일리스트의 확장자를 한번씩만 담은 배열 리턴
+};
+
+/* SAVE 함수 : 서버로 파일정보 전송 (file list 객체를 넘긴다. file list 객체에는 name, type, size, lastModified(최종수정날짜객체) 등이 key,value 쌍으로 정의되어 있다. */
+function save(){
+    firebase.database().ref('filename/').set(  fileObj.files ); //  input file로 가져온 file list 객체를 Firs Base databse로 넘김으로써 최종 마무리.
 };
 
 
