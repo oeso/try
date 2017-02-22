@@ -64,6 +64,7 @@ function fileOpenStart(input){
 
 /* 오픈한 file을 테이블명을 골라내어 Table 요소에 차례대로 삽입 */
 function writeInTable( input ){
+
     if( input.files ){ //IE9 이상 , 그 외
         var repeat = input.files.length
     }else{ //IE9 이하
@@ -78,16 +79,21 @@ function writeInTable( input ){
 
             if( k == 0 ){ //첫번째 td 에 checkbox 생성하여 type과 id 속성 추가
                 var check = cell.appendChild(document.createElement("input"));
-                check.setAttribute( "type" , "checkbox" );
-                check.setAttribute( "id" , "checkbox" + cnt );
-                check.parentElement.parentElement.id = "tr" + cnt;
-                check.addEventListener( "change" , function(){
-                    checking( this, this.checked );
+                check.setAttribute( "type" , "checkbox" ); // type을 checkbox로 명시
+                check.setAttribute( "id" , "checkbox" + cnt ); // id값을 명시하는 이유 : checkbox의 id와 연결된 label의 for값 매칭 필.
+                check.addEventListener( "change" , function(){ // checking 이벤트 등록.
+                    checking( this, this.checked ); // 각 체크박스의 checked 속성이 checked 이면 name값 추가 또는 제거하는 이벤트 (참고 : 추후 marked 네임 값을 가지고 선택목록을 편집함)
                 });
             }else if( k == 1 ){//두번째 td에
                 var cellLabel = cell.appendChild(document.createElement("label"));//label 생성 후
-                cellLabel.setAttribute( "for" , "checkbox" + cnt);
-                cellLabel.className = "oldName" ;
+                cellLabel.setAttribute( "for" , "checkbox" + cnt); // for값은 바로 전 td에 속한 checkbox의 id와 동일하게 명시함.
+                cellLabel.className = "oldName"; // className 정의
+                var f_name = input.files[i].name; // 파일 명
+                var f_size = Math.ceil( input.files[i].size / 1024 ) + "kb"; // 사이즈는 소수점 올림처리함
+                cellLabel.addEventListener("contextmenu", function(e){
+                    rightClick( f_name, f_size ); // Mouse right click Event ( 파일 명, 사이즈를 인자로 넘김)
+                    e.preventDefault(); // 이벤트 버블링 해제
+                });
 
                 //label text로 file명 삽입
                 if( input.files ){ //IE9 이상 , 그 외
@@ -109,6 +115,11 @@ function writeInTable( input ){
     };
 };
 
+//mouse right click event
+function rightClick( obj1, obj2 ){ // 파일명, 사이즈 인자
+    alert( "파일명 : " + obj1 + ", 크기 : " + obj2 );
+};
+
 //IE에서는 파일 open시 file path를 몽땅 가지고 옴. 파일명만 걸러내는 함수
 function nameSort(file){
     var filename = file.replace(/^.*[\\\/]/, ''); // file path에서 파일명에 해당하는 부분만 걸러내는 정규식
@@ -124,7 +135,7 @@ function checking(checkbox, value){
     };
 };
 
-/* 체크한 체크박스 리턴 */
+/* 체크한 체크박스 collection 리턴 */
 function selection(){
     return document.getElementsByName("marked");
 };
@@ -431,9 +442,8 @@ function listArry(){
 
 /* SAVE 함수 : 서버로 파일정보 전송 (file list 객체를 넘긴다. file list 객체에는 name, type, size, lastModified(최종수정날짜객체) 등이 key,value 쌍으로 정의되어 있다. */
 function save(){
-    firebase.database().ref('filename/').set(  fileObj.files ); //  input file로 가져온 file list 객체를 Firs Base databse로 넘김으로써 최종 마무리.
+    //firebase.database().ref('filename/').set(  fileObj.files ); //  input file로 가져온 file list 객체를 Firs Base databse로 넘김으로써 최종 마무리.
 };
-
 
 
 
