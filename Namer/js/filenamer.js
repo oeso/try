@@ -2,23 +2,23 @@
  * Title : File Name Editor JS
  * Date : 2017 02 13~21
  **/
-var fileListTable // 편집 테이블의 id
-   , tbody // 편집 테이블의 tbody
+var fileListTable
+   , tbody
    , fileNameList = [] //open한 file 네임 리스트
-   , layer // 레이어
-   , beforeValue // 변경전 입력폼
-   , afterValue // 변경할 입력폼
    , navBtns // 왼쪽메뉴버튼
    , labels // 새 레이블
+   , beforeValue
+   , afterValue
+   , layer // 레이어
    , btnOk // 레이어 확인 버튼
    , beforeEvent // 왼쪽메뉴버튼 클릭시 일어나는 이벤트를 담아둘 변수
    , cnt = 0 // checkbox 와 tr,  label id를 뿌릴때 사용. cnt는 계속 올라감
    , coreAction // selectAction 함수 안에서 처리되어지는 부분으로 핵심 함수
-   , fileObj // Fire Base로 넘길 객체
+   , openMessage
+   , fileObj; // Fire Base로 넘길 객체
 
-//두 개 이상의함수에서 쓰는 변수들은 onload시 미리 초기화.
-window.onload = function(){
-    var openMessage   =  document.getElementById("openMessage"); // 레이어 확인 버튼
+window.onload = function(){ //두 개 이상의함수에서 쓰는 변수들은 onload시 초기화.
+    openMessage   =  document.getElementById("openMessage"); // 레이어 확인 버튼
     fileListTable =  document.getElementById("fileListTable"); //table id
     tbody         =  fileListTable.tBodies[0]; // 편집 테이블의 tbody
     layer         =  document.getElementById("layer"); // 레이어
@@ -28,7 +28,7 @@ window.onload = function(){
     navBtns       =  document.getElementById("nav").getElementsByTagName("button"); // 왼쪽메뉴버튼
 
     closeLayer(); //새로고침시 문자열 바꾸기 레이어 입력폼 내용 초기화
-    navButtonDisable(); //새로고침시 왼쪽 메뉴 버튼 초기화(비활성화)
+    navButtonDisable(); //새로고침시 왼쪽 메뉴 버튼 초기화(비활성화);
 };
 
 /* 현재 리스트에 파일이 없을 경우 왼쪽 메뉴 비활성화 */
@@ -46,7 +46,6 @@ function navButtonEnable(){
     };
     openMessage.style.display = "none";
 };
-var storageRef, imgRef,fileName ,mountainImagesRef, spaceRef, file,uploadTask, path, nm;
 
 /* file open시  */
 function fileOpenStart(input){
@@ -62,55 +61,44 @@ function fileOpenStart(input){
 	writeInTable( input ); // Table에 삽입하는 함수 호출
 };
 
-/* 오픈한 file을 테이블명을 골라내어 Table 요소에 차례대로 삽입 */
+/* 오픈한 file의 각 파일명을 골라내어 Table 요소에 차례대로 삽입 */
 function writeInTable( input ){
-
-    if( input.files ){ //IE9 이상 , 그 외
+    if( input.files ){ /* IE10 이상 , 그 외 */
         var repeat = input.files.length
     }else{ //IE9 이하
         var repeat = 1;
     };
     for( var i = 0; i < repeat; i++ ){ //input file로 불러온 file 갯수만큼 루프
-
-        var row = tbody.insertRow(); // tr 하나 생성
-
-        for(var k=0; k<4; k++){ // tr 안에서 5번 루프
-            var cell = row.insertCell(); // td 5개 생성
-
-            if( k == 0 ){ //첫번째 td 에 checkbox 생성하여 type과 id 속성 추가
-                var check = cell.appendChild(document.createElement("input"));
-                check.setAttribute( "type" , "checkbox" ); // type을 checkbox로 명시
-                check.setAttribute( "id" , "checkbox" + cnt ); // id값을 명시하는 이유 : checkbox의 id와 연결된 label의 for값 매칭 필.
-                check.addEventListener( "change" , function(){ // checking 이벤트 등록.
-                    checking( this, this.checked ); // 각 체크박스의 checked 속성이 checked 이면 name값 추가 또는 제거하는 이벤트 (참고 : 추후 marked 네임 값을 가지고 선택목록을 편집함)
-                });
-            }else if( k == 1 ){//두번째 td에
-                var cellLabel = cell.appendChild(document.createElement("label"));//label 생성 후
-                cellLabel.setAttribute( "for" , "checkbox" + cnt); // for값은 바로 전 td에 속한 checkbox의 id와 동일하게 명시함.
-                cellLabel.className = "oldName"; // className 정의
-                var f_name = input.files[i].name; // 파일 명
-                var f_size = Math.ceil( input.files[i].size / 1024 ) + "kb"; // 사이즈는 소수점 올림처리함
-                cellLabel.addEventListener("contextmenu", function(e){
-                    rightClick( f_name, f_size ); // Mouse right click Event ( 파일 명, 사이즈를 인자로 넘김)
-                    e.preventDefault(); // 이벤트 버블링 해제
-                });
-
-                //label text로 file명 삽입
-                if( input.files ){ //IE9 이상 , 그 외
-                    cellLabel.innerHTML = input.files[i].name;
-                }else{ //IE9 이하
-                    cellLabel.innerHTML = fileNameList;
-                };
-            }else if( k == 2 ) {//세번째 td에
-                var labels = cell.appendChild(document.createElement("div"));//label 생성 후
-                labels.className = "newName" ;
-                if( input.files ){ //IE9 이상 , 그 외 label text로 file명 삽입
-                    labels.innerHTML = input.files[i].name;
-                }else{ //IE9 이하
-                    labels.innerHTML = fileNameList;
-                };
-            };
+        var row = tbody.insertRow(); // tr 생성
+        function setElement( el,cls){
+            var td = row.insertCell();
+            var cell = td.appendChild( document.createElement( el ) );
+            cell.className = cls;
+            return cell;
         };
+        var selector1 = setElement("input");
+            selector1.setAttribute( "type" , "checkbox" ); // type을 checkbox로 명시
+            selector1.setAttribute( "id" , "checkbox" + cnt ); // id값을 명시하는 이유 : checkbox의 id와 연결된 label의 for값 매칭 필.
+
+        var selector2 = setElement("label","oldName");
+            var f_name = input.files[i].name /* 파일명 */, f_size = Math.ceil( input.files[i].size / 1024 ) + "kb"; // 파일 사이즈(소수점 올림)
+            selector2.setAttribute( "for" , "checkbox" + cnt ); // for값은 바로 전 td에 속한 checkbox의 id와 동일하게 명시함.
+            selector2.addEventListener("contextmenu", function(e){
+                rightClick( f_name, f_size ); // Mouse right click Event ( 파일 명, 사이즈를 인자로 넘김)
+                e.preventDefault(); // 이벤트 버블링 해제
+            });
+            if( input.files ){ //IE10 이상 , 그 외
+                selector2.innerHTML = input.files[i].name; //label text로 file명 삽입
+            }else{ //IE9 이하
+                selector2.innerHTML = fileNameList;
+            };
+
+        var selector3 = setElement("div","newName");
+            if( input.files ){ //IE10 이상 , 그 외 label text로 file명 삽입
+                selector3.innerHTML = input.files[i].name;
+            }else{ //IE9 이하
+                selector3.innerHTML = fileNameList;
+            };
         cnt++;
     };
 };
@@ -126,30 +114,25 @@ function nameSort(file){
     return filename; // 요리해서 얻어낸 파일명을 반환.
 };
 
-//각 체크박스의 checked 속성이 checked 이면 name값 추가 또는 제거
-function checking(checkbox, value){
-    if( value ){
-        checkbox.name = "marked"; // 참고 : 추후 marked 네임 값을 가지고 목록을 편집함
-    }else{
-        checkbox.name = "";
-    };
-};
-
 /* 체크한 체크박스 collection 리턴 */
 function selection(){
-    return document.getElementsByName("marked");
+    var checkbox = tbody.getElementsByTagName("input");
+    var checkedList  = [];
+    for( var i = 0 ; i < checkbox.length; i++ ){
+        if( checkbox[i].checked ){
+            checkedList.push( checkbox[i] );
+        };
+     };
+    return checkedList;
 };
-//전체 checkbox 선택시
-function checkAll(checkbox){
+//checkbox 일괄선택/일괄해제
+function checkAll(total){
     var inputCheckbox = tbody.getElementsByTagName("input");
-
     for( var i = 0 ; i < inputCheckbox.length; i++ ){
-        if( checkbox.checked ){
+        if( total.checked ){
             inputCheckbox[i].checked = true;
-            inputCheckbox[i].name = "marked";
         }else{
             inputCheckbox[i].checked = false;
-            inputCheckbox[i].name = "";
         };
     };
 };
@@ -165,11 +148,10 @@ function deleteRows(){
     if( selection().length == tbody.rows.length ){ // 선택항목과 전체항목 갯수가 같을경우 == 전체를 선택했을 시
         deleteAll(); // 일괄삭제 함수 호출
     }else{
-        do{
-            var checkedTr = selection()[0].parentElement.parentElement; // 체크된 첫번째 tr.
+        for( var i = selection().length; i >= 0; i-- ){
+            var checkedTr = selection()[i].parentElement.parentElement; // 체크된 첫번째 tr.
             tbody.removeChild( checkedTr ); // 체크된 첫번째 tr 삭제
-        }while( selection().length > 0 ); // 체크된 항목이 없을 때까지
-        // 이 문장에서 for문은 적절치 않음.
+        }
     };
 };
 
@@ -276,10 +258,11 @@ function delExtension(){
     selectAction();
 };
 
-/* 확장자만 리턴 */
+/* 파일명과 확장자로 구성된 배열 리턴 */
 function ext(txt){
     var start = txt.lastIndexOf("."); // 가장 마지막에 위치안 "."의 위치 값 number로 반환. lastIndexOf(), substr() 둘다 원래 문자열을 변경하지 않음
     var extension = txt.substr( start+1 , txt.length).toLowerCase(); // error 방지를 위하여 소문자로 ^^
+
     if( start != -1 ) { // txt (txt는 label.innerHTML) 내용 중에 "." 으로 구분되는 내용이 있을 경우  (없으면 -1 반환)
         return extension; // 순수 확장자만 리턴
     }else{
@@ -290,7 +273,7 @@ function ext(txt){
 /* 확장자 제외한 파일명만 리턴 */
 function returnFileName(txt){
     var lastDot = txt.lastIndexOf("."); // 가장 마지막에 위치안 "."의 위치 값 number로 반환. lastIndexOf(), substr() 둘다 원래 문자열을 변경하지 않음
-    var purename = txt.substr( 0 , lastDot).toLowerCase();
+    var purename = txt.substr( 0 , lastDot);
     if( lastDot != -1 ) { // txt (txt는 label.innerHTML) 내용 중에 "." 으로 구분되는 내용이 있을 경우  (없으면 -1 반환)
         return purename; // 순수 파일명만 리턴
     }else{
@@ -336,8 +319,9 @@ function sortDesc(){
 
 /* 각 OldName의 내용을 편집하고자 하는 내용으로 교체하는 함수 */
 function selectAction( before,after ){
-    for( var i = 0 ; i < selection().length; i++ ){
-        var tr = selection()[i].parentElement.parentElement; // 체크된 체크박스의 tr
+    var checkedItem = selection();
+    for( var i = 0 ; i < checkedItem.length; i++ ){
+        var tr = checkedItem[i].parentElement.parentElement; // 체크된 체크박스의 tr
         var labels = tr.cells[2].getElementsByTagName("div")[0]; // 초기 값
 
         coreAction( labels , before , after ); // 이거이 핵심,알맹이
