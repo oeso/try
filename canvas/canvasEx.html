@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>context</title>
+    <style>body{background:#efefef}canvas {display:block;width:100%;margin-bottom:30px;}.box{width:49%;float:left;margin:0 0.5%;min-height:900px;background:#fff}</style>
+    <script>
+    function id(v){return document.getElementById(v);}
+    function draw() {
+      var canvas = document.getElementById('canvas');
+      if (canvas.getContext) {
+        var ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = 'rgb(200, 0, 0)';
+        ctx.fillRect(10, 10, 50, 50);
+
+        ctx.fillStyle = 'rgba(0, 0, 200, 0.5)';
+        ctx.fillRect(30, 30, 50, 50);
+      }
+    }
+  </script>
+</head>
+<body onload="draw();">
+    <div class="box">
+    <h1>OES'S CANVAS</h1>
+    <canvas id="canvas" height="150">
+        <img src="https://www.google.co.kr/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png" alt="">
+    </canvas>
+
+<!-- circle 그리기 -->
+    <canvas id="cir"></canvas>
+
+    <script>
+        var cir = document.getElementById("cir");
+        var ctx = cir.getContext("2d");
+        ctx.beginPath();
+        ctx.arc(95,50,40,0,2*Math.PI);
+        ctx.stroke();
+        ctx.fillStyle="red"
+    </script>
+
+<!-- 텍스트 그리기 -->
+    <canvas id="txt"></canvas>
+    <script>
+        var txt = id("txt");
+        var ctxTxt = txt.getContext("2d");
+        ctxTxt.font = "50px Arial"
+        ctxTxt.fillText("TDD -> KARMA / JASMINE ", 10, 50);
+        ctxTxt.fillStyle="red"
+    </script>
+
+
+<canvas id="box" height="300" style="border:1px solid red"></canvas>
+<script>
+    var box = id("box");
+    var ctxbox = box.getContext("2d");
+
+    ctxbox.fillStyle="red";
+    ctxbox.fillRect(0,20,300,100);
+    ctxbox.clearRect(0,30,10,10);
+
+</script>
+
+<canvas id="box2" height="200" style="border:1px solid red">
+    cavnas 사용하기
+</canvas>
+<script>
+    var box2 = id("box2");
+    var ctxbox2 = box2.getContext("2d");
+
+    ctxbox2.beginPath();
+    ctxbox2.lineTo(150,20);
+    ctxbox2.lineTo(150,150);
+    ctxbox2.lineTo(20,150);
+    ctxbox2.closePath();
+    ctxbox2.fill();
+</script>
+
+
+<!--원 그리기-->
+<canvas id="box3" height="300" style="border:1px solid red">
+    cavnas 사용하기
+</canvas>
+<script>
+    var box3 = id("box3");
+    var ctxbox3 = box3.getContext("2d");
+
+    ctxbox3.beginPath(); // 시작함수 호출
+    ctxbox3.arc(200,200,90,180, 360*Math.PI/180, false);
+    ctxbox3.fill();
+
+</script>
+
+
+<!--곡선그리기-->
+<canvas id="box4" height="300" style="border:1px solid red"></canvas>
+<script>
+    var box4 = id("box4");
+    var ctxbox4 = box4.getContext("2d");
+
+    ctxbox4.beginPath(); // 시작함수 호출
+    ctxbox4.moveTo(50,50);
+    ctxbox4.quadraticCurveTo(200,350,350,50);
+    ctxbox4.fill();
+
+    ctxbox4.beginPath();
+    ctxbox4.moveTo(350,350);
+    ctxbox4.bezierCurveTo(300,50,600,100,650,350);
+    ctxbox4.stroke();
+
+    ctxbox4.beginPath();
+    ctxbox4.moveTo(350,350);
+    ctxbox4.bezierCurveTo(100,50,600,100,650,350);
+    ctxbox4.stroke();
+
+
+</script>
+
+<canvas id="canv" height="300"></canvas>
+<script>
+    var canv = document.getElementById("canv");
+    var canvasContext = canv.getContext("2d");
+
+
+    canvasContext.strokeRect(10,10,200,200);
+
+    canvasContext.fillRect(220,10,200,200);
+    canvasContext.fillStyle="red"
+
+
+    canvasContext.rect(430,10,200,200);
+    canvasContext.fill();
+
+    canvasContext.clearRect(500,50,100,100);
+</script>
+
+
+<!--도너츠만들기 실습-->
+<canvas id="cans" height="400"></canvas>
+<script>
+    var cans = document.getElementById("cans");
+    var cansContext = cans.getContext("2d");
+
+    cansContext.beginPath();
+    cansContext.arc(250,200,150,0,2*Math.PI);
+    cansContext.stroke();
+
+    cansContext.beginPath();
+    cansContext.arc(250,200,75,0,2*Math.PI)
+    cansContext.fill();
+</script>
+
+<!-- 직선을 이용하여 삼각형을 지정된 좌표에 그리고 색칠하시오.
+    구성요소
+    - 꼭지점 1의 좌표 (100,50)
+    - 꼭지점 2의 좌표 (100,250)
+    - 꼭지점 3의 좌표 (250,150)
+    - 내부의 색 : 검정색
+    - 전체 canvas 크기 : width=300, height=300
+    - style="border:solid 1px #000000" 지정
+-->
+<canvas id="triangle" width="300" height="300"></canvas>
+<script>
+    var triangle = id("triangle");
+    var triangleBox = triangle.getContext("2d");
+
+    triangleBox.moveTo(100,50);
+    triangleBox.lineTo(100,250);
+    triangleBox.lineTo(250,150);
+    triangleBox.fill();
+</script>
+</div>
+<div class="box">
+
+
+</div>
+</body>
+</html>
