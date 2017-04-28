@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko" ng-app="fileNamer">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Edit by AngularJS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="AngularJS File Name Editor by ottori">
+    <meta name="author" content="ottori">
+    <link rel="shortcut icon" href="http://image.global.golfzon.com/global/ca/golfzon.ico" />
+
+    <!-- theme bootstrap styles for this template -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/dashboard.css" rel="stylesheet">
+    <script src="https://use.fontawesome.com/ab543bb152.js"></script>
+    <script src="js/angular-1.6.4.js"></script>
+    <script src="js/filenamer-angular.js"></script>
+  </head>
+  <body>
+    <a href="#content" class="skip">skip navigation</a>
+    <h1 class="ir">File Namer</h1>
+
+    <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse" ng-controller="callArea">
+      <h2 class="ir">Top navigation</h2>
+      <a class="navbar-brand" href="#" id="title">File Namer</a>
+
+      <div class="navbar-collapse" id="navbarsExampleDefault">
+        <form class="form-inline mt-2 mt-md-0">
+          <!--<input class="form-control mr-sm-2" placeholder="Search" type="text" id="inputTxt">-->
+          <label class="btn btn-default btn-filebtn btn-outline-success my-2 my-sm-0">
+              불러오기 <input type="file" id="inputFile" multiple ng-change="fileOpenStart">
+          </label>
+        </form>
+      </div>
+    </nav>
+
+    <p id="openMessage" class="message">Open Your Files!</p>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="bg-faded sidebar" ng-controller="leftMenu">
+          <h2 class="hidden">filenamer global navigation</h2>
+          <ul id="nav" class="nav nav-pills flex-column">
+            <li class="nav-item"><button disabled id="btnDeleteAll" onclick="deleteAll(this);" class="btn btn-default"><i class="fa fa-window-close"></i> 전체 삭제 <span class="sr-only">(current)</span></button></li>
+            <li class="nav-item"><button disabled id="btnDeleteList" onclick="deleteRows(this);" class="btn btn-default"><i class="fa fa-remove"></i> 선택 삭제 <span class="sr-only">(current)</span></button></li>
+            <li class="nav-item"><button disabled id="btnRestore" onclick="restore(this);" class="btn btn-default"><i class="fa fa-refresh"></i> 원래이름으로</button></li>
+            <li class="nav-item"><button disabled id="btnStringChange" onclick="stringChange(this);" class="btn btn-default"><i class="fa fa-font"></i> 문자열 바꾸기</button></li>
+            <li class="nav-item"><button disabled id="btnPasteBefore" onclick="pasteBefore(this);" class="btn btn-default"><i class="fa fa-step-forward"></i> 앞이름 붙이기</button></li>
+            <li class="nav-item"><button disabled id="btnPasteAfter" onclick="pasteAfter(this);" class="btn btn-default"><i class="fa fa-step-backward"></i> 뒷이름 붙이기</button></li>
+            <li class="nav-item"><button disabled id="btnKeepNumber" onclick="keepNumber(this);" class="btn btn-default"><i class="fa fa-list-ol"></i> 숫자만 남기기</button></li>
+            <li class="nav-item"><button disabled id="btnAddExtension" onclick="registExtension(this);" class="btn btn-default"><i class="fa fa-asterisk"></i> 확장자 추가</button></li>
+            <li class="nav-item"><button disabled id="btnChangeExtension" onclick="changeExtension(this);" class="btn btn-default"><i class="fa fa-asterisk"></i> 확장자 변경</button></li>
+            <li class="nav-item"><button disabled id="btnDelExtension" onclick="delExtension(this);" class="btn btn-default"><i class="fa fa-asterisk"></i> 확장자 삭제</button></li>
+            <li class="nav-item"><button disabled id="btnSortAsc" onclick="sortAsc(this);" class="btn btn-default"><i class="fa fa-sort-alpha-asc"></i> 오름차순 정렬</button></li>
+            <li class="nav-item"><button disabled id="btnSortDesc" onclick="sortDesc(this);" class="btn btn-default"><i class="fa fa-sort-alpha-desc"></i> 내림차순 정렬</button></li>
+            <li class="nav-item"><button disabled id="btnSave" onclick="save(this);" class="btn btn-success"><i class="fa fa-save"></i> SAVE</button></li>
+          </ul>
+        </nav>
+
+        <main id="content" class="pt-3" ng-controller="content">
+            <h2 class="ir">Name List</h2>
+            <form class="" action="index.html" method="post">
+              <div class="table-responsive">
+                <table id="fileListTable" class="table table-bordered">
+                  <caption class="hidden">file name list</caption>
+                  <colgroup>
+                    <col style="width:50px">
+                    <col style="width:48%">
+                    <col>
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th><input type="checkbox" onclick="checkAll(this);" value="" title="total select!"></th>
+                      <th>Old Name</th>
+                      <th>New Name</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-center">
+                    <tr>
+                      <td><input class="undefined" type="checkbox" id="checkbox0"></td>
+                      <td><label class="oldName" for="checkbox0">chrome_child.dll.sig</label></td>
+                      <td><div class="newName">chrome_child.dll.sig</div></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </form>
+        </main>
+
+        <!-- 요구 사항 -->
+        <div class="checklist panel panel-default">
+            <h2 class="panel-heading">Requriement 요구사항</h2>
+            <ul class="panel-body list-group">
+                <li class="list-group-item">다중선택가능. multiple / file list 객체 활용. IE9 이하는 다중선택 불가</li>
+                <li class="list-group-item">선택한 체크박스 항목을 기준으로 왼쪽 지시에 따라 기능 동작</li>
+                <li class="list-group-item">가져온 파일 우클릭시 파일명, 사이즈 alert</li>
+            </ul>
+        </div>
+        <!-- // 요구 사항 -->
+
+      </div>
+    </div>
+
+    <p id="counting" class="counting"></p>
+
+    <!-- layer for Edit -->
+    <div id="dim" class="dimed" ng-show="layerState"></div>
+    <div id="layer" class="layer" ng-show="layerState" >
+        <h3 id="layerTitle" class="title">문자열 바꾸기</h3>
+        <ul class="layerbox">
+          <li>
+            <h4 id="layerGuide">Before label</h4>
+            <input type="text" id="beforeValue" class="inp-txt type1">
+            <label for="beforeValue">을</label>
+          </li>
+          <li id="ng-show">
+            <h4>After label</h4>
+            <input type="text" id="afterValue" class="inp-txt">
+            <label for="afterValue">으로</label>
+          </li>
+        </ul>
+        <div class="text-center">
+            <button type="button" class="btn btn-primary" id="btnOk" >OK</button>
+            <button type="button" class="btn btn-info" id="btnCancel" onclick="closeLayerAction();">CANCEL</button>
+        </div>
+    </div>
+    <!-- //layer for Edit -->
+
+</body>
+</html>
