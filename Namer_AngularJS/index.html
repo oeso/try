@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" ng-app="fileNamer">
+<html lang="ko" ng-app="app">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
@@ -17,11 +17,11 @@
     <script src="js/angular-1.6.4.js"></script>
     <script src="js/filenamer-angular.js"></script>
   </head>
-  <body>
+  <body ng-controller="editor">
     <a href="#content" class="skip">skip navigation</a>
     <h1 class="ir">File Namer</h1>
 
-    <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse" ng-controller="callArea">
+    <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
       <h2 class="ir">Top navigation</h2>
       <a class="navbar-brand" href="#" id="title">File Namer</a>
 
@@ -29,7 +29,7 @@
         <form class="form-inline mt-2 mt-md-0">
           <!--<input class="form-control mr-sm-2" placeholder="Search" type="text" id="inputTxt">-->
           <label class="btn btn-default btn-filebtn btn-outline-success my-2 my-sm-0">
-              불러오기 <input type="file" id="inputFile" multiple ng-change="fileOpenStart">
+              불러오기 <input type="file" id="inputFile" multiple onChange="fileOpenStart(this)">
           </label>
         </form>
       </div>
@@ -39,7 +39,7 @@
 
     <div class="container-fluid">
       <div class="row">
-        <nav class="bg-faded sidebar" ng-controller="leftMenu">
+        <nav class="bg-faded sidebar">
           <h2 class="hidden">filenamer global navigation</h2>
           <ul id="nav" class="nav nav-pills flex-column">
             <li class="nav-item"><button disabled id="btnDeleteAll" onclick="deleteAll(this);" class="btn btn-default"><i class="fa fa-window-close"></i> 전체 삭제 <span class="sr-only">(current)</span></button></li>
@@ -58,7 +58,7 @@
           </ul>
         </nav>
 
-        <main id="content" class="pt-3" ng-controller="content">
+        <main id="content" class="pt-3">
             <h2 class="ir">Name List</h2>
             <form class="" action="index.html" method="post">
               <div class="table-responsive">
