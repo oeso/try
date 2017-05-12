@@ -17,7 +17,7 @@
     <script src="js/angular-1.6.4.js"></script>
     <script src="js/filenamer-angular.js"></script>
   </head>
-  <body ng-controller="editor">
+  <body ng-controller="editor" id="editor">
     <a href="#content" class="skip">skip navigation</a>
     <h1 class="ir">File Namer</h1>
 
@@ -29,8 +29,9 @@
         <form class="form-inline mt-2 mt-md-0">
           <!--<input class="form-control mr-sm-2" placeholder="Search" type="text" id="inputTxt">-->
           <label class="btn btn-default btn-filebtn btn-outline-success my-2 my-sm-0">
-              불러오기 <input type="file" id="inputFile" multiple onChange="fileOpenStart(this)">
+              불러오기 <input type="file" id="inputFile" multiple data-bind-file="" data-ng-model="theFile" >
           </label>
+          <input type="checkbox" ng-model="leftbtn">
         </form>
       </div>
     </nav>
@@ -42,24 +43,26 @@
         <nav class="bg-faded sidebar">
           <h2 class="hidden">filenamer global navigation</h2>
           <ul id="nav" class="nav nav-pills flex-column">
-            <li class="nav-item"><button disabled id="btnDeleteAll" onclick="deleteAll(this);" class="btn btn-default"><i class="fa fa-window-close"></i> 전체 삭제 <span class="sr-only">(current)</span></button></li>
-            <li class="nav-item"><button disabled id="btnDeleteList" onclick="deleteRows(this);" class="btn btn-default"><i class="fa fa-remove"></i> 선택 삭제 <span class="sr-only">(current)</span></button></li>
-            <li class="nav-item"><button disabled id="btnRestore" onclick="restore(this);" class="btn btn-default"><i class="fa fa-refresh"></i> 원래이름으로</button></li>
-            <li class="nav-item"><button disabled id="btnStringChange" onclick="stringChange(this);" class="btn btn-default"><i class="fa fa-font"></i> 문자열 바꾸기</button></li>
-            <li class="nav-item"><button disabled id="btnPasteBefore" onclick="pasteBefore(this);" class="btn btn-default"><i class="fa fa-step-forward"></i> 앞이름 붙이기</button></li>
-            <li class="nav-item"><button disabled id="btnPasteAfter" onclick="pasteAfter(this);" class="btn btn-default"><i class="fa fa-step-backward"></i> 뒷이름 붙이기</button></li>
-            <li class="nav-item"><button disabled id="btnKeepNumber" onclick="keepNumber(this);" class="btn btn-default"><i class="fa fa-list-ol"></i> 숫자만 남기기</button></li>
-            <li class="nav-item"><button disabled id="btnAddExtension" onclick="registExtension(this);" class="btn btn-default"><i class="fa fa-asterisk"></i> 확장자 추가</button></li>
-            <li class="nav-item"><button disabled id="btnChangeExtension" onclick="changeExtension(this);" class="btn btn-default"><i class="fa fa-asterisk"></i> 확장자 변경</button></li>
-            <li class="nav-item"><button disabled id="btnDelExtension" onclick="delExtension(this);" class="btn btn-default"><i class="fa fa-asterisk"></i> 확장자 삭제</button></li>
-            <li class="nav-item"><button disabled id="btnSortAsc" onclick="sortAsc(this);" class="btn btn-default"><i class="fa fa-sort-alpha-asc"></i> 오름차순 정렬</button></li>
-            <li class="nav-item"><button disabled id="btnSortDesc" onclick="sortDesc(this);" class="btn btn-default"><i class="fa fa-sort-alpha-desc"></i> 내림차순 정렬</button></li>
-            <li class="nav-item"><button disabled id="btnSave" onclick="save(this);" class="btn btn-success"><i class="fa fa-save"></i> SAVE</button></li>
+            <li class="nav-item"><button ng-class="theFile ? 'on' : ''" data-ng-click="resetFile()" id="btnDeleteAll" class="btn btn-default"><i class="fa fa-window-close"></i> 전체 삭제 <span class="sr-only">(current)</span></button></li>
+            <li class="nav-item"><button ng-class="theFile ? 'on' : ''" ng-click="deleteRows(this);" id="btnDeleteList" class="btn btn-default"><i class="fa fa-remove"></i> 선택 삭제 <span class="sr-only">(current)</span></button></li>
+            <li class="nav-item"><button ng-class="theFile ? 'on' : ''" id="btnRestore" onclick="restore(this);" class="btn btn-default"><i class="fa fa-refresh"></i> 원래이름으로</button></li>
+            <li class="nav-item"><button ng-class="theFile ? 'on' : ''" id="btnStringChange" onclick="stringChange(this);" class="btn btn-default"><i class="fa fa-font"></i> 문자열 바꾸기</button></li>
+            <li class="nav-item"><button ng-class="theFile ? 'on' : ''" id="btnPasteBefore" onclick="pasteBefore(this);" class="btn btn-default"><i class="fa fa-step-forward"></i> 앞이름 붙이기</button></li>
+            <li class="nav-item"><button ng-class="theFile ? 'on' : ''" id="btnPasteAfter" onclick="pasteAfter(this);" class="btn btn-default"><i class="fa fa-step-backward"></i> 뒷이름 붙이기</button></li>
+            <li class="nav-item"><button ng-class="theFile ? 'on' : ''" id="btnKeepNumber" onclick="keepNumber(this);" class="btn btn-default"><i class="fa fa-list-ol"></i> 숫자만 남기기</button></li>
+            <li class="nav-item"><button ng-class="theFile ? 'on' : ''" id="btnAddExtension" onclick="registExtension(this);" class="btn btn-default"><i class="fa fa-asterisk"></i> 확장자 추가</button></li>
+            <li class="nav-item"><button ng-class="theFile ? 'on' : ''" id="btnChangeExtension" onclick="changeExtension(this);" class="btn btn-default"><i class="fa fa-asterisk"></i> 확장자 변경</button></li>
+            <li class="nav-item"><button ng-class="theFile ? 'on' : ''" id="btnDelExtension" onclick="delExtension(this);" class="btn btn-default"><i class="fa fa-asterisk"></i> 확장자 삭제</button></li>
+            <li class="nav-item"><button ng-class="theFile ? 'on' : ''" id="btnSortAsc" onclick="sortAsc(this);" class="btn btn-default"><i class="fa fa-sort-alpha-asc"></i> 오름차순 정렬</button></li>
+            <li class="nav-item"><button ng-class="theFile ? 'on' : ''" id="btnSortDesc" onclick="sortDesc(this);" class="btn btn-default"><i class="fa fa-sort-alpha-desc"></i> 내림차순 정렬</button></li>
+            <li class="nav-item"><button ng-class="theFile ? 'on' : ''" id="btnSave" onclick="save(this);" class="btn btn-success"><i class="fa fa-save"></i> SAVE</button></li>
           </ul>
         </nav>
 
         <main id="content" class="pt-3">
             <h2 class="ir">Name List</h2>
+            <p class="file-size" ng-hide="theFile.length > 0">파일 목록이 없습니다.</p>
+            <p class="file-size" ng-show="theFile">총 <strong class="mark">{{theFile.length}}</strong>개의 파일 OPEN</p>
             <form class="" action="index.html" method="post">
               <div class="table-responsive">
                 <table id="fileListTable" class="table table-bordered">
@@ -71,16 +74,16 @@
                   </colgroup>
                   <thead>
                     <tr>
-                      <th><input type="checkbox" onclick="checkAll(this);" value="" title="total select!"></th>
+                      <th><input type="checkbox" value="" title="total select!" ng-model="allCheck"></th>
                       <th>Old Name</th>
                       <th>New Name</th>
                     </tr>
                   </thead>
                   <tbody class="text-center">
-                    <tr>
-                      <td><input class="undefined" type="checkbox" id="checkbox0"></td>
-                      <td><label class="oldName" for="checkbox0">chrome_child.dll.sig</label></td>
-                      <td><div class="newName">chrome_child.dll.sig</div></td>
+                    <tr ng-repeat="item in theFile">
+                      <td><input class="undefined" type="checkbox" id="{{$index+1}}" ng-model="allCheck" ng-click="checkedSorting(this)"></td>
+                      <td><label class="oldName" for="{{$index+1}}">{{item.name}}</label></td>
+                      <td><div class="newName"></div></td>
                     </tr>
                   </tbody>
                 </table>

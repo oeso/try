@@ -26,11 +26,15 @@
 .fa-sort-amount-asc,.fa-sort-amount-desc {display:inline-block;padding:0 10px}
 .oldName, .newName, .resultName {margin:0; padding:5px 8px; text-indent:10px; text-align:left}
 .sidebar .nav-item {padding:5px 25px}
-.nav > li > button {display:block;width:100%;padding:10px 0;color:#666}
+.nav > li > .btn {display:block;width:100%;padding:10px 0;color:#999}
+.nav > li > .btn.on {color:#000}
 .form-inline label {position:absolute;right:12px;top:10px}
 .counting {position:absolute; left:18%; right:20px; bottom:30px; font-size:12px}
 .message {position:absolute;left:0; right:0; top:350px; margin-left:220px; font-size:80px; font-weight:bold; color:#eee; text-align:center}
 .btn-success {color:#fff !important}
+.file-size {font-size:13px}
+.file-size .mark {color:#007eff; background:none}
+.ment-nofile {color:#888; margin:0}
 
 .container-fluid {min-width:1000px}
 .panel > .list-group {padding:0}
