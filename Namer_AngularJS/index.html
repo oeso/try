@@ -31,7 +31,6 @@
           <label class="btn btn-default btn-filebtn btn-outline-success my-2 my-sm-0">
               불러오기 <input type="file" id="inputFile" multiple data-bind-file="" data-ng-model="theFile" >
           </label>
-          <input type="checkbox" ng-model="leftbtn">
         </form>
       </div>
     </nav>
@@ -44,7 +43,7 @@
           <h2 class="hidden">filenamer global navigation</h2>
           <ul id="nav" class="nav nav-pills flex-column">
             <li class="nav-item"><button ng-class="theFile ? 'on' : ''" data-ng-click="resetFile()" id="btnDeleteAll" class="btn btn-default"><i class="fa fa-window-close"></i> 전체 삭제 <span class="sr-only">(current)</span></button></li>
-            <li class="nav-item"><button ng-class="theFile ? 'on' : ''" ng-click="deleteRows(this);" id="btnDeleteList" class="btn btn-default"><i class="fa fa-remove"></i> 선택 삭제 <span class="sr-only">(current)</span></button></li>
+            <li class="nav-item"><button ng-class="theFile ? 'on' : ''" toast="" ng-model="orderDel"  id="btnDeleteList" class="btn btn-default"><i class="fa fa-remove"></i> 선택 삭제 <span class="sr-only">(current)</span></button></li>
             <li class="nav-item"><button ng-class="theFile ? 'on' : ''" id="btnRestore" onclick="restore(this);" class="btn btn-default"><i class="fa fa-refresh"></i> 원래이름으로</button></li>
             <li class="nav-item"><button ng-class="theFile ? 'on' : ''" id="btnStringChange" onclick="stringChange(this);" class="btn btn-default"><i class="fa fa-font"></i> 문자열 바꾸기</button></li>
             <li class="nav-item"><button ng-class="theFile ? 'on' : ''" id="btnPasteBefore" onclick="pasteBefore(this);" class="btn btn-default"><i class="fa fa-step-forward"></i> 앞이름 붙이기</button></li>
@@ -80,8 +79,8 @@
                     </tr>
                   </thead>
                   <tbody class="text-center">
-                    <tr ng-repeat="item in theFile">
-                      <td><input class="undefined" type="checkbox" id="{{$index+1}}" ng-model="allCheck" ng-click="checkedSorting(this)"></td>
+                    <tr ng-repeat="item in theFile" ng-class-even="'tr-even'" ng-if="!orderDel" ng-class="orderDel ? 'off' : 'on'">
+                      <td><input class="undefined" type="checkbox" id="{{$index+1}}" ng-checked="allCheck" ng-click="checkedSorting(this)"></td>
                       <td><label class="oldName" for="{{$index+1}}">{{item.name}}</label></td>
                       <td><div class="newName"></div></td>
                     </tr>
@@ -92,14 +91,7 @@
         </main>
 
         <!-- 요구 사항 -->
-        <div class="checklist panel panel-default">
-            <h2 class="panel-heading">Requriement 요구사항</h2>
-            <ul class="panel-body list-group">
-                <li class="list-group-item">다중선택가능. multiple / file list 객체 활용. IE9 이하는 다중선택 불가</li>
-                <li class="list-group-item">선택한 체크박스 항목을 기준으로 왼쪽 지시에 따라 기능 동작</li>
-                <li class="list-group-item">가져온 파일 우클릭시 파일명, 사이즈 alert</li>
-            </ul>
-        </div>
+        <ng-include src="'explain.html'" onload="includeAlert()" autoscroll="true" ></ng-include>
         <!-- // 요구 사항 -->
 
       </div>

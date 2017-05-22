@@ -20,6 +20,7 @@
 .table td a {display:block}
 .table td input[type="checkbox"] {cursor:pointer}
 .table .newName {text-align:left; color:#1a1c22}
+.table .tr-even td {background:#eee}
 
 .btn-filebtn {overflow:hidden; position:relative; width:90px}
 .btn-filebtn input[type="file"] {opacity:0;position:absolute;top:0;right:0;bottom:0;cursor:pointer;font-size:30px;color:transparent}
