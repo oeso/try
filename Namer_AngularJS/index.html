@@ -58,7 +58,41 @@
           </ul>
         </nav>
 
-        <main id="content" class="pt-3">
+        <main id="content" class="pt-3" ng-init="theFile.length = 0">
+            <div class="user-info">
+              <h2 class="user-info-tit"><strong>User Information input validation</strong></h2>
+              <ul class="labels">
+                <li>
+                  <label for="names">Name : </label>
+                  <input id="names" type="text" ng-model="validationNames" ng-model-options="{updateOn : 'blur'}">
+                  <button>Search</button>
+                  <p>{{validationNames}}</p>
+                </li>
+                <li>
+                  <label for="ids">ID : </label>
+                  <input id="ids" type="text" ng-model="validationId" ng-model-options="{updateOn : 'click'}">
+                  <button>ID verify</button>
+                  <p>{{validationId}}</p>
+                </li>
+                <li>
+                  <label>sex : </label>
+                  <input name="sex" id="female" type="radio" ng-model="female">
+                  <label for="female">female</label>
+                  <input name="sex" id="male" type="radio" ng-model="male">
+                  <label for="male">male</label>
+                  <p ng-if="!female && !male">성별을 선택해주세요</p>
+                </li>
+                <li>
+                  <label>National : </label>
+                  <input name="national" id="domestic" ng-model="domestic">
+                  <label for="domestic">domestic</label>
+                  <input name="national" id="foreigner" ng-model="foreigner">
+                  <label for="foreigner">foreigner</label>
+                  <p ng-if="!domestic && !foreigner">국적 선택해주세요</p>
+                </li>
+              </ul>
+              <button class="submit">Submit</button>
+            </div>
             <h2 class="ir">Name List</h2>
             <p class="file-size" ng-hide="theFile.length > 0">파일 목록이 없습니다.</p>
             <p class="file-size" ng-show="theFile">총 <strong class="mark">{{theFile.length}}</strong>개의 파일 OPEN</p>
@@ -80,7 +114,7 @@
                   </thead>
                   <tbody class="text-center">
                     <tr ng-repeat="item in theFile" ng-class-even="'tr-even'" ng-if="!orderDel" ng-class="orderDel ? 'off' : 'on'">
-                      <td><input class="undefined" type="checkbox" id="{{$index+1}}" ng-checked="allCheck" ng-click="checkedSorting(this)"></td>
+                      <td><input class="undefined" type="checkbox" id="{{$index+1}}" ng-del="orderDel" ng-checked="allCheck" ng-click="checkedSorting(this)"></td>
                       <td><label class="oldName" for="{{$index+1}}">{{item.name}}</label></td>
                       <td><div class="newName"></div></td>
                     </tr>
