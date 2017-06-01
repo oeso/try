@@ -14,10 +14,12 @@
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/dashboard.css" rel="stylesheet">
     <script src="https://use.fontawesome.com/ab543bb152.js"></script>
+    <script src="http://connect.facebook.net/en_US/sdk.js"></script>
     <script src="js/angular-1.6.4.js"></script>
     <script src="js/filenamer-angular.js"></script>
   </head>
   <body ng-controller="editor" id="editor">
+    <div id="fb-root">
     <a href="#content" class="skip">skip navigation</a>
     <h1 class="ir">File Namer</h1>
 
@@ -55,14 +57,15 @@
             <li class="nav-item"><button ng-class="theFile ? 'on' : ''" id="btnSortAsc" onclick="sortAsc(this);" class="btn btn-default"><i class="fa fa-sort-alpha-asc"></i> 오름차순 정렬</button></li>
             <li class="nav-item"><button ng-class="theFile ? 'on' : ''" id="btnSortDesc" onclick="sortDesc(this);" class="btn btn-default"><i class="fa fa-sort-alpha-desc"></i> 내림차순 정렬</button></li>
             <li class="nav-item"><button ng-class="theFile ? 'on' : ''" id="btnSave" onclick="save(this);" class="btn btn-success"><i class="fa fa-save"></i> SAVE</button></li>
+            <li class="nav-item"><fb:login-button scope="public_profile,email" onlogin="checkLoginState();"> </fb:login-button></li>
           </ul>
         </nav>
 
         <main id="content" class="pt-3" ng-init="theFile.length = 0">
             <div class="user-info">
-              <h2 class="user-info-tit"><strong>User Information input validation</strong></h2>
+              <h2 class="user-info-tit"><strong>간편 회원 정보 입력</strong></h2>
               <ul class="labels">
-                <li>
+                <li ng-open="testFalse">
                   <label for="names">Name : </label>
                   <input id="names" type="text" ng-model="validationNames" ng-model-options="{updateOn : 'blur'}">
                   <button>Search</button>
@@ -76,26 +79,26 @@
                 </li>
                 <li>
                   <label>sex : </label>
-                  <input name="sex" id="female" type="radio" ng-model="female">
+                  <input type="radio" name="sex" id="female" ng-model="female">
                   <label for="female">female</label>
-                  <input name="sex" id="male" type="radio" ng-model="male">
+                  <input type="radio" name="sex" id="male" ng-model="male">
                   <label for="male">male</label>
                   <p ng-if="!female && !male">성별을 선택해주세요</p>
                 </li>
                 <li>
                   <label>National : </label>
-                  <input name="national" id="domestic" ng-model="domestic">
+                  <input type="radio" name="national" id="domestic" ng-model="domestic">
                   <label for="domestic">domestic</label>
-                  <input name="national" id="foreigner" ng-model="foreigner">
+                  <input type="radio" name="national" id="foreigner" ng-model="foreigner">
                   <label for="foreigner">foreigner</label>
                   <p ng-if="!domestic && !foreigner">국적 선택해주세요</p>
                 </li>
               </ul>
-              <button class="submit">Submit</button>
+              <button class="btn btn-info"><span class="glyphicon glyphicon-ok" style="font-size:10px"></span> Submit</button>
             </div>
             <h2 class="ir">Name List</h2>
-            <p class="file-size" ng-hide="theFile.length > 0">파일 목록이 없습니다.</p>
-            <p class="file-size" ng-show="theFile">총 <strong class="mark">{{theFile.length}}</strong>개의 파일 OPEN</p>
+
+            <p class="file-size" ng-show="theFile"><span class="file-size" ng-hide="theFile.length > 0">파일 목록이 없습니다.</span> 총 <strong class="mark">{{theFile.length}}</strong>개의 파일 OPEN</p>
             <form class="" action="index.html" method="post">
               <div class="table-responsive">
                 <table id="fileListTable" class="table table-bordered">
@@ -124,10 +127,11 @@
             </form>
         </main>
 
-        <!-- 요구 사항 -->
-        <ng-include src="'explain.html'" onload="includeAlert()" autoscroll="true" ></ng-include>
-        <!-- // 요구 사항 -->
+        <!-- Explain 사항 include -->
+        <!--<ng-include src="'explain.html'" onload="includeAlert()" autoscroll="true" ></ng-include>-->
+        <!-- // Explain 사항 include -->
 
+      </div>
       </div>
     </div>
 
@@ -136,7 +140,7 @@
     <!-- layer for Edit -->
     <div id="dim" class="dimed" ng-show="layerState"></div>
     <div id="layer" class="layer" ng-show="layerState" >
-        <h3 id="layerTitle" class="title">문자열 바꾸기</h3>
+        <h3 id="layerTitle" class="title">Change Text unit</h3>
         <ul class="layerbox">
           <li>
             <h4 id="layerGuide">Before label</h4>

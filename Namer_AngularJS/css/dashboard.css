@@ -22,7 +22,7 @@
 .table .newName {text-align:left; color:#1a1c22}
 .table .tr-even td {background:#eee}
 
-.user-info {border:1px solid #eee; margin:0 0 10px; padding:10px}
+.user-info {margin:0 0 20px}
 .user-info-tit {padding-bottom:10px}
 
 .btn-filebtn {overflow:hidden; position:relative; width:90px}
@@ -40,14 +40,13 @@
 .file-size .mark {color:#007eff; background:none}
 .ment-nofile {color:#888; margin:0}
 
-.labels {margin:0; padding:0; line-height:30px; list-style:none}
+.labels {margin:0 0 10px; padding:10px; line-height:30px; list-style:none; border:1px solid #eee; }
 .labels p {color:red}
 .labels li {list-style:none}
 .labels label {min-width:100px; height:30px; vertical-align:top; color:#666; background:#fff}
 .labels input,.labels button {height:30px; vertical-align:top; color:#666; background:#fff; border:1px solid #f2f2f2;}
 .labels button {min-width:80px}
 .labels p {margin:0; padding:0}
-.submit {margin: 20px 0 0 0}
 
 
 .container-fluid {min-width:1000px}
