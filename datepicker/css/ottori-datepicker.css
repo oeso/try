@@ -3,12 +3,12 @@
 ul,li {padding:0}
 caption {font-size:20px; font-weight:bold; height:30px; line-height:30px; margin-bottom:20px}
 span {vertical-align:middle}
-.nav .btn {position:relative}
+.nav .btn {position:relative; padding:5px 12px 6px}
 .nav .btn:before {position:relative; top:2px}
 .nav .btn:focus {background:inherit}
+.nav .glyphicon {top:0; vertical-align:middle}
 .nav .glyphicon-repeat:before {margin-right:6px;font-weight:normal}
 .nav .glyphicon-repeat.on {background:#122b40}
-.glyphicon {top:-1px}
 .new {display:block; position:absolute; left:-5px; top:-5px; width:19px; height:19px; line-height:15px; font-size:13px; color:#fff; font-weight:bold; font-style:normal; -webkit-border-radius:50%; -moz-border-radius:50%; border-radius:50%; background:#d9534f}
 .top-menu {padding:5px 0}
 .title  {border-bottom:1px solid #eee; margin:0 auto 20px; padding-bottom:10px; text-align:center; color:transparent; font-size:1px}
