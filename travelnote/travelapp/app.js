@@ -1,3 +1,14 @@
+// // basicServer.js
+// var http = require('http');
+// http.createServer(function (req, res) {
+//     res.writeHead(200, {'Content-Type': 'text/html'});
+//     res.end('Hello World');
+// }).listen(1337, '127.0.0.1');
+// console.log('Server running at http://127.0.0.1:1337/');
+
+
+
+// jade를 포함한 템플릿 엔진 안쓰고 해보자
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -5,8 +16,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
+//var index = require('./public/index');
 
 var app = express();
 
@@ -20,13 +30,11 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
-app.use('/users', users);
-app.use('/login', login);//login page
 
-app.use('/account', index);//account page
+//app.use('/', index);
+
+app.use(express.static('public'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
