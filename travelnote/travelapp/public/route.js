@@ -1,9 +1,9 @@
 /**
+ * route
  * Created by ottori on 2017-06-30.
  */
 
-angular.module( 'route', [])
-
+angular.module( 'travel', [])
     .config(function($routeProvider) {
 
         $routeProvider
@@ -17,6 +17,6 @@ angular.module( 'route', [])
 
             .otherwise({redirectTo: 'error/error.html'});
     })
-    .controller( 'app', function($scope, $location){
+    .controller( 'wrap', function($scope, $location){
         $scope.name = "TEST NAME!!"
     })

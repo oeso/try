@@ -17,6 +17,11 @@ caption {line-height:0; color:transparent; font-size:0; height:0; text-indent:-8
 .ellipsis{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .hide-el{display:block;overflow:hidden;position:absolute;left:-7000px;width:0;height:0;font-size:1px;color:transparent}
 
+/* index nav link */
+.indexNav {background:#365899}
+.index__link {display:inline-block; padding:10px 20px; color:#fff}
+.index__link:hover {background:#3f3b3b; cursor:pointer}
+
 /* intro */
 .intro-title {position:absolute; left:0; right:0; top:48%; font-size:50px; text-align:center}
 
@@ -39,12 +44,12 @@ caption {line-height:0; color:transparent; font-size:0; height:0; text-indent:-8
 .account .section-ment {padding:10px 0 30px; font-size:15px}
 
 /* header */
-.header {position:relative; padding:10px 20px; border-bottom:2px solid #666}
-.btn-menu {vertical-align:middle; border:1px solid #666; padding:10px; }
-.email {position:relative; top:2px; font-weight:bold; font-size:16px}
+.header {position:relative; padding:10px 20px; border-bottom:2px solid #666; background:#333; color:#fff}
+.btn-menu {vertical-align:middle; padding:10px 10px 8px; color:#444; font-weight:bold; letter-spacing:1px; font-size:16px;background:#86bf3a}
+.email {position:relative; top:2px; font-size:16px}
 .header .pic {width:36px; height:36px; margin-left:10px; border-radius:50%; vertical-align:middle}
 .header-title {position:absolute; right:20px; top:14px; font-size:30px}
-
+.header-note {color:#86bf3a}
 
 /* list */
 .feedlist__section {overflow:hidden;position:relative;}

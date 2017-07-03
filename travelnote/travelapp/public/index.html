@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="route">
+<html lang="en" ng-app="travel">
 <head>
     <meta charset="UTF-8">
     <title>Travel Index</title>
@@ -9,17 +9,64 @@
     <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
         최신버전. 1.0.2와는 사용법에 차이가 있음 -->
     <script src="route.js"></script>
+    <script src="build/result.js"></script>
 </head>
-<body>
-    <div ng-controller="app">
-        <ul>
-            <li><a href="#/login">login</a></li>
-            <li><a href="#/account">account</a></li>
-            <li><a href="#/feedlist">feedlist</a></li>
-            <li><a href="#/reservation">reservation</a></li>
-            <li><a href="#/reservationSuccess">reservationSuccess</a></li>
-        </ul>
+<body ng-controller="wrap">
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '1752200768352421',
+                xfbml      : true,
+                version    : 'v2.9'
+            });
+            FB.AppEvents.logPageView();
+
+            /* 1.로그인 상태 확인 */
+            FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+                    console.log('Logged in.');
+                }
+                else {
+                    alert("미로그인");
+                    FB.login();
+                }
+            });
+        };
+
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <div >
+        <div class="indexNav">
+            <ul>
+                <li class="index__link"><a href="#/login">login</a></li>
+                <li class="index__link"><a href="#/account">account</a></li>
+                <li class="index__link"><a href="#/feedlist">feedlist</a></li>
+                <li class="index__link"><a href="#/reservation">reservation</a></li>
+                <li class="index__link"><a href="#/reservationSuccess">reservationSuccess</a></li>
+            </ul>
+        </div>
     </div>
     <div ng-view></div>
+
+    <script>
+        /*
+        * status는 앱 사용자의 로그인 상태를 지정합니다. 상태는 다음 중 하나일 수 있습니다.
+
+         connected: 사용자가 Facebook에 로그인하고 앱에 로그인했습니다.
+         not_authorized: 사용자가 Facebook에 로그인했지만 앱에 로그인하지 않았습니다.
+         unknown: 사용자가 Facebook에 로그인하지 않았으므로 앱에 로그인했는지 알 수 없습니다. 또는 전에 FB.logout()이 호출되었으므로 Facebook에 연결할 수 없습니다.
+         connected 상태인 경우 authResponse가 포함되며 다음과 같이 구성되어 있습니다.
+         accessToken: 앱 사용자의 액세스 토큰이 포함되어 있습니다.
+         expiresIn: 토큰이 만료되어 갱신해야 하는 UNIX 시간을 표시합니다.
+         signedRequest: 앱 사용자에 대한 정보를 포함하는 서명된 매개변수입니다.
+         userID: 앱 사용자의 ID입니다.
+         */
+    </script>
 </body>
 </html>
