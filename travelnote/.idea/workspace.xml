@@ -57,14 +57,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="result.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="result.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/travelapp/public/build/result.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="46" column="33" lean-forward="false" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="33" />
+            <state relative-caret-position="380">
+              <caret line="53" column="20" lean-forward="false" selection-start-line="53" selection-start-column="20" selection-end-line="53" selection-end-column="20" />
               <folding>
                 <marker date="1499251328820" expanded="true" signature="5417:5423" ph="{...}" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="228">
+              <caret line="12" column="79" lean-forward="true" selection-start-line="12" selection-start-column="79" selection-end-line="12" selection-end-column="79" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -135,7 +145,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/travelapp/views/index.jade" />
         <option value="$PROJECT_DIR$/travelapp/routes/index.js" />
         <option value="$PROJECT_DIR$/travelapp/routes/account.js" />
         <option value="$PROJECT_DIR$/travelapp/routes/login.js" />
@@ -186,6 +195,7 @@
         <option value="$PROJECT_DIR$/travelapp/public/route.js" />
         <option value="$PROJECT_DIR$/travelapp/public/build/result.js" />
         <option value="$PROJECT_DIR$/travelapp/public/feedlist/template.html" />
+        <option value="$PROJECT_DIR$/../README.md" />
       </list>
     </option>
   </component>
@@ -634,12 +644,12 @@
       <workItem from="1497494209253" duration="48000" />
       <workItem from="1497494258566" duration="46704000" />
       <workItem from="1497945524568" duration="18231000" />
-      <workItem from="1498795597496" duration="84938000" />
+      <workItem from="1498795597496" duration="85137000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="195285000" />
+    <option name="totallyTimeSpent" value="195484000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="283" y="0" width="1547" height="1080" extended-state="0" />
@@ -676,7 +686,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://C:/Golfzon_Project/GDR/GM_layer_popup_20170629/html/common.css" />
     <entry file="file://C:/Golfzon_Project/GDR/GM_layer_popup_20170629/html/layer.html" />
     <entry file="file://C:/Golfzon_Project/GDR/GM_popup_20170629/view/layer.html">
       <provider selected="true" editor-type-id="text-editor">
@@ -1075,11 +1084,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/travelapp/public/build/result.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="46" column="33" lean-forward="false" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="33" />
+        <state relative-caret-position="380">
+          <caret line="53" column="20" lean-forward="false" selection-start-line="53" selection-start-column="20" selection-end-line="53" selection-end-column="20" />
           <folding>
             <marker date="1499251328820" expanded="true" signature="5417:5423" ph="{...}" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="12" column="79" lean-forward="true" selection-start-line="12" selection-start-column="79" selection-end-line="12" selection-end-column="79" />
+          <folding />
         </state>
       </provider>
     </entry>
