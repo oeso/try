@@ -1,4 +1,9 @@
-/**
- * feedlist
- * Created by ottori on 2017-06-30.
- */
+/* feedlist */
+
+angular.module('travel')
+    .controller('feedlist', function($scope){
+        FB.api('/me', {fields: 'last_name'}, function(response) {
+            console.log(response);
+        });
+    });
+

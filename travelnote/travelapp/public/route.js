@@ -1,7 +1,4 @@
-/**
- * route
- * Created by ottori on 2017-06-30.
- */
+/* rout */
 
 angular.module( 'travel', [])
     .config(function($routeProvider) {
@@ -17,6 +14,11 @@ angular.module( 'travel', [])
 
             .otherwise({redirectTo: 'error/error.html'});
     })
-    .controller( 'wrap', function($scope, $location){
-        $scope.name = "TEST NAME!!"
-    })
+    .controller('wrap', function($scope){
+        $scope.lnbToggle = 0;
+
+        var lnbOpen = function(){
+            console.log('MENU click!');
+            $scope.lnbToggle = 1;
+        }
+    });

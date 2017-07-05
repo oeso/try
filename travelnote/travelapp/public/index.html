@@ -4,17 +4,107 @@
     <meta charset="UTF-8">
     <title>Travel Index</title>
     <link rel="stylesheet" href="stat/stylesheets/travelnote.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
         최신버전. 1.0.2와는 사용법에 차이가 있음 -->
-    <script src="route.js"></script>
 </head>
-<body ng-controller="wrap">
-    <script>
+<body>
 
-    </script>
-    <div >
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '1752200768352421',
+            cookie     : true,  // enable cookies to allow the server to access
+            xfbml      : true,  // parse social plugins on this page
+            version    : 'v2.8' // use graph api version 2.8
+        });
+        FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+        });
+        console.log(1)
+
+    };
+
+    /* login화면 진입시 페북 로그인 상태 : 로그인 대화상자를 띄워 XX님으로 계속 버튼 표시. 버튼 클릭시 loginSuccess 화면 리디렉트,  로그아웃 버튼 노출 */
+    function loginWidthFacebook(){
+
+        FB.login(function(response){ //login을 호출하기면 하면 로그인 대화상자가 생김. 쉼표로 구분하여 나열한 리스트인 선택적 scope 매개변수를 함께 호출하면 추가로 사용자 데이터를 요청할 수 있다.
+
+            if( response.status == "connected" ){
+                console.log('로그인 상태. 피드리스트 화면으로.');
+                window.location.href = "http://tn.com:3000/#/feedlist";
+            }else{
+                FB.login();
+            }
+        }, {scope: 'public_profile, email, user_likes'});
+    }
+
+    /* 로그아웃 */
+    function facebookLogout(){
+        FB.login(function(response){
+            console.log('로그아웃 되었습니다.')
+        });
+    }
+    /* feedlist */
+    function feedlistLoad() {
+        FB.api('/me', {fields: 'last_name'}, function (response) {
+            console.log(response);
+        });
+    };
+
+    // Load the SDK asynchronously
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+
+    // This is called with the results from from FB.getLoginStatus().
+    function statusChangeCallback(response) {
+        if (response.status === 'connected') {
+            console.log("로그인 상태입니다. ");
+
+        } else {
+            //document.getElementById('status').innerHTML = 'Loggin with Facebook';
+            console.log('미로그인 상태입니다.');
+        };
+    };
+
+    //login화면 진입시 페북 미로그인 상태 : login with facebook 로그인 버튼 표시
+
+
+
+    //login화면 진입시 페북 로그인했으며 페북으로 계속하기 버튼을 눌러 권한을 받은 상태인경우 : 바로 feedlist 페이지로 이동. 로그아웃 버튼 노출
+
+
+
+    function testAPI() {
+        console.log('Welcome!  Fetching your information.... ');
+        FB.api('/me', function(response) {
+            //console.log(JSON.stringify(response));
+            //console.log('testAPI : Successful login for: ' + response.name);
+            document.getElementById('status').innerHTML =
+                'testAPI : Thanks for logging in, ' + response.name + '!';
+        });
+    };
+
+    //메시지 게시하는 api
+    function write(){
+        FB.login(function(){
+            FB.api('/me/feed', 'post', {
+                message: 'Hello, world!'
+            });
+        }, {
+            scope: 'publish_actions'
+        });
+    };
+
+</script>
+
+<div ng-controller="wrap">
+    <div>
         <div class="indexNav">
             <ul>
                 <li class="index__link"><a href="#/login">login</a></li>
@@ -25,7 +115,18 @@
             </ul>
         </div>
     </div>
-    <div ng-view></div>
+    <div ng-view>
+
+
+    </div>
+    <!-- 로그인 상태 -->
+    <div id="fb-root"></div>
+    <div onclick="loginWidthFacebook()" class="login__btn-start">페이스북으로 로그인하기</div>
+    <!--<fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button>-->
+
+    <!--<button onclick="myFacebookLogin()" scope="public_profile" class="login__btn-start">Login with Facebook</button>-->
+    <!--<div id="status" class="status"></div>-->
+    <!--<div onclick="write(); return false" scope="publish_actions" class="login__btn-start">게시하기</div>-->
 
     <script>
         /*
@@ -41,7 +142,12 @@
          userID: 앱 사용자의 ID입니다.
          */
     </script>
+</div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+
+    <script src="route.js"></script>
     <script src="build/result.js"></script>
 </body>
 </html>

@@ -1,4 +1,6 @@
-/**
- * header
- * Created by ottori on 2017-06-30.
- */
+/* header */
+//
+// angular.module( 'travel', [])
+//     .controller('header', function($scope){
+//         document.getElementById("aside").style.left = -500+"px";
+//     })
