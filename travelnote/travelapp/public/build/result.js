@@ -1,74 +1,138 @@
-/**
- * Created by ottori on 2017-06-30.
- */
 
+console.log('Angular module 시작');
 
-angular.module( 'travel', [])
-    .config(function($routeProvider) {
+//    Promise를 쓰려 했으나 IE 모든 버전에서 지원하지 않아 쓸 수 없음ㅠㅠ
+//    Promise는 ES6버전 부터 정식 채택된 바 있음
+//    ( new Promise 생성시 정의되지 않았다고 오류 뜸 )
+//    var _promise = new Promise(function( resolve, reject){
+//        var findFB = setInterval(function(){
+//            if( FB ){
+//                clearInterval( findFB );
+//                resolve("FB 확인됨");
+//            }else{
+//                reject('FB찾을 수 없음');
+//            }
+//        },500);
+//    });
+//    _promise.then(
+//        function(success){
+//            console.log(success);
+//
+//        },
+//        function(fail){
+//            console.log(fail);
+//        }
+//    );
+var names = 123;
 
-        $routeProvider
-            .when('/login', {templateUrl: 'login/template.html'})
-            .when('/loginSuccess', {templateUrl: 'login/login_success.html'})
-            .when('/account', {templateUrl: 'account/template.html'})
-            .when('/intro', {templateUrl: 'intro/template.html'})
-            .when('/feedlist', {templateUrl: 'feedlist/template.html'})
-            .when('/reservation', {templateUrl: 'reservation/template.html'})
-            .when('/reservationSuccess', {templateUrl: 'reservationSuccess/template.html'})
-
-            .otherwise({redirectTo: 'error/error.html'});
+// feed list를 가져와서 리턴하는 함수
+function feedBind(){
+    FB.api('/me', {fields:'last_name'}, function(response){
+        console.log(response);
+        console.log(response.last_name);
+        names = response.last_name;
+        return response.last_name;
     })
-    .controller('wrap', function($scope){
+    return names;
+}
 
-        //LNB 열기
-        $scope.lnbOpen = function(){
-            console.log('MENU 열기');
-            $scope.lnbToggle = 'open';
-        };
-        //LNB 닫기
-        $scope.lnbClose = function(){
-            console.log('MENU 닫음');
-            $scope.lnbToggle = 'close';
-        };
+//페이스북 로그인 여부 확인
+function statusChangeCallback(response) {
+    if (response.status === 'connected') {
+        console.log("로그인 상태입니다.");
+        document.getElementById("btnLoginFB").style.display ="none";
+    } else {
+        //document.getElementById('status').innerHTML = 'Loggin with Facebook';
+        console.log('미로그인 상태입니다.');
+    };
+};
 
-        //로그아웃
-        $scope.fbLogout = function(){
-            facebookLogout();
-        };
-    });
 
-/* feed list */
-angular.module('travel')
-    .controller('feedlist', function($scope){
-        console.log(2);
+/* login화면 진입시 페북 로그인 상태 : 로그인 대화상자를 띄워 XX님으로 계속 버튼 표시. 버튼 클릭시 loginSuccess 화면 리디렉트,  로그아웃 버튼 노출 */
+function loginWidthFacebook(){
+    FB.login(function(response){ //login을 호출하기면 하면 로그인 대화상자가 생김. 쉼표로 구분하여 나열한 리스트인 선택적 scope 매개변수를 함께 호출하면 추가로 사용자 데이터를 요청할 수 있다.
 
-        $scope.feedListLoad = function(){
-            feedlistLoad();
-
-            $scope.fees  =  function() {
-                $scope.feeds = [{
-                    title: 'hi1',
-                    date: '2017-06-120'
-                }, {
-                    title: 'hello',
-                    date: '2017-07-03'
-                }, {
-                    title: 'hi hello',
-                    date: '2017-07-04'
-                }];
-            };
+        if( response.status == "connected" ){
+            console.log('이미 로그인 상태. 피드리스트 화면으로.');
+            window.location.href = "http://tn.com:3000/#/loginSuccess";
+        }else{
+            //FB.login();
         }
+    }, {scope: 'public_profile, email, user_likes'});
+}
+
+/* 로그아웃 */
+function facebookLogout(){
+    FB.login(function(response){
+        console.log('로그아웃 되었습니다.')
+    });
+}
+/* feedlist */
+function feedlistLoad() {
+    FB.api('/me', {fields: 'last_name'}, function (response) {
+        console.log(response);
+    });
+};
+
+//메시지 게시하는 api
+function write(){
+    FB.login(function(){
+        FB.api('/me/feed', 'post', {
+            message: 'Hello, world!'
+        });
+    }, {
+        scope: 'publish_actions'
+    });
+};
+
+
+
+
+/* angular module */
+angular.module('travel')
+    .controller('feed', function($scope){
+        $scope.feeds = [{
+            title: 'hi1',
+            date: '2017-06-120'
+        }, {
+            title: 'hello',
+            date: '2017-07-03'
+        }, {
+            title: 'hi hello',
+            date: '2017-07-04'
+        }];
+
+        //view button click시 타임라인목록 호출/바인딩
+        $scope.feedListLoad = function(){
+            var feedlists = feedBind();
+            console.log(feedlists)
+            console.log("AAAAAAAAAAAAA:",feedBind)
+
+            $scope.$watch('feedlists', function(newValue, oldValue){
+                window.alert('$scope.feedlists의 값이 ' + $scope['feedlists'] + '로 바뀌었습니다!');
+            }, true);
+
+            $scope.feeds = [{
+                title: feedlists,
+                date: '2017-06-12'
+            }, {
+                title: 'hello',
+                date: '2017-07-03'
+            }, {
+                title: 'hi hello',
+                date: '2017-07-04'
+            }];
+            console.log(12)
+        };
+
+        // $scope.$watch('FB', function(newValue, oldValue){
+        //     window.alert('$scope.FB의 값이 ' + $scope['FB'] + '로 바뀌었습니다!');
+        // }, true);
     });
 
-
-/**
- * Account
- * Created by ottori on 2017-06-30.
- */
-
-/**
- * feedlist
- * Created by ottori on 2017-06-30.
- */
+// $scope.$watch('llll',function(){
+//     console.log('aaa')
+// })
 
 /* header */
 //
@@ -76,10 +140,6 @@ angular.module('travel')
 //     .controller('header', function($scope){
 //         document.getElementById("aside").style.left = -500+"px";
 //     })
-/**
- * login
- * Created by ottori on 2017-06-30.
- */
 //
 // var tkn, res;
 // function statusChangeCallback(response) {
@@ -166,40 +226,26 @@ angular.module('travel')
 //     }
 // };
 
+//
+// angular.module('travel')
+//     .controller('loginController' , function($scope){
+//         /* Facebook Javascript SDK */
+//
+//
+//         $scope.last_name = 'lastname'
+//
+//         // $scope.getMyLastName = function() {
+//         //     facebookService.getMyLastName()
+//         //         .then(function(response) {
+//         //                 $scope.last_name = response.last_name;
+//         //             }
+//         //         );
+//         // };
+//
+//     });
 
-angular.module('travel')
-    .controller('loginController' , function($scope){
-        /* Facebook Javascript SDK */
-
-
-        $scope.last_name = 'lastname'
-
-        // $scope.getMyLastName = function() {
-        //     facebookService.getMyLastName()
-        //         .then(function(response) {
-        //                 $scope.last_name = response.last_name;
-        //             }
-        //         );
-        // };
-
-    });
-
-/**
- * loginSuccess
- * Created by ottori on 2017-06-30.
- */
-
-angular.module('travel')
-    .controller('loginSuccessController' , function($scope){
-        $scope.useremail = "ottori@gmail.com"; // sns 사용자 계정 이메일 가져와서 바인딩
-    });
-
-/**
- * reservation
- * Created by ottori on 2017-06-30.
- */
-
-/**
- * reservationSuccess
- * Created by ottori on 2017-06-30.
- */
+//
+// angular.module('travel')
+//     .controller('loginSuccessController' , function($scope){
+//         $scope.useremail = "ottori@gmail.com"; // sns 사용자 계정 이메일 가져와서 바인딩
+//     });

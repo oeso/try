@@ -7,21 +7,20 @@
 <div ng-include="'lnb/lnb.html'"></div>
 <!-- //include lnb -->
 
-
-<div class="feedlist" ng-controller="feedlist">
+<div class="feedlist" ng-controller="feed">
     <h1 class="hide">Feed list</h1>
 
     <div id="section" class="feedlist__section">
 
         <article class="feedlist__nav">
             <h2 class="feedlist__nav--title">Feed list</h2>
-            <div ng-click="feedListLoad()">View</div>
+            <div ng-click="feedListLoad()" class="feedlist__call">View</div>
 
             <!-- feed list repeat -->
-            <div ng-view>
-                <a href="#none" class="feedlist__item" ng-repeat="feedlist in feeds" ng-click="feedOpen()">
-                    <h3 class="feedlist__item--title" >{{feedlist.title}}</h3>
-                    <div class="feedlist__item--date">{{feedlist.date}}</div>
+            <div>
+                <a href="#none" class="feedlist__item" ng-repeat="item in feeds" ng-click="feedOpen()">
+                    <h3 class="feedlist__item--title" >{{item.title}}</h3>
+                    <div class="feedlist__item--date">{{item.date}}</div>
                 </a>
             </div>
 
