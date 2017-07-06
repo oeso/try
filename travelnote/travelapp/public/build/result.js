@@ -28,7 +28,6 @@ var names = 123;
 // feed list를 가져와서 리턴하는 함수
 function feedBind(){
     FB.api('/me', {fields:'last_name'}, function(response){
-        console.log(response);
         console.log(response.last_name);
         names = response.last_name;
         return response.last_name;
@@ -90,6 +89,9 @@ function write(){
 
 /* angular module */
 angular.module('travel')
+    .controller('wrap', function($scope) {
+        $scope.names = 'lastNames';
+    })
     .controller('feed', function($scope){
         $scope.feeds = [{
             title: 'hi1',
@@ -102,27 +104,43 @@ angular.module('travel')
             date: '2017-07-04'
         }];
 
+
+        $scope.$watch('names', function(n , o){
+            console.log('$watch :', $scope.names )
+        }, true);
+
         //view button click시 타임라인목록 호출/바인딩
         $scope.feedListLoad = function(){
-            var feedlists = feedBind();
-            console.log(feedlists)
-            console.log("AAAAAAAAAAAAA:",feedBind)
 
-            $scope.$watch('feedlists', function(newValue, oldValue){
-                window.alert('$scope.feedlists의 값이 ' + $scope['feedlists'] + '로 바뀌었습니다!');
-            }, true);
+            //$scope.names = 'lastNames333';
 
-            $scope.feeds = [{
-                title: feedlists,
-                date: '2017-06-12'
-            }, {
-                title: 'hello',
-                date: '2017-07-03'
-            }, {
-                title: 'hi hello',
-                date: '2017-07-04'
-            }];
-            console.log(12)
+            $scope.changeNames = function( value ){
+                $scope.names = value;
+                console.log('changeNames : ', $scope.names);
+
+
+                $scope.feeds = [{
+                    title: $scope.names ,
+                    date: '2017-06-12'
+                }, {
+                    title: 'hello',
+                    date: '2017-07-03'
+                }, {
+                    title: 'hi hello',
+                    date: '2017-07-04'
+                }];
+
+                return $scope.names;
+            }
+
+            FB.api('/me', {fields:'last_name'}, function(response){
+                console.log(2)
+                console.log( response.last_name ); // 오
+                console.log( $scope.names );
+                return $scope.changeNames( response.last_name );
+            });
+
+
         };
 
         // $scope.$watch('FB', function(newValue, oldValue){
