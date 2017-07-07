@@ -1,8 +1,5 @@
-
 console.log('Angular module 시작');
-
-//    Promise를 쓰려 했으나 IE 모든 버전에서 지원하지 않아 쓸 수 없음ㅠㅠ
-//    Promise는 ES6버전 부터 정식 채택된 바 있음
+//    Promise를 쓰려 했으나 IE 모든 버전에서 지원하지 않아 쓸 수 없음ㅠㅠ Promise는 ES6버전 부터 정식 채택된 바 있음
 //    ( new Promise 생성시 정의되지 않았다고 오류 뜸 )
 //    var _promise = new Promise(function( resolve, reject){
 //        var findFB = setInterval(function(){
@@ -24,7 +21,6 @@ console.log('Angular module 시작');
 //        }
 //    );
 var names = 123;
-
 // feed list를 가져와서 리턴하는 함수
 function feedBind(){
     FB.api('/me', {fields:'last_name'}, function(response){
@@ -34,24 +30,15 @@ function feedBind(){
     })
     return names;
 }
-
-//페이스북 로그인 여부 확인
+//문서 로드되자마자 페이스북 로그인 여부 확인
 function statusChangeCallback(response) {
-    if (response.status === 'connected') {
-
-        console.log("facebook 로그인 상태입니다.");
-        console.log(document.location.href);
-
+    if (response.status === 'connected') { console.log("facebook 로그인 상태입니다.");
         if(document.location.href == "http://tn.com:3000/#/login"){
-            document.location.href = "http://tn.com:3000/#/feedlist"
+            document.location.href = "http://tn.com:3000/#/loginSuccess"
         }
         document.getElementById("btnLoginFB").style.display ="none";
-    } else {
-        //document.getElementById('status').innerHTML = 'Loggin with Facebook';
-        console.log('facebook 미로그인 상태입니다.');
-    };
+    } else { console.log('facebook 미로그인 상태입니다.')};
 };
-
 
 /* login화면 진입시 페북 로그인 상태 : 로그인 대화상자를 띄워 XX님으로 계속 버튼 표시. 버튼 클릭시 loginSuccess 화면 리디렉트,  로그아웃 버튼 노출 */
 function loginWidthFacebook(){
@@ -66,46 +53,38 @@ function loginWidthFacebook(){
     }, {scope: 'public_profile, email, user_likes'});
 }
 
-/* 로그아웃 */
-function facebookLogout(){
-    var outment = confirm('로그아웃 하시겠습니까');
-    if(outment){
-        FB.login(function(response){
-            console.log('로그아웃 되었습니다.')
-        });
-    };
-}
-/* feedlist */
-function feedlistLoad() {
-    FB.api('/me', {fields: 'last_name'}, function (response) {
-        console.log(response);
-    });
-};
-
-//메시지 게시하는 api
-function write(){
-    FB.login(function(){
-        FB.api('/me/feed', 'post', {
-            message: 'Hello, world!'
-        });
-    }, {
-        scope: 'publish_actions'
-    });
-};
-
-
-
 
 /* angular module */
 angular.module('travel')
     .controller('wrap', function($scope) {
         $scope.names = 'lastNames';
-        $scope.headers = function(){
-            FB.api('/me', {fields:'picture, email'}, function(response){
-                console.log( "response : ", response.picture.data.url );
-                return $scope.userPic = response.picture.data.url;
-            });
+        $scope.userPic = 'http://forum.whale.naver.com/uploads/monthly_2017_03/25789dd553195df114fd554ff25e5577100619.jpg.e8d69d581ecca3c31172064ea7c7deaf.jpg';
+        $scope.userMail = 'email';
+
+        function bindHeaderInfo(res){
+            $scope.userPic = res.picture.data.url;
+            $scope.userMail = res.email;
         };
+        $scope.headers = function(){
+            setTimeout(function(){
+                FB.api('/me', {fields:'picture, email'}, function(response){
+                    console.log( "HEADER res : ", response);
+                    bindHeaderInfo(response);
+                });
+            },1000, true)
+        };
+        $scope.headers();
+
+        /* TEST */
+        // $scope.test = function(){
+        //     setTimeout(function(){
+        //         $scope.userPic = 'http://cfs13.blog.daum.net/image/23/blog/2008/09/21/08/27/48d5866c880ab';
+        //         $scope.userMail = 'test!!';
+        //     },2000, true)
+        // };
+        // $scope.test();
+        /* //TEST */
+
         //LNB OPEN
         $scope.lnbOpen = function(){
             document.getElementById("aside").style.left = 0;
@@ -119,10 +98,9 @@ angular.module('travel')
             var outment = confirm('로그아웃 하시겠습니까');
             if(outment){
                 FB.logout(function(response){
-                    console.log(response)
-                    console.log('로그아웃 되었습니다.')
+                    console.log('로그아웃 되었습니다.', response)
                 });
-            };
+            }else{console.log('로그인취소함')};
         }        
     })
     .controller('feed', function($scope){
@@ -136,8 +114,6 @@ angular.module('travel')
         $scope.feedListLoad = function(){
             $scope.changeNames = function( value ){
                 $scope.names = value;
-                console.log('changeNames : ', $scope.names);
-
                 $scope.feeds = [{
                     title: $scope.names ,
                     date: '2017-06-12'
@@ -151,25 +127,21 @@ angular.module('travel')
                 return $scope.names;
             };
 
-            FB.api('/me', {fields:'feed, friends, photos, picture, groups, likes, gender, languages,link, locale, location, name_format,religion,website, work, id, about, name, cover, education, favorite_teams, birthday,email,first_name, last_name'}, function(response){
-                console.log( 'FB.api의 반환 response 값 : ', response );
-                console.log( $scope.names );
-                console.log( response );
-                console.log( response.picture );
-                return $scope.changeNames( response.email );
+            /* feed API call */
+            FB.api( '/me/feed', { limit: 1000 }, function (response) {
+                console.log('me/feed : ',response);
+                if (response && !response.error) {
+                    /* handle the result */
+                }
+                return $scope.changeNames( response );
             });
 
-            /* make the API call */
-            FB.api(
-                "1752200768352421",
-                function (response) {
-                    console.log(response);
-                    if (response && !response.error) {
-                        /* handle the result */
-                        
-                    }
-                }
-            );
+            // FB.api('/me', {fields:'feed'}, function(response){
+            //     console.log( 'FB.api의 반환 response 값 : ', response );
+            //     console.log( response );
+            //     return $scope.changeNames( response.email );
+            // });
+
         };
     })
     .controller('account', function($scope){
@@ -187,15 +159,42 @@ angular.module('travel')
                 $scope.feed = response.feed; // feed 는 검수받아야 함
                 $scope.likes = response.likes.data;
                 $scope.cover = response.cover.source;
+                $scope.age_range = response.age_range.min + "세 이상";
             };
 
-            FB.api('/me', {fields:'feed,music, photos, picture, likes, gender, languages,link, locale, location, name_format,website, work, id, about, name, cover, education, favorite_teams, email,first_name, last_name'}, function(response){
+            FB.api('/me', {fields:'feed,  music, age_range, photos, picture, likes, gender, languages,link, locale, location, name_format,website, work, id, about, name, cover, education, favorite_teams, email,first_name, last_name'}, function(response){
                 console.log( 'FB.api의 반환 response 값 : ', response );
-                console.log( 'FB.api의 반환 response.music 값 : ', response.feed );
-                //console.log( "response : ", response.cover.source );
+                console.log( 'FB.api의 반환 response.age_range 값 : ', response.age_range );
+
                 return $scope.yourAccount( response );
             });
         }
+    })
+    .controller('reservation', function($scope){
+
+        $scope.accountLoad = function(){};
+
+        $scope.reserv_lastname      = '오';
+        $scope.reserv_firstname     = '은선';
+        $scope.reserv_email         = 'ellyess@naver.com';
+        $scope.reserv_phonenumber   = '010-3378-1526';
+        $scope.reserv_gender        = 'femail';
+        $scope.reserv_period        = '2017-07-07 ~2017-07-30';
+        $scope.reserv_nation        = 'korea';
+        $scope.reserv_country       = 'china';
+        $scope.reserv_link          = '';
+        $scope.reserv_memo          = '다함께 고고고';
+
+        /* facebook 공유 */
+        $scope.reserv_share = function(){
+            FB.login(function(){
+                FB.api('/me/feed', 'post', {
+                    message: $scope.reserv_astname + $scope.reserv_firstname + $scope.reserv_email + $scope.reserv_phonenumber + $scope.reserv_gender + $scope.reserv_period + $scope.reserv_nation + $scope.reserv_country + $scope.reserv_link + $scope.reserv_memo
+                });
+            }, {
+                scope: 'publish_actions'
+            });
+        };
     })
 
 // $scope.$watch('llll',function(){

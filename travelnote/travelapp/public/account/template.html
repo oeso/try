@@ -7,31 +7,29 @@
 <!-- //include lnb -->
 
 <div class="account" ng-controller="account">
-    <h1 class="hide">Account info</h1>
-
-
     <div id="section" class="section">
         <div>
-            <h2 class="section-title">Account Info</h2>
+            <h1 class="section-title">Account Info</h1>
             <p class="section-ment">Personal info in your facebook account</p>
             <div ng-click="accountLoad()" class="account__call">View</div>
         </div>
 
         <ul class="account-list">
-            <li class="account-photo"><span>photo : </span><img ng-src="{{picture}}" onerror="this.src = 'https://techreport.com/forums/styles/canvas/theme/images/no_avatar.jpg';" src="https://techreport.com/forums/styles/canvas/theme/images/no_avatar.jpg" alt="" class="account-list-pic"></li>
-            <li>last_name : {{last_name}}</li>
-            <li>first_name : {{first_name}}</li>
-            <li>email : {{email}}</li>
-            <li>gender : {{gender}}</li>
-            <li>nation : {{nation}}</li>
-            <!--<li>feed : {{feed}}</li>
-            <li>relationship_status : {{relationship_status}}</li>-->
-            <!--<li>group : {{group}}</li> group은 user_manage_groups 로 검수받아야 하므로 제외하거나 차후 진행토록 함. -->
+            <li class="account-photo"><span>photo  </span><img ng-src="{{picture}}" onerror="this.src = '';" src="" alt="" class="account-list-pic"></li>
+            <li><span>last_name </span> {{last_name}}</li>
+            <li><span>first_name </span> {{first_name}}</li>
+            <li><span>email </span> {{email}}</li>
+            <li><span>gender </span> {{gender}}</li>
+            <li><span>age_range </span> {{age_range}}</li>
+            <li><span>nation </span> {{nation}}</li>
+            <!--<li>feed  {{feed}}</li>
+            <li>relationship_status  {{relationship_status}}</li>-->
+            <!--<li>group  {{group}}</li> group은 user_manage_groups 로 검수받아야 하므로 제외하거나 차후 진행토록 함. -->
             
-            <li>likes : <span class="account-repeat" ng-repeat="likesItem in likes">{{likesItem.name}}</span></li>
-            <li>music : <span class="account-repeat" ng-repeat="item in music">{{item.name}}</span></li>
-            <li>link : <a ng-href={{linkss}} href="" class="account-link" target="_blank" title="새창열림">{{linkss}}</a></li>
-            <li class="account-coverpic"><span>cover picture :</span> <img ng-src="{{cover}}"  src="" onerror="this.src='https://semantic-ui.com/images/wireframe/image.png'" ></li>
+            <li><span>likes </span> <span class="account-repeat" ng-repeat="likesItem in likes">{{likesItem.name}}</span></li>
+            <li><span>music </span> <span class="account-repeat" ng-repeat="item in music">{{item.name}}</span></li>
+            <li><span>link </span> <a ng-href={{linkss}} href="" class="account-link" target="_blank" title="새창열림">{{linkss}}</a></li>
+            <li class="account-coverpic"><span>cover picture </span> <img ng-src="{{cover}}"  src="" onerror="this.src=''" ></li>
         </ul>
         
     </div>
