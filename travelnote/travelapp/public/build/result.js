@@ -50,7 +50,7 @@ function loginWidthFacebook(){
         }else{
             //FB.login();
         }
-    }, {scope: 'public_profile, email, user_likes'});
+    }, {scope: 'public_profile, email, user_likes, pages_show_list,manage_pages, user_posts'});
 }
 
 
@@ -58,8 +58,8 @@ function loginWidthFacebook(){
 angular.module('travel')
     .controller('wrap', function($scope) {
         $scope.names = 'lastNames';
-        $scope.userPic = 'http://forum.whale.naver.com/uploads/monthly_2017_03/25789dd553195df114fd554ff25e5577100619.jpg.e8d69d581ecca3c31172064ea7c7deaf.jpg';
-        $scope.userMail = 'email';
+        $scope.userPic = 'https://s3.amazonaws.com/whisperinvest-images/default.png';
+        $scope.userMail = 'user@mail.com';
 
         function bindHeaderInfo(res){
             $scope.userPic = res.picture.data.url;
@@ -73,7 +73,7 @@ angular.module('travel')
                     console.log( "HEADER res : ", response);
                     bindHeaderInfo(response);
                 });
-            },3000, true)
+            },1000, true)
         };
         $scope.headers();
 
@@ -119,9 +119,10 @@ angular.module('travel')
                 return $scope.names;
             };
 
+
             /* feed API call */
-            FB.api( '/me/feed', { limit: 1000 }, function (response) {
-                console.log('me/feed : ',response);
+            FB.api( '/me/feed', function (response) {
+                console.log('me/feed1 : ',response);
                 if (response && !response.error) {
                     /* handle the result */
                 }
