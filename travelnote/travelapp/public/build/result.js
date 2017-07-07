@@ -64,26 +64,18 @@ angular.module('travel')
         function bindHeaderInfo(res){
             $scope.userPic = res.picture.data.url;
             $scope.userMail = res.email;
+            $scope.$apply();
         };
         $scope.headers = function(){
+            console.log('testcall')
             setTimeout(function(){
                 FB.api('/me', {fields:'picture, email'}, function(response){
                     console.log( "HEADER res : ", response);
                     bindHeaderInfo(response);
                 });
-            },1000, true)
+            },3000, true)
         };
         $scope.headers();
-
-        /* TEST */
-        // $scope.test = function(){
-        //     setTimeout(function(){
-        //         $scope.userPic = 'http://cfs13.blog.daum.net/image/23/blog/2008/09/21/08/27/48d5866c880ab';
-        //         $scope.userMail = 'test!!';
-        //     },2000, true)
-        // };
-        // $scope.test();
-        /* //TEST */
 
         //LNB OPEN
         $scope.lnbOpen = function(){
