@@ -38,11 +38,17 @@ function feedBind(){
 //페이스북 로그인 여부 확인
 function statusChangeCallback(response) {
     if (response.status === 'connected') {
-        console.log("로그인 상태입니다.");
+
+        console.log("facebook 로그인 상태입니다.");
+        console.log(document.location.href);
+
+        if(document.location.href == "http://tn.com:3000/#/login"){
+            document.location.href = "http://tn.com:3000/#/feedlist"
+        }
         document.getElementById("btnLoginFB").style.display ="none";
     } else {
         //document.getElementById('status').innerHTML = 'Loggin with Facebook';
-        console.log('미로그인 상태입니다.');
+        console.log('facebook 미로그인 상태입니다.');
     };
 };
 
@@ -62,9 +68,12 @@ function loginWidthFacebook(){
 
 /* 로그아웃 */
 function facebookLogout(){
-    FB.login(function(response){
-        console.log('로그아웃 되었습니다.')
-    });
+    var outment = confirm('로그아웃 하시겠습니까');
+    if(outment){
+        FB.login(function(response){
+            console.log('로그아웃 되었습니다.')
+        });
+    };
 }
 /* feedlist */
 function feedlistLoad() {
@@ -91,19 +100,33 @@ function write(){
 angular.module('travel')
     .controller('wrap', function($scope) {
         $scope.names = 'lastNames';
+        $scope.headers = function(){
+            FB.api('/me', {fields:'picture, email'}, function(response){
+                console.log( "response : ", response.picture.data.url );
+                return $scope.userPic = response.picture.data.url;
+            });
+        };
+        //LNB OPEN
+        $scope.lnbOpen = function(){
+            document.getElementById("aside").style.left = 0;
+        };
+        //LNB CLOSE
+        $scope.lnbClose = function(){
+            document.getElementById("aside").style.left = -500+"px";
+        }        
+        //LOGOUT
+        $scope.fbLogout = function(){
+            var outment = confirm('로그아웃 하시겠습니까');
+            if(outment){
+                FB.logout(function(response){
+                    console.log(response)
+                    console.log('로그아웃 되었습니다.')
+                });
+            };
+        }        
     })
     .controller('feed', function($scope){
-        $scope.feeds = [{
-            title: 'hi1',
-            date: '2017-06-120'
-        }, {
-            title: 'hello',
-            date: '2017-07-03'
-        }, {
-            title: 'hi hello',
-            date: '2017-07-04'
-        }];
-
+        $scope.feeds = [{ title: 'hi1', date: '2017-06-120' }, { title: 'hello', date: '2017-07-03' }, { title: 'hi hello', date: '2017-07-04' }];
 
         $scope.$watch('names', function(n , o){
             console.log('$watch :', $scope.names )
@@ -111,13 +134,9 @@ angular.module('travel')
 
         //view button click시 타임라인목록 호출/바인딩
         $scope.feedListLoad = function(){
-
-            //$scope.names = 'lastNames333';
-
             $scope.changeNames = function( value ){
                 $scope.names = value;
                 console.log('changeNames : ', $scope.names);
-
 
                 $scope.feeds = [{
                     title: $scope.names ,
@@ -129,24 +148,55 @@ angular.module('travel')
                     title: 'hi hello',
                     date: '2017-07-04'
                 }];
-
                 return $scope.names;
-            }
+            };
 
-            FB.api('/me', {fields:'last_name'}, function(response){
-                console.log(2)
-                console.log( response.last_name ); // 오
+            FB.api('/me', {fields:'feed, friends, photos, picture, groups, likes, gender, languages,link, locale, location, name_format,religion,website, work, id, about, name, cover, education, favorite_teams, birthday,email,first_name, last_name'}, function(response){
+                console.log( 'FB.api의 반환 response 값 : ', response );
                 console.log( $scope.names );
-                return $scope.changeNames( response.last_name );
+                console.log( response );
+                console.log( response.picture );
+                return $scope.changeNames( response.email );
             });
 
-
+            /* make the API call */
+            FB.api(
+                "1752200768352421",
+                function (response) {
+                    console.log(response);
+                    if (response && !response.error) {
+                        /* handle the result */
+                        
+                    }
+                }
+            );
         };
+    })
+    .controller('account', function($scope){
+        $scope.accountLoad = function(){
+            $scope.yourAccount = function(response){
+                $scope.picture = response.picture.data.url;
+                $scope.first_name = response.first_name;
+                $scope.last_name = response.last_name;
+                $scope.nation = response.locale;
+                $scope.email = response.email;
+                $scope.gender = response.gender;
+                $scope.languages = response.languages;
+                $scope.music = response.music.data;
+                $scope.linkss = response.link;
+                $scope.feed = response.feed; // feed 는 검수받아야 함
+                $scope.likes = response.likes.data;
+                $scope.cover = response.cover.source;
+            };
 
-        // $scope.$watch('FB', function(newValue, oldValue){
-        //     window.alert('$scope.FB의 값이 ' + $scope['FB'] + '로 바뀌었습니다!');
-        // }, true);
-    });
+            FB.api('/me', {fields:'feed,music, photos, picture, likes, gender, languages,link, locale, location, name_format,website, work, id, about, name, cover, education, favorite_teams, email,first_name, last_name'}, function(response){
+                console.log( 'FB.api의 반환 response 값 : ', response );
+                console.log( 'FB.api의 반환 response.music 값 : ', response.feed );
+                //console.log( "response : ", response.cover.source );
+                return $scope.yourAccount( response );
+            });
+        }
+    })
 
 // $scope.$watch('llll',function(){
 //     console.log('aaa')
