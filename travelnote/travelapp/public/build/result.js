@@ -1,4 +1,3 @@
-console.log('Angular module 시작');
 //    Promise를 쓰려 했으나 IE 모든 버전에서 지원하지 않아 쓸 수 없음ㅠㅠ Promise는 ES6버전 부터 정식 채택된 바 있음
 //    ( new Promise 생성시 정의되지 않았다고 오류 뜸 )
 //    var _promise = new Promise(function( resolve, reject){
@@ -14,7 +13,6 @@ console.log('Angular module 시작');
 //    _promise.then(
 //        function(success){
 //            console.log(success);
-//
 //        },
 //        function(fail){
 //            console.log(fail);
@@ -32,7 +30,8 @@ function feedBind(){
 }
 //문서 로드되자마자 페이스북 로그인 여부 확인
 function statusChangeCallback(response) {
-    if (response.status === 'connected') { console.log("facebook 로그인 상태입니다.");
+    if (response.status === 'connected') {
+        //console.log("facebook 로그인 상태입니다.");
         if(document.location.href == "http://tn.com:3000/#/login"){
             document.location.href = "http://tn.com:3000/#/loginSuccess"
         }
@@ -57,6 +56,7 @@ function loginWidthFacebook(){
 /* angular module */
 angular.module('travel')
     .controller('wrap', function($scope) {
+
         $scope.names = 'lastNames';
         $scope.userPic = 'https://s3.amazonaws.com/whisperinvest-images/default.png';
         $scope.userMail = 'user@mail.com';
@@ -66,16 +66,82 @@ angular.module('travel')
             $scope.userMail = res.email;
             $scope.$apply();
         };
-        $scope.headers = function(){
-            console.log('testcall')
-            setTimeout(function(){
-                FB.api('/me', {fields:'picture, email'}, function(response){
-                    console.log( "HEADER res : ", response);
-                    bindHeaderInfo(response);
-                });
-            },1000, true)
+//해당 AngularJS Web 작업 중 처음부터 거의 끝날때까지 자꾸 발생했던 문제 : FB SDK가 문서 내에 script 태그를 만들어 로드하고 FB 오브젝트에 fbAsyncInit 오브젝트를 생성하
+
+        var int = setInterval(function($scope){
+            if( FB && FB.api ){ console.log( "FB 및 FB.api 로드 완료 상태");
+                fbCall();
+                clearInterval(int);
+            }
+        });
+        function fbCall(){
+            FB.api('/me', {fields:'picture, email'}, function(response){
+                if(!response || response.error){
+                    console.log( "실패 -->  !response || response.error" );
+                    fbCall();
+                }else{
+                    console.log( "성공 -->  HEADER res : ", response );
+                    $scope.userPic = response.picture.data.url;
+                    $scope.userMail = response.email;
+                    $scope.$apply();
+                    $scope.accountLoad(response);
+                }
+            });
         };
-        $scope.headers();
+
+        $scope.accountLoad = function(response){
+            //$scope.yourAccount = function(response){
+            if(response && !response.error){
+                FB.api('/me', {fields:'music, age_range, photos, picture, likes, gender, languages,link, locale, location, name_format,website, work, id, about, name, cover, education, favorite_teams, email,first_name, last_name'}, function(response){
+                    $scope.picture = response.picture.data.url;
+                    $scope.first_name = response.first_name;
+                    $scope.last_name = response.last_name;
+                    $scope.nation = response.locale;
+                    $scope.email = response.email;
+                    $scope.gender = response.gender;
+                    $scope.languages = response.languages;
+                    $scope.music = response.music.data;
+                    $scope.linkss = response.link;
+                    $scope.feed = response.feed; // feed 는 검수받아야 함
+                    $scope.likes = response.likes.data;
+                    $scope.cover = response.cover.source;
+                    $scope.age_range = response.age_range.min + "세 이상";
+                });
+            };
+        };
+
+        $scope.$watch('FB', function(o){
+            console.log('watch');
+            if(FB){
+                console.log('FB 로드완료');
+                clearInterval(int);
+            }
+            //bindHeaderInfo(response);
+        })
+
+
+       //  $scope.headers = function(){
+       //      $scope.loaderer = true;
+       //
+       //      do{
+       //          cnt++;
+       //          console.log("cnt : ", cnt, ", FB : ", FB);
+       //          if(FB){
+       //              console.log(FB);
+       //              console.log("찾았다!!!!!!!!!!!!");
+       //              FB.api('/me', {fields:'picture, email'}, function(response){
+       //                  $scope.response = response;
+       //                  console.log( "HEADER res : ", response);
+       //                  //bindHeaderInfo(response);
+       //                  $scope.userPic = response.picture.data.url;
+       //                  $scope.userMail = response.email;
+       //                  $scope.$apply();
+       //              });
+       //              break;
+       //          }
+       //      }while( !FB );
+       // };
+       //  $scope.headers();
 
         //LNB OPEN
         $scope.lnbOpen = function(){
@@ -94,8 +160,8 @@ angular.module('travel')
                 });
             }else{console.log('로그인취소함')};
         }        
-    })
-    .controller('feed', function($scope){
+    // })
+    // .controller('feed', function($scope){
         $scope.feeds = [{ title: 'hi1', date: '2017-06-120' }, { title: 'hello', date: '2017-07-03' }, { title: 'hi hello', date: '2017-07-04' }];
 
         $scope.$watch('names', function(n , o){
@@ -132,34 +198,13 @@ angular.module('travel')
 
             };
         };
-    })
-    .controller('account', function($scope){
-        $scope.accountLoad = function(response){
-            //$scope.yourAccount = function(response){
-            if(!!response){
-                $scope.picture = response.picture.data.url;
-                $scope.first_name = response.first_name;
-                $scope.last_name = response.last_name;
-                $scope.nation = response.locale;
-                $scope.email = response.email;
-                $scope.gender = response.gender;
-                $scope.languages = response.languages;
-                $scope.music = response.music.data;
-                $scope.linkss = response.link;
-                $scope.feed = response.feed; // feed 는 검수받아야 함
-                $scope.likes = response.likes.data;
-                $scope.cover = response.cover.source;
-                $scope.age_range = response.age_range.min + "세 이상";
-            };
+    // })
+    // .controller('account', function($scope){
 
-            FB.api('/me', {fields:'music, age_range, photos, picture, likes, gender, languages,link, locale, location, name_format,website, work, id, about, name, cover, education, favorite_teams, email,first_name, last_name'}, function(response){
-                return $scope.accountLoad( response );
-            });
-        }
-    })
-    .controller('reservation', function($scope){
+    // })
+    // .controller('reservation', function($scope){
 
-        $scope.accountLoad = function(){};
+        $scope.reservationLoad = function(){};
 
         $scope.reserv_lastname      = '오';
         $scope.reserv_firstname     = '은선';
