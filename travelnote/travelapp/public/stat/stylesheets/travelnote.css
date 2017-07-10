@@ -66,7 +66,7 @@ caption {line-height:0; color:transparent; font-size:0; height:0; text-indent:-8
 .account__cover--box {height:300px; padding:10px; margin-bottom:20px; background-repeat:no-repeat}
 .account__cover--img {width:100%; max-height:180px}
 .account-link {color:#365899; text-decoration:underline}
-.account-repeat {display:inline-block; width:auto; line-height:1; border:1px solid #365899; font-size:17px; padding:2px 5px; margin-right:10px;}
+.account-repeat {display:inline-block; width:auto; height:50px; line-height:1; font-size:17px; padding:2px 5px; margin-right:10px; background:#eee; border-radius:2px}
 
 /* header */
 .header {position:relative; padding:10px 20px; border-bottom:2px solid #666; background:#333; color:#fff}
@@ -79,17 +79,16 @@ caption {line-height:0; color:transparent; font-size:0; height:0; text-indent:-8
 /* list */
 .feedlist__section {overflow:hidden;position:relative;}
 .feedlist__nav {float:left; position:relative; width:300px; padding:20px}
-.feedlist__nav--title {}
 .feedlist__item {display:block; margin:10px 0; padding:10px; background:#eee; border-radius:4px}
-.feedlist__item--title {}
-.feedlist__item--date {}
-
 .feedlist__content {margin-left:300px; padding:20px 10px}
-.feedlist__content--title {padding-bottom:50px; font-size:30px}
+.feedlist__content--title {font-size:30px}
+.feedlist__content--date {padding:10px 0 30px; font-size:20px}
+.feedlist__item--conts {overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
 .feedlist__content--img {max-width:500px}
-.feedlist__content--st {padding:30px 0; line-height:24px}
+.feedlist__content--st {padding:10px 0 30px; line-height:24px; font-size:18px}
 .feedlist__call {position:absolute;right:20px; top:15px; cursor:pointer; padding:5px 10px; border:2px solid #666}
 .feedlist__call:hover {background:#eee}
+.feedlist__element {max-height:600px; padding-right:10px; overflow-y:auto}
 
 .reservation .section {padding:50px 30px}
 .reservation__title {font-size:30px}

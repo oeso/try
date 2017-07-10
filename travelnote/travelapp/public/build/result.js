@@ -106,17 +106,8 @@ angular.module('travel')
         $scope.feedListLoad = function(){
             $scope.changeNames = function( value ){
                 $scope.names = value;
-                $scope.feeds = [{
-                    title: $scope.names ,
-                    date: '2017-06-12'
-                }, {
-                    title: 'hello',
-                    date: '2017-07-03'
-                }, {
-                    title: 'hi hello',
-                    date: '2017-07-04'
-                }];
-                return $scope.names;
+                $scope.feeds = value.data;
+                return $scope.feeds;
             };
 
 
@@ -124,22 +115,28 @@ angular.module('travel')
             FB.api( '/me/feed', function (response) {
                 console.log('me/feed1 : ',response);
                 if (response && !response.error) {
-                    /* handle the result */
-                }
-                return $scope.changeNames( response );
+                    return $scope.changeNames( response );
+                };
             });
 
-            // FB.api('/me', {fields:'feed'}, function(response){
-            //     console.log( 'FB.api의 반환 response 값 : ', response );
-            //     console.log( response );
-            //     return $scope.changeNames( response.email );
-            // });
+            $scope.feedOpen = function(){
 
+                console.log("this : ", this.item.__proto__)
+                if(!this.item.story){
+                    $scope.feedTitle = "게시글";
+                }else{
+                    $scope.feedTitle = this.item.story;
+                }
+                $scope.feedContents = this.item.message;
+                $scope.feedDate = this.item.created_time;
+
+            };
         };
     })
     .controller('account', function($scope){
-        $scope.accountLoad = function(){
-            $scope.yourAccount = function(response){
+        $scope.accountLoad = function(response){
+            //$scope.yourAccount = function(response){
+            if(!!response){
                 $scope.picture = response.picture.data.url;
                 $scope.first_name = response.first_name;
                 $scope.last_name = response.last_name;
@@ -155,11 +152,8 @@ angular.module('travel')
                 $scope.age_range = response.age_range.min + "세 이상";
             };
 
-            FB.api('/me', {fields:'feed,  music, age_range, photos, picture, likes, gender, languages,link, locale, location, name_format,website, work, id, about, name, cover, education, favorite_teams, email,first_name, last_name'}, function(response){
-                console.log( 'FB.api의 반환 response 값 : ', response );
-                console.log( 'FB.api의 반환 response.age_range 값 : ', response.age_range );
-
-                return $scope.yourAccount( response );
+            FB.api('/me', {fields:'music, age_range, photos, picture, likes, gender, languages,link, locale, location, name_format,website, work, id, about, name, cover, education, favorite_teams, email,first_name, last_name'}, function(response){
+                return $scope.accountLoad( response );
             });
         }
     })
