@@ -6,7 +6,7 @@
 <div ng-include="'lnb/lnb.html'"></div>
 <!-- //include lnb -->
 
-<div class="account">
+<div class="account" ng-controller="account">
     <div id="section" class="section">
         <div>
             <h1 class="section-title">Account Info</h1>
@@ -14,21 +14,17 @@
         </div>
 
         <ul class="account-list">
-            <li class="account-photo"><span>photo  </span><img ng-src="{{picture}}" onerror="this.src = '';" src="" alt="" class="account-list-pic"></li>
-            <li><span>last_name </span> {{last_name}}</li>
-            <li><span>first_name </span> {{first_name}}</li>
-            <li><span>email </span> {{email}}</li>
-            <li><span>gender </span> {{gender}}</li>
-            <li><span>age_range </span> {{age_range}}</li>
-            <li><span>nation </span> {{nation}}</li>
-            <!--<li>feed  {{feed}}</li>
-            <li>relationship_status  {{relationship_status}}</li>-->
-            <!--<li>group  {{group}}</li> group은 user_manage_groups 로 검수받아야 하므로 제외하거나 차후 진행토록 함. -->
-            
-            <li><span>likes </span> <span class="account-repeat" ng-repeat="likesItem in likes">{{likesItem.name}}</span></li>
-            <li><span>music </span> <span class="account-repeat" ng-repeat="item in music">{{item.name}}</span></li>
-            <li><span>link </span> <a ng-href={{linkss}} href="" class="account-link" target="_blank" title="새창열림">{{linkss}}</a></li>
-            <li class="account-coverpic"><span>cover picture </span> <img ng-src="{{cover}}"  src="" onerror="this.src=''" ></li>
+            <li class="account-photo"><img ng-src="{{picture}}" src="https://s3.amazonaws.com/whisperinvest-images/default.png" alt="" class="account-list-pic"> <span class="username">{{name}}</span></li>
+            <li><span class="account-title">last_name </span> {{last_name}}</li>
+            <li><span class="account-title">first_name </span> {{first_name}}</li>
+            <li><span class="account-title">email </span> {{email}}</li>
+            <li><span class="account-title">gender </span> {{gender}}</li>
+            <li><span class="account-title">age_range </span> {{age_range}}</li>
+            <li><span class="account-title">nation </span> {{nation}}</li>
+            <li><span class="account-title">likes </span> <div class="repeat-item"><span class="account-repeat" ng-repeat="likesItem in likes">{{likesItem.name}}</span></div></li>
+            <li><span class="account-title">music </span> <div class="repeat-item"><span class="account-repeat" ng-repeat="item in music">{{item.name}}</span></div></li>
+            <li><span class="account-title">link </span> <a ng-href={{linkss}} href="" class="account-link" target="_blank" title="새창열림">{{linkss}}</a></li>
+            <li class="account-coverpic"><span class="account-title">cover picture </span> <img ng-src="{{cover}}"  src="" onerror="this.src=''" ></li>
         </ul>
         
     </div>

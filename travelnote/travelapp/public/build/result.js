@@ -18,44 +18,59 @@
 //            console.log(fail);
 //        }
 //    );
-var names = 123;
-// feed list를 가져와서 리턴하는 함수
-function feedBind(){
-    FB.api('/me', {fields:'last_name'}, function(response){
-        console.log(response.last_name);
-        names = response.last_name;
-        return response.last_name;
-    })
-    return names;
-}
+
 //문서 로드되자마자 페이스북 로그인 여부 확인
 function statusChangeCallback(response) {
     if (response.status === 'connected') {
         console.log("facebook 로그인 상태입니다.");
-        // if(document.location.href == "http://tn.com:3000/#/login"){
-        //     document.location.href = "http://tn.com:3000/#/loginSuccess"
-        // }
         document.getElementById("btnLoginFB").style.display ="none";
-    } else { console.log('facebook 미로그인 상태입니다.')};
+    } else {
+        document.location.href = document.location.origin + "/#/login";
+        document.getElementById("btnLoginFB").style.display ="block";
+        console.log('facebook 미로그인 상태입니다.');
+    };
 };
 
 /* login화면 진입시 페북 로그인 상태 : 로그인 대화상자를 띄워 XX님으로 계속 버튼 표시. 버튼 클릭시 loginSuccess 화면 리디렉트,  로그아웃 버튼 노출 */
-function loginWidthFacebook(){
-    FB.login(function(response){ //login을 호출하기면 하면 로그인 대화상자가 생김. 쉼표로 구분하여 나열한 리스트인 선택적 scope 매개변수를 함께 호출하면 추가로 사용자 데이터를 요청할 수 있다.
-
-        if( response.status == "connected" ){
-            console.log('이미 로그인 상태. 피드리스트 화면으로.');
-            window.location.href = "http://tn.com:3000/#/loginSuccess";
+function loginWidthFacebook(response){
+    FB.getLoginStatus(function(res){
+        if( res.status == "connected" ){
+            console.log('로그인 완료 상태. 피드리스트 화면으로.');
+            document.getElementById("btnLoginFB").style.display ="none";
+            window.location.href = "http://tn.com:3000/#/feedlist";
         }else{
+            console.log('미로그인 상태. 로그인버튼 노출');
+            document.getElementById("btnLoginFB").style.display ="block";
             //FB.login();
         }
-    }, {scope: 'public_profile, email, user_likes, pages_show_list,manage_pages, user_posts'});
-}
-
+    });
+};
 
 /* angular module */
 angular.module('travel')
-    .controller('wrap', function($scope) {
+    .controller('login', function($scope){
+        loginWidthFacebook(response)
+        // window.fbAsyncInit = function() {
+        //     FB.init({
+        //         appId: '1752200768352421',
+        //         cookie: true,  // enable cookies to allow the server to access
+        //         xfbml: true,  // parse social plugins on this page
+        //         version: 'v2.8' // use graph api version 2.8
+        //     });
+        //     FB.getLoginStatus(function(response){ //login을 호출하기면 하면 로그인 대화상자가 생김. 쉼표로 구분하여 나열한 리스트인 선택적 scope 매개변수를 함께 호출하면 추가로 사용자 데이터를 요청할 수 있다.
+        //         if( response.status == "connected" ){
+        //             console.log('로그인 완료 상태. 피드리스트 화면으로.');
+        //             window.location.href = "http://tn.com:3000/#/feedlist";
+        //         }else{
+        //             document.getElementById("btnLoginFB").style.display ="block";
+        //             //FB.login();
+        //         }
+        //     }, {scope: 'public_profile, email, user_likes, pages_show_list,manage_pages, user_posts'});
+        // }
+        // console.log(12)
+    })
+    .controller('wrap', function($scope, $http) {
+        $scope.res;
         window.fbAsyncInit = function() {
             FB.init({
                 appId      : '1752200768352421',
@@ -64,22 +79,24 @@ angular.module('travel')
                 version    : 'v2.8' // use graph api version 2.8
             });
             FB.getLoginStatus(function(response) {
-                statusChangeCallback(response);
+                statusChangeCallback(response)
             });
-
             (function call(){
                 FB.api('/me', {fields:'music, age_range, photos, picture, likes, gender, languages,link, locale, location, name_format,website, work, id, about, name, cover, education, favorite_teams, email,first_name, last_name'}, function(response){
                     if(!response || response.error){
                         console.log( "실패 -->  !response || response.error" );
                         call();
-                    }else{  
+                    }else{
                         console.log( "성공 -->  HEADER res : ", response );
                         $scope.headers(response);
                         $scope.accountLoad(response);
-                        feedCall();// $scope.$apply(); // 여기서 $scope.apply 하면 안됨                        
+                        $scope.res = response;
+                        feedCall();// $scope.$apply(); // 여기서 $scope.apply 하면 안됨
                     };
                 });
             })();
+
+
 
             function feedCall(){
                 FB.api( '/me/feed', function (response) {
@@ -95,10 +112,15 @@ angular.module('travel')
             };             
         };
         $scope.out = function(){
+            console.log("AA")
             console.log(FB)
+            console.log("BBB", FB.getAuthResponse())
+
             FB.logout(function(response){
-                console.log('로그아웃 되었습니다.', response)
+                document.location.href= document.location.origin + "/#/login";
+                console.log('로그아웃!!!!!!!!!!!', response)
             });
+
         }
 
         /* feed list page */
@@ -186,6 +208,7 @@ angular.module('travel')
             $scope.last_name = response.last_name;
             $scope.nation = response.locale;
             $scope.email = response.email;
+            $scope.name = response.name;
             $scope.gender = response.gender;
             $scope.languages = response.languages;
             $scope.music = response.music.data;
@@ -196,33 +219,38 @@ angular.module('travel')
             $scope.$apply();
         };
 
-        $scope.submit = function(){
-            //$scope.reservationLoad();
-            
-        }
-      
+        $scope.info = {};
+        $scope.infoWrited;
+
         /* reservation Success page */
-        $scope.reservationLoad = function(response){
-            $scope.reserv_lastname      = response.last_name;
-            $scope.reserv_firstname     = response.first_name;
-            $scope.reserv_email         = response.email;
-            $scope.reserv_phonenumber   = '010-3378-1526';
-            $scope.reserv_gender        = response.gender;
-            $scope.reserv_period        = '2017-07-07 ~2017-07-30';
-            $scope.reserv_nation        = 'korea';
-            $scope.reserv_country       = response.locale;
-            $scope.reserv_link          = response.link;
-            $scope.reserv_memo          = response.memo
+        $scope.reservationLoad = function($event){
+            $scope.infoWrited = $scope.info;
+            console.log($event);
+            $scope._submit_last_name            = $event.last_name;
+            $scope._submit_first_name           = $event.first_name;
+            $scope._submit_email                = $event.email;
+            $scope._submit_tel1                 = $event.tel1;
+            $scope._submit_tel2                 = $event.tel2;
+            $scope._submit_tel3                 = $event.tel3;
+            $scope._submit_genders              = $event.genders;
+            $scope._submit_reserv_startday      = $event.startday;
+            $scope._submit_reserv_endday        = $event.endday;
+            $scope._submit_nation               = $event.country;
+            $scope._submit_reserv_country       = $event.locale;
+            $scope._submit_reserve_href         = $event.href;
+
+            return $event;
         };
+
 
         /* facebook 공유 */
         $scope.reserv_share = function(){
-            var reserveText = angular.element(document.querySelector('#share_list')).text();
-            console.log(  reserveText   )
-            
-            FB.api('/me/feed', 'post', {
-                message: reserveText
-            });
+            if(confirm("예약내용을 페이스북에 게시할까요?")){
+                var reserveText = angular.element(document.querySelector('#share_list')).text();
+                FB.api('/me/feed', 'post', {
+                    message: reserveText
+                });
+            };
         };
         
         //LNB OPEN
@@ -234,158 +262,56 @@ angular.module('travel')
             document.getElementById("aside").style.left = -500+"px";
         };
 
+        console.log($scope.info)
+        $scope._submit_last_name            = $scope.info.last_name;
+        $scope._submit_first_name           = $scope.info.first_name;
+        $scope._submit_email                = $scope.info.email;
+
+        $scope._submit_genders              = $scope.info.genders;
+        $scope._submit_reserv_startday      = $scope.info.startday;
+        $scope._submit_reserv_endday        = $scope.info.endday;
+        $scope._submit_nation               = $scope.info.country;
+        $scope._submit_reserv_country       = $scope.info.locale;
+        $scope._submit_reserve_href         = $scope.info.href;
+        $scope._submit_reserv_memo          = $scope.info.memo;
+
+        $scope._submit_last_name            = 'd';
+        $scope._submit_first_name           = 'c';
+        $scope._submit_email                = 'v';
     })
-
-    // .controller('feed', function($scope){
-    //     $scope.feeds = [{ title: 'hi1', date: '2017-06-120' }, { title: 'hello', date: '2017-07-03' }, { title: 'hi hello', date: '2017-07-04' }];
-
-        // //view button click시 타임라인목록 호출/바인딩
-        // $scope.feedListLoad = function(){
-        //     $scope.changeNames = function( value ){
-        //         $scope.names = value;
-        //         $scope.feeds = value.data;
-        //         return $scope.feeds;
-        //     };
-
-        //     /* feed API call */
-        //     FB.api( '/me/feed', function (response) {
-        //         console.log('me/feed : ',response);
-        //         if (response && !response.error) {
-        //             return $scope.changeNames( response );
-        //         };
-        //     });
-
-        //     $scope.feedOpen = function(){
-
-        //         console.log("this : ", this.item.__proto__)
-        //         if(!this.item.story){
-        //             $scope.feedTitle = "게시글";
-        //         }else{
-        //             $scope.feedTitle = this.item.story;
-        //         }
-        //         $scope.feedContents = this.item.message;
-        //         $scope.feedDate = this.item.created_time;
-
-        //     };
-        // };
-    //})
-
-// $scope.$watch('llll',function(){
-//     console.log('aaa')
-// })
-
-/* header */
-//
-// angular.module( 'travel', [])
-//     .controller('header', function($scope){
-//         document.getElementById("aside").style.left = -500+"px";
-//     })
-//
-// var tkn, res;
-// function statusChangeCallback(response) {
-//     console.log('statusChangeCallback');
-//     console.log(response);
-//     // The response object is returned with a status field that lets the
-//     // app know the current login status of the person.
-//     // Full docs on the response object can be found in the documentation
-//     // for FB.getLoginStatus().
-//     if (response.status === 'connected') {
-//         // Logged into your app and Facebook.
-//         testAPI();
-//     } else {
-//         // The person is not logged into your app or we are unable to tell.
-//         document.getElementById('status').innerHTML = 'Please log ' +
-//             'into this app.';
-//     }
-// }
-//
-// // This function is called when someone finishes with the Login
-// // Button.  See the onlogin handler attached to it in the sample
-// // code below.
-// function checkLoginState() {
-//     FB.getLoginStatus(function(response) {
-//         statusChangeCallback(response);
-//     });
-// }
-//
-// window.fbAsyncInit = function() {
-//     FB.init({
-//         appId      : '1752200768352421',
-//         xfbml      : true,
-//         version    : 'v2.9'
-//     });
-//     FB.AppEvents.logPageView();
-//
-//     FB.getLoginStatus(function(response) {
-//         console.log($scope)
-//         //console.log("response.authResponse : ", response.authResponse);
-//         //console.log("액세스토큰 : " , response.authResponse.accessToken);
-//
-//
-//         tkn = response.authResponse.accessToken;
-//         res = response.status;
-//         if (response.status === 'connected') {
-//             console.log('Logged in.');
-//             $scope.logged = true;
-//             $scope.username = "oes";//임시로 test
-//
-//         }else {
-//             console.log("미로그인");
-//             $scope.notLogged = true;
-//             FB.login();
-//         }
-//
-//     });
-//
-//     (function(d, s, id) {
-//         var js, fjs = d.getElementsByTagName(s)[0];
-//         if (d.getElementById(id)) return;
-//         js = d.createElement(s); js.id = id;
-//         js.src = "//connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.9&appId=1498390546894034";
-//         fjs.parentNode.insertBefore(js, fjs);
-//     }(document, 'script', 'facebook-jssdk'));
-//
-//
-//     /* make the API call */
-//     FB.api(
-//         "1752200768352421",
-//         function (response) {
-//             if (response && !response.error) {
-//                 /* handle the result */
-//             }
-//             console.log(response);
-//         }
-//     );
-//     function testAPI() {
-//         console.log('Welcome!  Fetching your information.... ');
-//         FB.api('/me', function(response) {
-//             console.log('Successful login for: ' + response.name);
-//             document.getElementById('status').innerHTML =
-//                 'Thanks for logging in, ' + response.name + '!';
-//         });
-//     }
-// };
-
-//
-// angular.module('travel')
-//     .controller('loginController' , function($scope){
-//         /* Facebook Javascript SDK */
-//
-//
-//         $scope.last_name = 'lastname'
-//
-//         // $scope.getMyLastName = function() {
-//         //     facebookService.getMyLastName()
-//         //         .then(function(response) {
-//         //                 $scope.last_name = response.last_name;
-//         //             }
-//         //         );
-//         // };
-//
-//     });
-
-//
-// angular.module('travel')
-//     .controller('loginSuccessController' , function($scope){
-//         $scope.useremail = "ottori@gmail.com"; // sns 사용자 계정 이메일 가져와서 바인딩
-//     });
+    .controller('login', function($scope){
+        //loginWidthFacebook()
+    })
+    .controller('loginSuccess', function($scope){
+        //loginWidthFacebook()
+    })
+    .controller('reservation', function($scope,$routeParams, $http){
+        console.log(55)
+        /*
+        $scope.reservationReading=function(info){
+            $http({
+                method : 'GET',
+                url : 'http://tn.com:3000/#/reservationData'
+            }).success(function(data, status, headers, config) {
+                console.log(12121212);
+                console.log("data :", data, "status:", status);
+                $scope._submit_tel1                 = data.tel1;
+                $scope._submit_tel2                 = data.tel2;
+                $scope._submit_tel3                 = data.tel3;
+                document.location.href = document.location.origin + "/#/reservationSuccess"
+            }).error(function(data, status, headers, config) {
+                console.log(111111111111111)
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+            });
+        }
+        */
+        //$scope.reservationReading();
+    })
+    .controller('reservationSuccess', function($scope, $location, $http){
+        console.log("test:::::111",$location.search().r_lastname);
+        console.log("test:::::",$location.absUrl());
+    })
+    .controller('feedlist', function($scope){
+        //loginWidthFacebook()
+    })

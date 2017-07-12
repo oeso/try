@@ -11,6 +11,7 @@ angular.module( 'travel', [])
             .when('/feedlist', {templateUrl: 'feedlist/template.html'})
             .when('/reservation', {templateUrl: 'reservation/template.html'})
             .when('/reservationSuccess', {templateUrl: 'reservationSuccess/template.html'})
+            .when('/reservationData'   , {templateUrl: 'reservationSuccess/template.html'})
 
             .otherwise({redirectTo: 'error/error.html'});
     })
