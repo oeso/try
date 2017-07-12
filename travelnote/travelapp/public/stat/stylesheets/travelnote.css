@@ -31,8 +31,8 @@ caption {line-height:0; color:transparent; font-size:0; height:0; text-indent:-8
 .aside__close {position:absolute; right:20px; top:15px; padding:5px 10px; background:#fff; border-radius:2px}
 .aside__close:hover {background:#eee}
 .aside__nav {padding:50px 20px 0}
-.aside__nav a {display:block; line-height:30px; font-size:20px; padding:5px; border:1px solid #999; border-radius:2px; margin-bottom:5px}
-.aside__nav a:hover {background:#fff; color:#666}
+.aside__nav--btn {display:block; width:100%; line-height:30px; font-size:20px; padding:5px; border:1px solid #999; border-radius:2px; margin-bottom:5px; color:#fff; text-align:left}
+.aside__nav--btn:hover {background:#fff; color:#666}
 
 /* intro */
 .intro-title {position:absolute; left:0; right:0; top:48%; font-size:50px; text-align:center}
@@ -98,14 +98,14 @@ caption {line-height:0; color:transparent; font-size:0; height:0; text-indent:-8
 .reservation__ment {padding:10px 0 17px; font-size:15px}
 .reservation__inptxt {display:inline-block; height:30px; line-height:30px; padding:5px; min-width:200px; border:1px solid #999; border-radius:3px}
 .reservation__tel {display:inline-block; height:30px; line-height:30px; padding:5px; width:60px; border:1px solid #999; border-radius:3px; text-align:center}
-.reservation__radio {display:inline-block; width:15px; height:15px; margin-right:10px; border:1px solid #999; border-radius:3px}
-.reservation__date {height:30px; line-height:30px; border:1px solid #999; border-radius:3px}
+.reservation__radio {display:inline-block; width:15px; height:15px; border:1px solid #999; border-radius:3px}
+.reservation__date {height:30px; line-height:30px; padding:5px; border:1px solid #999; border-radius:3px}
 .reservation__select {display:inline-block; width:150px; height:30px; line-height:30px;border:1px solid #999; border-radius:3px}
 .reservation_textarea {display:inline-block; width:100%; max-width:600px; height:100px; resize:none; line-height:20px; padding:10px; vertical-align:top; border:1px solid #999; border-radius:3px}
 .reservation_submit {display:inline-block; width:150px; height:30px; line-height:30px; color:#fff; background:#365899; border-radius:3px; text-align:center}
 .reservation_submit--wrap {padding:30px 0}
 .reservation__submit {display:inline-block; margin:0 0 20px;cursor:pointer; padding:5px 40px; border:1px solid #666}
-
+.reservation__inplink {display:inline-block; width:600px; height:30px; line-height:30px; padding:5px; min-width:200px; border:1px solid #999; border-radius:3px}
 
 
 

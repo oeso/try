@@ -6,53 +6,48 @@
 <div ng-include="'lnb/lnb.html'"></div>
 <!-- //include lnb -->
 
-<div class="reservation" ng-controller="reservation">
+<div class="reservation">
     <section id="section" class="section">
-        <div>
-            <h1 class="reservation__title">Reservation</h1>
-            <p class="reservation__ment">Personal info in your facebook account</p>
-            <a href="" ng-click="accountLoad()" class="reservation__submit">제출</a>
-        </div>
+        <form name="serveForm" action="#/reservationSuccess" method="get">
+            <div>
+                <h1 class="reservation__title">Reservation</h1>
+                <p class="reservation__ment">Personal info in your facebook account</p>
+                <button class="reservation__submit" ng-click="submit()" ng-disabled="!submit()">제출</button>
+            </div>
 
             <fieldset>
                 <div class="reservation__table">
                     <ul class="reservation-list">
-                        <li><span>last_name </span>  <input type="text" class="reservation__inptxt" ng-model="reserve_name"></li>
-                        <li><span>first_name </span>  <input type="text" class="reservation__inptxt" ></li>
-                        <li><span>email </span> <input type="email" class="reservation__inptxt" ></li>
+                        <li><span>last_name </span>  <input ng-required="true"  type="text" name="r_lastname" class="reservation__inptxt" ng-model="last_name"></li>
+                        <li><span>first_name </span>  <input ng-required="true"  type="text" name="r_firstname" class="reservation__inptxt" ng-model="first_name"></li>
+                        <li><span>email </span> <input ng-required="true"  type="email" name="r_email" class="reservation__inptxt" ng-model="email"></li>
                         <li><span>phone </span>
-                            <input type="tel" class="reservation__tel" value="010" >
-                            <input type="tel" class="reservation__tel" >
-                            <input type="tel" class="reservation__tel" >
+                            <input ng-required="true"  type="tel" class="reservation__tel" value="010" >
+                            <input ng-required="true"  type="tel" class="reservation__tel" >
+                            <input ng-required="true"  type="tel" class="reservation__tel" >
                         </li>
                         <li><span>gender </span>
-                            <input type="radio" class="reservation__radio" id="male"> <label for="male" >male</label>
-                            <input type="radio" class="reservation__radio" id="female"> <label for="female" >female</label>
+                            <input ng-required="true"  type="radio" class="reservation__radio" id="male"> <label for="male" >male</label>
+                            <input ng-required="true"  type="radio" class="reservation__radio" id="female"> <label for="female" >female</label>
                         </li>
                         <li>
                             <span>travel period</span>
-                            <input type="date" class="reservation__date" id="startday"> ~
-                            <input type="date" class="reservation__date" id="endday">
+                            <input ng-required="true" name="r_start" type="date" class="reservation__date" id="startday"> ~
+                            <input ng-required="true" name="r_end" type="date" class="reservation__date" id="endday">
                         </li>
                         <li>
                             <span>nation </span>
-                            <select name="" id="" class="reservation__select">
-                                <option value="">korea</option>
-                                <option value="">england</option>
-                                <option value="">japan</option>
-                                <option value="">china</option>
-                                <option value="">india</option>
-                            </select>
+                            <input ng-required="true"  type="text" class="reservation__inptxt" ng-model="nation">
                         </li>
-                        <li><span>country to visit </span> <input type="text" class="reservation__inptxt" ></li>
-                        <li><span>link </span> <input type="url" class="reservation__inptxt" ></li>
+                        <li><span>country to visit </span> <input ng-required="true" name="r_contry"  type="text" class="reservation__inptxt" ></li>
+                        <li><span>link </span> <input ng-required="true" name="r_url" type="url" class="reservation__inplink" ng-model="linkss"></li>
                         <li><span>memo</span>
-                            <textarea name="" id="" cols="30" rows="10" class="reservation_textarea"></textarea>
+                            <textarea name="r_memo" id="" cols="30" rows="10" class="reservation_textarea"></textarea>
                         </li>
                     </ul>
                 </div>
 
             </fieldset>
-
+        </form>
     </section>
-</div   >
+</div   
