@@ -15,41 +15,23 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="template.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/travelapp/public/reservation/template.html">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/travelapp/public/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="672">
+              <caret line="51" column="31" lean-forward="false" selection-start-line="51" selection-start-column="17" selection-end-line="51" selection-end-column="31" />
+              <folding>
+                <marker date="1499934488307" expanded="true" signature="1518:1597" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="template.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/travelapp/public/reservationSuccess/template.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="30" column="31" lean-forward="false" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="route.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/travelapp/public/route.js">
+      <file leaf-file-name="lnb.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/travelapp/public/lnb/lnb.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="247">
-              <caret line="13" column="19" lean-forward="false" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="login_success.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/travelapp/public/login/login_success.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="19" column="6" lean-forward="true" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
+              <caret line="13" column="91" lean-forward="true" selection-start-line="13" selection-start-column="91" selection-end-line="13" selection-end-column="91" />
               <folding />
             </state>
           </provider>
@@ -58,46 +40,71 @@
       <file leaf-file-name="result.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/travelapp/public/build/result.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3145">
-              <caret line="71" column="21" lean-forward="false" selection-start-line="71" selection-start-column="17" selection-end-line="71" selection-end-column="21" />
+            <state relative-caret-position="339">
+              <caret line="247" column="9" lean-forward="true" selection-start-line="247" selection-start-column="9" selection-end-line="247" selection-end-column="9" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <element signature="e#6151#7701#0" expanded="false" />
+                <element signature="e#5334#6884#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="template.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/travelapp/public/feedlist/template.html">
+        <entry file="file://$PROJECT_DIR$/travelapp/public/login/template.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="6" selection-end-column="22" />
-              <folding>
-                <marker date="1499839207755" expanded="true" signature="1214:1219" ph="..." />
-                <marker date="1499839207755" expanded="true" signature="1214:1238" ph="..." />
-              </folding>
+            <state relative-caret-position="190">
+              <caret line="10" column="10" lean-forward="true" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="template.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/travelapp/public/account/template.html">
+      <file leaf-file-name="login_success.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/travelapp/public/login/login_success.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="11" column="29" lean-forward="false" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
-              <folding>
-                <marker date="1499839201174" expanded="true" signature="1476:1810" ph="..." />
-              </folding>
+            <state relative-caret-position="304">
+              <caret line="16" column="72" lean-forward="false" selection-start-line="16" selection-start-column="65" selection-end-line="16" selection-end-column="72" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="reservationData.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/travelapp/public/reservation/reservationData.json">
+      <file leaf-file-name="travelnote.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/travelapp/public/stat/stylesheets/travelnote.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="9" column="1" lean-forward="true" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
+            <state relative-caret-position="307">
+              <caret line="47" column="63" lean-forward="false" selection-start-line="47" selection-start-column="63" selection-end-line="47" selection-end-column="63" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="template.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/travelapp/public/reservation/template.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="232">
+              <caret line="20" column="17" lean-forward="false" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="route.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/travelapp/public/route.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="95">
+              <caret line="5" column="19" lean-forward="true" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/travelapp/app.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="342">
+              <caret line="24" column="3" lean-forward="false" selection-start-line="23" selection-start-column="47" selection-end-line="24" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -117,22 +124,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>scope</find>
-      <find>login</find>
-      <find>bindHeaderInfo</find>
-      <find>userMail</find>
-      <find>get</find>
-      <find>post</find>
-      <find>$scope.names</find>
-      <find>feedListLoad</find>
-      <find>feeds</find>
-      <find>feedOpen</find>
-      <find>account</find>
-      <find>accountLoad</find>
-      <find>btnLoginFB</find>
-      <find>login__btn-start</find>
-      <find>model=&quot;</find>
-      <find>{{</find>
       <find>{{_submit.</find>
       <find>._submit.</find>
       <find>{{_submit_</find>
@@ -141,12 +132,28 @@
       <find>out()</find>
       <find>loginWidthFacebook</find>
       <find>$http</find>
-      <find>reservationLoad</find>
       <find>reservationReadingreservationReading</find>
       <find>test</find>
-      <find>reservationReading</find>
-      <find>form</find>
+      <find>ng-model=&quot;</find>
+      <find>info.</find>
       <find>feedlist</find>
+      <find>model=&quot;</find>
+      <find>r_</find>
+      <find>reservationReading</find>
+      <find>config</find>
+      <find>memberInfo.reserv_</find>
+      <find>{{</find>
+      <find>_submit</find>
+      <find>_submit_</find>
+      <find>reserv_</find>
+      <find>__</find>
+      <find>reservationLoad</find>
+      <find>&lt;/li&gt;</find>
+      <find>fb-login-button</find>
+      <find>login__btn-start</find>
+      <find>lastname</find>
+      <find>form</find>
+      <find>next</find>
     </findStrings>
     <replaceStrings>
       <replace>em:before</replace>
@@ -162,7 +169,12 @@
       <replace>{{_submit_</replace>
       <replace>._submit_</replace>
       <replace>{{info.</replace>
+      <replace>ng-model=&quot;reserv_</replace>
+      <replace>model=&quot;memberInfo.</replace>
       <replace>$event.</replace>
+      <replace>{{check_</replace>
+      <replace>_</replace>
+      <replace>&lt;em&lt;</replace>
     </replaceStrings>
   </component>
   <component name="IdeDocumentHistory">
@@ -185,7 +197,6 @@
         <option value="$PROJECT_DIR$/travelapp/public/js/route.js" />
         <option value="$PROJECT_DIR$/travelapp/index.html" />
         <option value="$PROJECT_DIR$/travelapp/route.js" />
-        <option value="$PROJECT_DIR$/travelapp/app.js" />
         <option value="$PROJECT_DIR$/travelapp/public/html/account.html" />
         <option value="$PROJECT_DIR$/travelapp/public/stylesheets/travelnote.css" />
         <option value="$PROJECT_DIR$/travelapp/public/html/login.html" />
@@ -197,7 +208,6 @@
         <option value="$PROJECT_DIR$/travelapp/public/error/controller.js" />
         <option value="$PROJECT_DIR$/travelapp/public/reservation/controller.js" />
         <option value="$PROJECT_DIR$/travelapp/public/reservationSuccess/controller.js" />
-        <option value="$PROJECT_DIR$/travelapp/public/error/error.html" />
         <option value="$PROJECT_DIR$/travelapp/gruntfile.js" />
         <option value="$PROJECT_DIR$/travelapp/public/login/loginSuccessController.js" />
         <option value="$PROJECT_DIR$/../../tn/index.html" />
@@ -206,19 +216,21 @@
         <option value="$PROJECT_DIR$/travelapp/public/lnb/controller.js" />
         <option value="$PROJECT_DIR$/travelapp/public/feedlist/controller.js" />
         <option value="$PROJECT_DIR$/../README.md" />
-        <option value="$PROJECT_DIR$/travelapp/public/lnb/lnb.html" />
         <option value="$PROJECT_DIR$/travelapp/public/header/header.html" />
         <option value="$PROJECT_DIR$/travelapp/public/terms/template.html" />
-        <option value="$PROJECT_DIR$/travelapp/public/index.html" />
-        <option value="$PROJECT_DIR$/travelapp/public/stat/stylesheets/travelnote.css" />
-        <option value="$PROJECT_DIR$/travelapp/public/login/template.html" />
         <option value="$PROJECT_DIR$/travelapp/public/account/template.html" />
         <option value="$PROJECT_DIR$/travelapp/public/feedlist/template.html" />
-        <option value="$PROJECT_DIR$/travelapp/public/login/login_success.html" />
+        <option value="$PROJECT_DIR$/travelapp/public/error/error.html" />
         <option value="$PROJECT_DIR$/travelapp/public/reservationSuccess/template.html" />
+        <option value="$PROJECT_DIR$/travelapp/public/login/login_success.html" />
+        <option value="$PROJECT_DIR$/travelapp/public/lnb/lnb.html" />
+        <option value="$PROJECT_DIR$/travelapp/public/index.html" />
+        <option value="$PROJECT_DIR$/travelapp/public/login/template.html" />
+        <option value="$PROJECT_DIR$/travelapp/public/stat/stylesheets/travelnote.css" />
+        <option value="$PROJECT_DIR$/travelapp/public/route.js" />
+        <option value="$PROJECT_DIR$/travelapp/app.js" />
         <option value="$PROJECT_DIR$/travelapp/public/build/result.js" />
         <option value="$PROJECT_DIR$/travelapp/public/reservation/template.html" />
-        <option value="$PROJECT_DIR$/travelapp/public/route.js" />
       </list>
     </option>
   </component>
@@ -574,7 +586,7 @@
   <component name="PropertiesComponent">
     <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Gbox" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
@@ -696,7 +708,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="297494000" />
+    <option name="totallyTimeSpent" value="324470000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1096" extended-state="6" />
@@ -805,20 +817,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/travelapp/grunt.js" />
-    <entry file="file://$PROJECT_DIR$/travelapp/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="24" column="31" lean-forward="false" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/travelapp/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="14" column="29" lean-forward="true" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/travelapp/public/reservationSuccess/controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
@@ -847,25 +845,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/travelapp/public/error/error.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" column="9" lean-forward="true" selection-start-line="11" selection-start-column="9" selection-end-line="11" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../tn/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
           <caret line="7" column="0" lean-forward="false" selection-start-line="33" selection-start-column="42" selection-end-line="33" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/travelapp/gruntfile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="16" column="16" lean-forward="true" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -931,32 +914,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/travelapp/public/stat/stylesheets/travelnote.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="90" column="41" lean-forward="false" selection-start-line="90" selection-start-column="41" selection-end-line="90" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/travelapp/public/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding>
-            <marker date="1499820494661" expanded="true" signature="1067:1132" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/travelapp/public/lnb/lnb.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" column="47" lean-forward="false" selection-start-line="12" selection-start-column="32" selection-end-line="12" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/travelapp/public/account/template.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
@@ -964,6 +921,57 @@
           <folding>
             <marker date="1499839201174" expanded="true" signature="1476:1810" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/travelapp/public/feedlist/template.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="6" selection-end-column="22" />
+          <folding>
+            <marker date="1499839207755" expanded="true" signature="1214:1219" ph="..." />
+            <marker date="1499839207755" expanded="true" signature="1214:1238" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/travelapp/public/reservation/reservationData.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="9" column="1" lean-forward="false" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/travelapp/public/error/error.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="14" column="6" lean-forward="true" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/travelapp/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="14" column="29" lean-forward="true" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/travelapp/gruntfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="19" column="52" lean-forward="true" selection-start-line="19" selection-start-column="52" selection-end-line="19" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/travelapp/public/reservationSuccess/template.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="9" column="42" lean-forward="true" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -975,72 +983,79 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/travelapp/public/login/template.html">
+    <entry file="file://$PROJECT_DIR$/travelapp/public/lnb/lnb.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" column="6" lean-forward="true" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+        <state relative-caret-position="247">
+          <caret line="13" column="91" lean-forward="true" selection-start-line="13" selection-start-column="91" selection-end-line="13" selection-end-column="91" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/travelapp/public/feedlist/template.html">
+    <entry file="file://$PROJECT_DIR$/travelapp/public/login/template.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="6" selection-end-column="22" />
-          <folding>
-            <marker date="1499839207755" expanded="true" signature="1214:1219" ph="..." />
-            <marker date="1499839207755" expanded="true" signature="1214:1238" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/travelapp/public/reservation/reservationData.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" column="1" lean-forward="true" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
+        <state relative-caret-position="190">
+          <caret line="10" column="10" lean-forward="true" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/travelapp/public/login/login_success.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="19" column="6" lean-forward="true" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
+        <state relative-caret-position="304">
+          <caret line="16" column="72" lean-forward="false" selection-start-line="16" selection-start-column="65" selection-end-line="16" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/travelapp/public/stat/stylesheets/travelnote.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="47" column="63" lean-forward="false" selection-start-line="47" selection-start-column="63" selection-end-line="47" selection-end-column="63" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/travelapp/public/build/result.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3145">
-          <caret line="71" column="21" lean-forward="false" selection-start-line="71" selection-start-column="17" selection-end-line="71" selection-end-column="21" />
+        <state relative-caret-position="339">
+          <caret line="247" column="9" lean-forward="true" selection-start-line="247" selection-start-column="9" selection-end-line="247" selection-end-column="9" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <element signature="e#6151#7701#0" expanded="false" />
+            <element signature="e#5334#6884#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/travelapp/public/reservationSuccess/template.html">
+    <entry file="file://$PROJECT_DIR$/travelapp/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="30" column="31" lean-forward="false" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="31" />
+        <state relative-caret-position="342">
+          <caret line="24" column="3" lean-forward="false" selection-start-line="23" selection-start-column="47" selection-end-line="24" selection-end-column="3" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/travelapp/public/route.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="13" column="19" lean-forward="false" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
+        <state relative-caret-position="95">
+          <caret line="5" column="19" lean-forward="true" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="20" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/travelapp/public/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="672">
+          <caret line="51" column="31" lean-forward="false" selection-start-line="51" selection-start-column="17" selection-end-line="51" selection-end-column="31" />
+          <folding>
+            <marker date="1499934488307" expanded="true" signature="1518:1597" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/travelapp/public/reservation/template.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+        <state relative-caret-position="232">
+          <caret line="20" column="17" lean-forward="false" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
           <folding />
         </state>
       </provider>

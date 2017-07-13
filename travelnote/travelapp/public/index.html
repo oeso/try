@@ -13,16 +13,26 @@
     <script src="build/result.js"></script>
 </head>
 <body>
-    <script>
-        //Load the Facebook Javascript SDK
-        (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.9&appId=1498390546894034";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+
+    <!--<script>-->
+        <!--//Load the Facebook Javascript SDK-->
+        <!--(function(d, s, id) {-->
+            <!--var js, fjs = d.getElementsByTagName(s)[0];-->
+            <!--if (d.getElementById(id)) return;-->
+            <!--js = d.createElement(s); js.id = id;-->
+            <!--js.src = "//connect.facebook.net/en_US/sdk.js";-->
+            <!--fjs.parentNode.insertBefore(js, fjs);-->
+        <!--}(document, 'script', 'facebook-jssdk'));-->
+    <!--</script>-->
 
     <div ng-controller="wrap">
 
@@ -34,9 +44,7 @@
         <!--<div id="status" class="status"></div>-->
         <!--<div onclick="write(); return false" scope="publish_actions" class="login__btn-start">게시하기</div>-->
 
-        <!-- 로그인 상태 -->
-        <div id="fb-root"></div>
-        <div onclick="loginWidthFacebook()" id="btnLoginFB" class="login__btn-start">페이스북으로 로그인하기</div>
+        <!--<div onclick="loginWidthFacebook()" id="btnLoginFB" class="login__btn-start">페이스북으로 로그인하기</div>-->
         <script>
             /*
              *status (앱 사용자의 로그인 상태) :

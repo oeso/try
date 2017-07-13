@@ -23,10 +23,8 @@
 function statusChangeCallback(response) {
     if (response.status === 'connected') {
         console.log("facebook 로그인 상태입니다.");
-        document.getElementById("btnLoginFB").style.display ="none";
     } else {
-        document.location.href = document.location.origin + "/#/login";
-        document.getElementById("btnLoginFB").style.display ="block";
+        document.location.href = document.location.origin + "/#/login"; //login 화면으로 이동
         console.log('facebook 미로그인 상태입니다.');
     };
 };
@@ -49,28 +47,15 @@ function loginWidthFacebook(response){
 /* angular module */
 angular.module('travel')
     .controller('login', function($scope){
-        loginWidthFacebook(response)
-        // window.fbAsyncInit = function() {
-        //     FB.init({
-        //         appId: '1752200768352421',
-        //         cookie: true,  // enable cookies to allow the server to access
-        //         xfbml: true,  // parse social plugins on this page
-        //         version: 'v2.8' // use graph api version 2.8
-        //     });
-        //     FB.getLoginStatus(function(response){ //login을 호출하기면 하면 로그인 대화상자가 생김. 쉼표로 구분하여 나열한 리스트인 선택적 scope 매개변수를 함께 호출하면 추가로 사용자 데이터를 요청할 수 있다.
-        //         if( response.status == "connected" ){
-        //             console.log('로그인 완료 상태. 피드리스트 화면으로.');
-        //             window.location.href = "http://tn.com:3000/#/feedlist";
-        //         }else{
-        //             document.getElementById("btnLoginFB").style.display ="block";
-        //             //FB.login();
-        //         }
-        //     }, {scope: 'public_profile, email, user_likes, pages_show_list,manage_pages, user_posts'});
-        // }
-        // console.log(12)
+        //loginWidthFacebook()
+    })
+    .controller('loginSuccess', function($scope){
+        //loginWidthFacebook()
     })
     .controller('wrap', function($scope, $http) {
         $scope.res;
+        $scope.connected;
+
         window.fbAsyncInit = function() {
             FB.init({
                 appId      : '1752200768352421',
@@ -81,13 +66,18 @@ angular.module('travel')
             FB.getLoginStatus(function(response) {
                 statusChangeCallback(response)
             });
+            var cnt = 0;
             (function call(){
                 FB.api('/me', {fields:'music, age_range, photos, picture, likes, gender, languages,link, locale, location, name_format,website, work, id, about, name, cover, education, favorite_teams, email,first_name, last_name'}, function(response){
                     if(!response || response.error){
+                        $scope.connected = false;
+                        if( cnt >= 10 ){ return false; }
                         console.log( "실패 -->  !response || response.error" );
                         call();
+                        cnt++;
                     }else{
                         console.log( "성공 -->  HEADER res : ", response );
+                        $scope.connected = true;
                         $scope.headers(response);
                         $scope.accountLoad(response);
                         $scope.res = response;
@@ -242,20 +232,26 @@ angular.module('travel')
             document.getElementById("aside").style.left = -500+"px";
         };
     })
-    .controller('login', function($scope){
-        //loginWidthFacebook()
-    })
-    .controller('loginSuccess', function($scope){
-        //loginWidthFacebook()
-    })
     .controller('account', function($scope){
         //loginWidthFacebook()
     })
-    .controller('reservation',['$scope', '$rootScope', '$window', '$routeParams', '$http', function($scope, $rootScope, $window, $routeParams, $http){
-        console.log(this.parameterNames)
+    .controller('reservation',['$scope', '$rootScope', '$window', '$routeParams', '$http', '$location', function($scope, $rootScope, $window, $routeParams, $http, $location){
+        $scope.submit = function(e){
+            console.log('dddd')
+            //$window.document.getElementById("serveForm").action = $window.location.href.split("#")[0]+"#/reservationSuccess";
+
+            //console.log($window.document.getElementById("serveForm").action)
+            //$window.document.getElementById("serveForm").submit();
+            console.log('ddddddddd')
+
+            //$window.location.href.split("#!")[0] + "#/reservationSuccess"
+        }
+//        console.log(this.parameterNames)
 
     }])
-    .controller('reservationSuccess', function($scope, $location, $http){
+    .controller('reservationSuccess',['$scope', '$location', '$http', '$routeParams', function($scope, $location, $http, $routeParams){
+
+
         console.log($location.search())
         console.log("test:::::111",$location.search().lastname);
         console.log("test:::::",$location.absUrl());
@@ -274,7 +270,7 @@ angular.module('travel')
         $scope.check_linkss = $location.search().linkss;
         $scope.check_memo = $location.search().memo;
 
-    })
+    }])
     .controller('feedlist', function($scope){
         //loginWidthFacebook()
     })
