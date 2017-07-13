@@ -1,7 +1,8 @@
 /* route */
 
 angular.module( 'travel', [])
-    .config(function($routeProvider) {
+    .config(function($routeProvider, $locationProvider) {
+
         $routeProvider
             .when('/', {templateUrl: 'login/template.html'})
             .when('/login', {templateUrl: 'login/template.html'})
@@ -11,9 +12,11 @@ angular.module( 'travel', [])
             .when('/feedlist', {templateUrl: 'feedlist/template.html'})
             .when('/reservation', {templateUrl: 'reservation/template.html'})
             .when('/reservationSuccess', {templateUrl: 'reservationSuccess/template.html'})
-            .when('/reservationData'   , {templateUrl: 'reservationSuccess/template.html'})
+            .when('/error', {templateUrl: 'error/error.html'})
 
-            .otherwise({redirectTo: 'error/error.html'});
+            .otherwise({redirectTo: '/error'});
+
+        //$locationProvider.html5Mode(true);
     })
     // .controller('wrap', function($scope){
 

@@ -12,37 +12,24 @@
             <h1 class="reservation__title">Reservation</h1>
             <p class="reservation__ment">Personal info in your facebook account</p>
             <a href="" ng-href="#/reservation" class="reservation__submit">수정</a>
-            <div ng-click="reserv_share()" class="reservation__submit">Facebook 공유</div>
+            <div ng-click="_share()" class="reservation__submit">Facebook 공유</div>
         </div>
 
         <fieldset>
-            <div class="reservation__table">
+            <div class="reservation_table">
                 <ul class="reservation-list" id="share_list">
-                    <!--<li>last_name :  {{info.last_name}}</li>-->
-                    <!--<li>first_name : {{info.first_name}}</li>-->
-                    <!--<li>email : {{info.email}}</li>-->
-                    <!--<li>phone : {{info.tel1}} - {{info.tel2}} - {{info.tel3}}</li>-->
-                    <!--<li>gender : {{info.genders}}</li>-->
-                    <!--<li>travel period : {{info.startday}} ~ {{info.endday}}</li>-->
-                    <!--<li>nation : {{info.nation}}</li>-->
-                    <!--<li>country to visit : {{info.country}}</li>-->
-                    <!--<li>link : <a href="" ng-href="{{info.reserve_href}}">{{info.reserve_href}}</a></li>-->
-                    <!--<li>memo : {{info.memo}}</li>-->
-                    {{serveForm.info}}
-                    <li>last_name :  {{last_name}}</li>
-                    <li>first_name : {{first_name}}</li>
-                    <li>email : {{email}}</li>
-                    <li>phone : {{_submit_tel1}} - {{_submit_tel2}} - {{_submit_tel3}}</li>
-                    <li>gender : {{gender}}</li>
-                    <li>travel period : {{_submit_reserv_startday}} ~ {{_submit_reserv_endday}}</li>
-                    <li>nation : {{nation}}</li>
-                    <li>country to visit : {{_submit_reserv_country}}</li>
-                    <li>link : <a href="" ng-href="{{linkss}}">{{linkss}}</a></li>
-                    <li>memo : {{_submit_reserv_memo}}</li>
+                    <li>Last Name :  {{check_last_name}}</li>
+                    <li>First Name : {{check_first_name}}</li>
+                    <li>Email : {{check_email}}</li>
+                    <li>Phone : {{check_tel1}} - {{check_tel2}} - {{check_tel3}}</li>
+                    <li>Gender : {{check_gender}}</li>
+                    <li>Travel period : {{check_startday}} ~ {{check_endday}}</li>
+                    <li>Nation : {{check_country}}</li>
+                    <li>Country to visit : {{check_country}}</li>
+                    <li>Link : <a href="" ng-href="{{check_linkss}}">{{check_linkss}}</a></li>
+                    <li>Memo : {{check_memo}}</li>
                 </ul>
             </div>
-
         </fieldset>
-
     </section>
 </div>

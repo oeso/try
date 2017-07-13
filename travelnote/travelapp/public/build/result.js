@@ -219,29 +219,9 @@ angular.module('travel')
             $scope.$apply();
         };
 
-        $scope.info = {};
-        $scope.infoWrited;
-
         /* reservation Success page */
         $scope.reservationLoad = function($event){
-            $scope.infoWrited = $scope.info;
-            console.log($event);
-            $scope._submit_last_name            = $event.last_name;
-            $scope._submit_first_name           = $event.first_name;
-            $scope._submit_email                = $event.email;
-            $scope._submit_tel1                 = $event.tel1;
-            $scope._submit_tel2                 = $event.tel2;
-            $scope._submit_tel3                 = $event.tel3;
-            $scope._submit_genders              = $event.genders;
-            $scope._submit_reserv_startday      = $event.startday;
-            $scope._submit_reserv_endday        = $event.endday;
-            $scope._submit_nation               = $event.country;
-            $scope._submit_reserv_country       = $event.locale;
-            $scope._submit_reserve_href         = $event.href;
-
-            return $event;
         };
-
 
         /* facebook 공유 */
         $scope.reserv_share = function(){
@@ -261,23 +241,6 @@ angular.module('travel')
         $scope.lnbClose = function(){
             document.getElementById("aside").style.left = -500+"px";
         };
-
-        console.log($scope.info)
-        $scope._submit_last_name            = $scope.info.last_name;
-        $scope._submit_first_name           = $scope.info.first_name;
-        $scope._submit_email                = $scope.info.email;
-
-        $scope._submit_genders              = $scope.info.genders;
-        $scope._submit_reserv_startday      = $scope.info.startday;
-        $scope._submit_reserv_endday        = $scope.info.endday;
-        $scope._submit_nation               = $scope.info.country;
-        $scope._submit_reserv_country       = $scope.info.locale;
-        $scope._submit_reserve_href         = $scope.info.href;
-        $scope._submit_reserv_memo          = $scope.info.memo;
-
-        $scope._submit_last_name            = 'd';
-        $scope._submit_first_name           = 'c';
-        $scope._submit_email                = 'v';
     })
     .controller('login', function($scope){
         //loginWidthFacebook()
@@ -285,32 +248,32 @@ angular.module('travel')
     .controller('loginSuccess', function($scope){
         //loginWidthFacebook()
     })
-    .controller('reservation', function($scope,$routeParams, $http){
-        console.log(55)
-        /*
-        $scope.reservationReading=function(info){
-            $http({
-                method : 'GET',
-                url : 'http://tn.com:3000/#/reservationData'
-            }).success(function(data, status, headers, config) {
-                console.log(12121212);
-                console.log("data :", data, "status:", status);
-                $scope._submit_tel1                 = data.tel1;
-                $scope._submit_tel2                 = data.tel2;
-                $scope._submit_tel3                 = data.tel3;
-                document.location.href = document.location.origin + "/#/reservationSuccess"
-            }).error(function(data, status, headers, config) {
-                console.log(111111111111111)
-                // called asynchronously if an error occurs
-                // or server returns response with an error status.
-            });
-        }
-        */
-        //$scope.reservationReading();
+    .controller('account', function($scope){
+        //loginWidthFacebook()
     })
+    .controller('reservation',['$scope', '$rootScope', '$window', '$routeParams', '$http', function($scope, $rootScope, $window, $routeParams, $http){
+        console.log(this.parameterNames)
+
+    }])
     .controller('reservationSuccess', function($scope, $location, $http){
-        console.log("test:::::111",$location.search().r_lastname);
+        console.log($location.search())
+        console.log("test:::::111",$location.search().lastname);
         console.log("test:::::",$location.absUrl());
+        console.log("$location.url():::::",$location.url());
+
+        $scope.check_last_name = $location.search().lastname;
+        $scope.check_first_name = $location.search().firstname;
+        $scope.check_email = $location.search().email;
+        $scope.check_tel1 = $location.search().tel1;
+        $scope.check_tel2 = $location.search().tel2;
+        $scope.check_tel3 = $location.search().tel3;
+        $scope.check_gender = $location.search().gender;
+        // $scope.check_startday = $location.search().check_startday;
+        // $scope.check_endday = $location.search().check_endday;
+        $scope.check_country = $location.search().nation;
+        $scope.check_linkss = $location.search().linkss;
+        $scope.check_memo = $location.search().memo;
+
     })
     .controller('feedlist', function($scope){
         //loginWidthFacebook()
