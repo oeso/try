@@ -14,7 +14,7 @@
         <div class="login__form">
             <img src="https://avatars3.githubusercontent.com/u/17796530?v=3&s=460" alt="" class="login__pic"><!-- alt값에 유저 이름 뿌리기 -->
             <div class="login__useremail">{{useremail}}</div>
-            <a href="#/feedlist" class="login__btn-start" style="display:block">START</a>
+            <a href="#/feedlist" class="login__btn-start" style="display:block" ng-if="connected"  ng-init="connected=false">START</a>
         </div>
     </div>
 </div>

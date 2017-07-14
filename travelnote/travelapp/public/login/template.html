@@ -4,9 +4,8 @@
     <h2 class="login__title--h2"></h2>
     <div id="section">
         <div class="login__form">
-            <a href="#/loginSuccess" id="btnStart" ng-show="connected" class="login__btn-start">START</a>
-            <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="true"></div>
-
+            <a href="#/feedlist" id="startApp" class="login__btn-start">START</a>
+            <button ng-click="loginFB()" id="loginFacebook" class="login__btn-start">Login with facebook</button>
         </div>
     </div>
 </div>

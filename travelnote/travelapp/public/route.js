@@ -2,6 +2,8 @@
 
 angular.module( 'travel', [])
     .config(function($routeProvider, $locationProvider) {
+        //$locationProvider.html5Mode(true);
+
         $routeProvider
             .when('/', {templateUrl: 'login/template.html'})
             .when('/login', {templateUrl: 'login/template.html'})
@@ -14,8 +16,6 @@ angular.module( 'travel', [])
             .when('/error', {templateUrl: 'error/error.html'})
 
             .otherwise({redirectTo: '/error'});
-
-
 
         //$locationProvider.html5Mode(true);
 

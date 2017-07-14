@@ -12,22 +12,23 @@
             <h1 class="reservation__title">Reservation</h1>
             <p class="reservation__ment">Personal info in your facebook account</p>
             <a href="" ng-href="#/reservation" class="reservation__submit">수정</a>
-            <div ng-click="_share()" class="reservation__submit">Facebook 공유</div>
+            <div ng-click="reserv_share()" class="reservation__submit">Facebook 공유</div>
         </div>
 
         <fieldset>
-            <div class="reservation_table">
-                <ul class="reservation-list" id="share_list">
-                    <li>Last Name :  {{check_last_name}}</li>
-                    <li>First Name : {{check_first_name}}</li>
-                    <li>Email : {{check_email}}</li>
-                    <li>Phone : {{check_tel1}} - {{check_tel2}} - {{check_tel3}}</li>
-                    <li>Gender : {{check_gender}}</li>
-                    <li>Travel period : {{check_startday}} ~ {{check_endday}}</li>
-                    <li>Nation : {{check_country}}</li>
-                    <li>Country to visit : {{check_country}}</li>
-                    <li>Link : <a href="" ng-href="{{check_linkss}}">{{check_linkss}}</a></li>
-                    <li>Memo : {{check_memo}}</li>
+            <div class="reservation_table" id="share_list">
+                <h2 style="padding-bottom:30px;">::: Travel Note Reservation Check List :::</h2>
+                <ul class="reservation-list" >
+                    <li class="data-bind"><span class="title-bind">Last Name :</span>  {{info.last_name}}</li>
+                    <li class="data-bind"><span class="title-bind">First Name :</span> {{info.first_name}}</li>
+                    <li class="data-bind"><span class="title-bind">Email :</span> {{info.email}}</li>
+                    <li class="data-bind"><span class="title-bind">Phone :</span> {{info.tel1}} - {{info.tel2}} - {{info.tel3}}</li>
+                    <li class="data-bind"><span class="title-bind">Gender :</span> {{info.gender}}</li>
+                    <li class="data-bind"><span class="title-bind">Travel period :</span> {{info.startday}} ~ {{info.endday}}</li>
+                    <li class="data-bind"><span class="title-bind">Nation :</span> {{info.country}}</li>
+                    <li class="data-bind"><span class="title-bind">Country to visit :</span> {{info.country}}</li>
+                    <li class="data-bind"><span class="title-bind">Link :</span> <a href="" ng-href="{{info.linkss}}">{{info.linkss}}</a></li>
+                    <li class="data-bind"><span class="title-bind">Memo :</span> {{info.memo}}</li>
                 </ul>
             </div>
         </fieldset>
