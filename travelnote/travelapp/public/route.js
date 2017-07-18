@@ -2,7 +2,6 @@
 
 angular.module( 'travel', [])
     .config(function($routeProvider, $locationProvider) {
-        //$locationProvider.html5Mode(true);
 
         $routeProvider
             .when('/', {templateUrl: 'login/template.html'})
@@ -20,16 +19,3 @@ angular.module( 'travel', [])
         //$locationProvider.html5Mode(true);
 
     })
-    // .controller('wrap', function($scope){
-
-    //     //LNB 열기
-    //     $scope.lnbOpen = function(){
-    //         console.log('MENU 열기');
-    //         $scope.lnbToggle = 'open';
-    //     };
-    //     //LNB 닫기
-    //     $scope.lnbClose = function(){
-    //         console.log('MENU 닫음');
-    //         $scope.lnbToggle = 'close';
-    //     };
-    // });

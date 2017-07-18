@@ -1,9 +1,9 @@
 
 <!-- include header -->
-<div ng-include="'header/header.html'"></div>
+<div ng-include="'include/header.html'"></div>
 <!-- //include header -->
 <!-- include lnb -->
-<div ng-include="'lnb/lnb.html'"></div>
+<div ng-include="'include/lnb.html'"></div>
 <!-- //include lnb -->
 
 <div class="reservation" ng-controller="reservation">
@@ -22,9 +22,9 @@
                         <li><span>email </span> <input ng-required="true"  type="text" name="email" class="reservation__inptxt" ng-model="email"></li>
                         <li><span>gender </span> <em>{{gender}}</em></li>
                         <li><span>phone </span>
-                            <input ng-required="true"  type="text" class="reservation__tel" value="010" maxlength="4" ng-model="tel1">
-                            <input ng-required="true"  type="text" class="reservation__tel" maxlength="4" ng-model="tel2">
-                            <input ng-required="true"  type="text" class="reservation__tel" maxlength="4" ng-model="tel3">
+                            <input ng-required="true" type="text" class="reservation__tel" value="010" maxlength="4" ng-model="tel1">
+                            <input ng-required="true" type="text" class="reservation__tel" maxlength="4" ng-model="tel2">
+                            <input ng-required="true" type="text" class="reservation__tel" maxlength="4" ng-model="tel3">
                         </li>
                         <li>
                             <span>travel period</span>
@@ -33,12 +33,12 @@
                         </li>
                         <li>
                             <span>nation </span>
-                            <input ng-required="true"  type="text" class="reservation__inptxt" ng-model="nation">
+                            <input ng-required="true" type="text" class="reservation__inptxt" ng-model="nation">
                         </li>
                         <li><span>country to visit </span> <input ng-required="true" name="contry"  type="text" class="reservation__inptxt" ng-model="country" ></li>
                         <li><span>link </span> <input ng-required="true" name="url" type="url" class="reservation__inplink" ng-model="linkss"></li>
                         <li><span>memo</span>
-                            <textarea name="memo" id="" cols="30" rows="10" class="reservation_textarea" ng-model="memo"></textarea>
+                            <textarea ng-required="true" name="memo" id="" cols="30" rows="10" class="reservation_textarea" ng-model="memo"></textarea>
                         </li>
                     </ul>
                 </div>

@@ -4,8 +4,15 @@
     <h2 class="login__title--h2"></h2>
     <div id="section">
         <div class="login__form">
-            <a href="#/feedlist" id="startApp" class="login__btn-start">START</a>
+            <a href="#/loginSuccess" id="startApp" class="login__btn-start">START</a>
             <button ng-click="loginFB()" id="loginFacebook" class="login__btn-start">Login with facebook</button>
         </div>
     </div>
 </div>
+
+<!--
+# login페이지 진입시 버튼 구별 노츨
+1. 해당 브라우저에 facebook 미로그인 상태(=로그아웃 상태. 당연히 액세스 토큰도 없는 상태임) : Login with Facebook 버튼만 노출
+2. 해당 브라우저에 facebook 로그인 상태, 액세스 토큰이 없는 경우(TravelNote 미로그인임) : Login with Facebook 버튼만 노출
+2. 해당 브라우저에 facebook 로그인 상태, 액세스 토큰이 있는 경우 : START 버튼만 노출
+-->

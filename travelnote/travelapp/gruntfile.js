@@ -3,20 +3,20 @@ module.exports = function(grunt){
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        //uglify 설정
+        //uglify 설정은 다음 앵귤러 프로젝트에 쓰겠음
         // uglify: {
-        //     options: {
-        //         banner: '/* <%= grunt.template.today("yyyy-mm-dd") %> / ' //파일의 맨처음 붙는 banner 설정
-        //     },
+        //     options: {},
         //     build: {
-        //         src: 'public/account/controller.js',
-        //         dest: 'public/account/result.min.js'
+        //         src: 'xxx.js',
+        //         dest: 'xxx.min.js'
         //     }
         // },
+
         //concat 설정
         concat:{
             basic: {
-                src:['public/route.js',
+                src:[
+                     'public/stat/js/common.js',
                      'public/account/controller.js',
                      'public/feedlist/controller.js',
                      'public/header/controller.js',

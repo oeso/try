@@ -1,13 +1,3 @@
-// // basicServer.js
-// var http = require('http');
-// http.createServer(function (req, res) {
-//     res.writeHead(200, {'Content-Type': 'text/html'});
-//     res.end('Hello World');
-// }).listen(1337, '127.0.0.1');
-// console.log('Server running at http://127.0.0.1:1337/');
-
-
-
 // jade를 포함한 템플릿 엔진 안쓰고 해보자
 var express = require('express');
 var path = require('path');

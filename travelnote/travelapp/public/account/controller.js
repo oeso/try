@@ -1,4 +1,5 @@
-/**
- * Account
- * Created by ottori on 2017-06-30.
- */
+/* Account */
+angular.module('travel')
+    .controller('account', function($scope){
+        //loginWidthFacebook()
+    })
