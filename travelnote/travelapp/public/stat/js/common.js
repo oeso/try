@@ -1,36 +1,12 @@
-function startBtnShow(){
-    document.getElementById("startApp").style.display = "block";
-    document.getElementById("loginFacebook").style.display = "none";
-};
-function startBtnHide() {
-    document.getElementById("startApp").style.display = "none";
-    document.getElementById("loginFacebook").style.display = "block";
-};
-
-/* login화면 진입시 페북 로그인 상태 : 로그인 대화상자를 띄워 XX님으로 계속 버튼 표시. 버튼 클릭시 loginSuccess 화면 리디렉트,  로그아웃 버튼 노출 */
-function loginWidthFacebook(response){
-    FB.getLoginStatus(function(res){
-        if( res.status == "connected" ){
-            console.log('로그인 완료 상태. 피드리스트 화면으로.');
-            document.getElementById("btnLoginFB").style.display ="none";
-            window.location.href = "http://tn.com:3000/#/feedlist";
-        }else{
-            console.log('미로그인 상태. 로그인버튼 노출');
-            document.getElementById("btnLoginFB").style.display ="block";
-        }
-    });
-};
-function loginpage(response){
-    if (response.status === 'connected') {
-        if (document.getElementsByClassName("login")[0]) {
-            startBtnShow();
-        };
+function startBtnDisplay(bool){
+    if(bool){
+        document.getElementById("startApp").style.display = "block";
+        document.getElementById("loginFacebook").style.display = "none";
     }else{
-        if( document.getElementsByClassName("login")[0] ){
-            startBtnHide()
-        };
-    }
-}
+        document.getElementById("startApp").style.display = "none";
+        document.getElementById("loginFacebook").style.display = "block";
+    };
+};
 /* angular module */
 angular.module('travel')
     .controller('wrap', [ '$scope', '$location', '$http', function($scope, $location, $http) {
@@ -45,14 +21,17 @@ angular.module('travel')
             FB.getLoginStatus(function(response) { //문서 로드되자마자 페이스북 로그인 여부 확인
                 if (response.status === 'connected') {
                     console.log("facebook 로그인 상태임");
+                    if (document.getElementsByClassName("login")[0]) {
+                        startBtnDisplay(true);
+                    };
                 } else {
                     console.log('facebook 미로그인 상태임');
-                    document.location.href = document.location.origin + "/#/login"; //login 화면으로 이동
+                    if( document.getElementsByClassName("login")[0] ){ // login 페이지인 경우
+                        startBtnDisplay(false);
+                    }else{
+                        document.location.href = document.location.origin + "/#/login"; //login 화면으로 이동
+                    }
                 };
-                loginpage(response);//login 페이지에서.
-            });
-            var cnt = 0;
-            (function call(){
                 FB.api('/me', {fields:'email,first_name, last_name,music, age_range, picture, likes, gender, languages,link, locale, name, cover'}, function(response){
                     if(!response || response.error){
                         if( cnt >= 10 ){ return false; }
@@ -66,7 +45,7 @@ angular.module('travel')
                         feedCall();
                     };
                 });
-            })();
+            });
 
             function feedCall(){
                 FB.api( '/me/feed', function (response) {
@@ -80,7 +59,6 @@ angular.module('travel')
         };
 
         $scope.goLoginPage = function(){
-            console.log($location.url)
             $location.url = '/login';
         };
 
