@@ -1,36 +1,13 @@
-function startBtnShow(){
-    document.getElementById("startApp").style.display = "block";
-    document.getElementById("loginFacebook").style.display = "none";
-};
-function startBtnHide() {
-    document.getElementById("startApp").style.display = "none";
-    document.getElementById("loginFacebook").style.display = "block";
+function startBtnDisplay(bool){
+    if(bool){
+        document.getElementById("startApp").style.display = "none";
+        document.getElementById("loginFacebook").style.display = "block";
+    }else{
+        document.getElementById("startApp").style.display = "none";
+        document.getElementById("loginFacebook").style.display = "block";
+    };
 };
 
-/* login화면 진입시 페북 로그인 상태 : 로그인 대화상자를 띄워 XX님으로 계속 버튼 표시. 버튼 클릭시 loginSuccess 화면 리디렉트,  로그아웃 버튼 노출 */
-function loginWidthFacebook(response){
-    FB.getLoginStatus(function(res){
-        if( res.status == "connected" ){
-            console.log('로그인 완료 상태. 피드리스트 화면으로.');
-            document.getElementById("btnLoginFB").style.display ="none";
-            window.location.href = "http://tn.com:3000/#/feedlist";
-        }else{
-            console.log('미로그인 상태. 로그인버튼 노출');
-            document.getElementById("btnLoginFB").style.display ="block";
-        }
-    });
-};
-function loginpage(response){
-    if (response.status === 'connected') {
-        if (document.getElementsByClassName("login")[0]) {
-            startBtnShow();
-        };
-    }else{
-        if( document.getElementsByClassName("login")[0] ){
-            startBtnHide()
-        };
-    }
-}
 /* angular module */
 angular.module('travel')
     .controller('wrap', [ '$scope', '$location', '$http', function($scope, $location, $http) {
@@ -45,36 +22,53 @@ angular.module('travel')
             FB.getLoginStatus(function(response) { //문서 로드되자마자 페이스북 로그인 여부 확인
                 if (response.status === 'connected') {
                     console.log("facebook 로그인 상태임");
+                    FB.api('/me', {fields:'events,videos,about,education,favorite_athletes,hometown,work,groups,religion,birthday, email,first_name, last_name,music, age_range, picture, likes, gender, languages,link, locale, name, cover'}, function(response){
+                        if(!response || response.error){
+                            if( cnt >= 10 ){ return false; }
+                            call();
+                            cnt++;
+                        }else{
+                            console.log( "성공.response 값 : ", response );
+                            $scope.headers(response);
+                            $scope.accountLoad(response);
+                            $scope.useremail = response.email;
+                            feedCall();
+                            console.log(response)
+                        };
+                    });
+                    if (document.getElementsByClassName("login")[0]) {
+                        startBtnDisplay(true);
+                    };
                 } else {
                     console.log('facebook 미로그인 상태임');
                     document.location.href = document.location.origin + "/#/login"; //login 화면으로 이동
+                    if (document.getElementsByClassName("login")[0]) {
+                        startBtnDisplay(false);
+                    };  
                 };
-                loginpage(response);//login 페이지에서.
+
             });
             var cnt = 0;
-            (function call(){
-                FB.api('/me', {fields:'email,first_name, last_name,music, age_range, picture, likes, gender, languages,link, locale, name, cover'}, function(response){
-                    if(!response || response.error){
-                        if( cnt >= 10 ){ return false; }
-                        call();
-                        cnt++;
-                    }else{
-                        console.log( "성공.response 값 : ", response );
-                        $scope.headers(response);
-                        $scope.accountLoad(response);
-                        $scope.useremail = response.email;
-                        feedCall();
-                    };
-                });
-            })();
 
             function feedCall(){
                 FB.api( '/me/feed', function (response) {
-                    if(!response || response.error){
-                    }else{
+                    if(response){
                         $scope.feedListLoad(response);//피드 리스트 클릭시 우측에 데이터 바인딩하는 함수 호출
                         $scope.feedOpenLoad(response.data[0]);//최초 로드시 컨텐츠 영역에 가장 최근 게시물을 뿌림
                     };
+                });
+                FB.api( '/me/groups', function (response) {
+                    console.log("groups ::::", response)
+                });
+                FB.api( '/me/videos', function (response) {
+                    console.log("videos ::::", response)
+                });
+                FB.api( '/me/photos', function (response) {
+                    console.log("photos ::::", response);
+                    $scope.photoSet(response.data)
+                });
+                FB.api( '/me/books', function (response) {
+                    console.log("books ::::", response)
                 });
             };             
         };
@@ -104,6 +98,7 @@ angular.module('travel')
             $scope.feedTitle = res.story;
             $scope.feedContents = res.message;
             $scope.feedDate = res.created_time;
+            $scope.feedPhotos = res.created_time;
             $scope.$apply();
         }
 
@@ -186,7 +181,11 @@ angular.module('travel')
     .controller('login', [ '$scope', '$location', '$http', function($scope, $location, $http) {
         //loginWidthFacebook()
         $scope.loginFB = function(){
-            FB.login();
+            FB.login(function(response){
+                console.log(response)
+            }, {
+                scope : 'user_friends,email,user_about_me,user_birthday,user_education_history,user_events,user_games_activity,user_hometown,user_likes,user_location,user_managed_groups,user_photos,user_posts,user_relationships,user_relationship_details,user_religion_politics,user_tagged_places,user_videos,user_website,user_work_history,read_custom_friendlists,read_insights,read_audience_network_insights,read_page_mailboxes,manage_pages,publish_pages,publish_actions,rsvp_event,pages_show_list,pages_manage_cta,pages_manage_instant_articles,ads_read,ads_management,business_management,pages_messaging,pages_messaging_subscriptions,pages_messaging_phone_number'
+            });
             $location.path('/loginSuccess');
         };
     }])
