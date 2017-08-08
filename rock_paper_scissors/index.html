@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>rock_paper_scissors</title>
+    <style>#jekyll,#hide{padding:10px 0;color:#f00}</style>
+    <script src="rps.js"></script>
+</head>
+<body>
+    <h1>rock-paper-scissors 가위바위보 10판 하기</h1>    
+    <p>1. 콘솔창에서 확인하세요.</p>
+    <p>2. Button 누를 시마다 한판씩 진행.</p>
+    <p>3. 승부가 난 경우만 판수로 인정.</p>
+    <p></p>
+    <div>* Player1 이름 : jekyll</div>
+    <div>* Player2 이름 : hide</div><br>
+    <button onclick="play();"> Play Click~~~~!!! </button>
+    <br><br>
+    <div id="jekyll"></div>
+    <div id="hide"></div>
+    <p>일현선임님</p>
+    <p>
+        주제: 가위 바위 보<br>
+        A,B 2명 묵찌빠 10판 하기<br><br>
+        
+        제약조건<br>
+        1. 같은거 연속 사용 금지<br>
+        단, 패자는 연속 사용 가능<br>
+        2. 승부가 난 경우만 판수로 인정(비기면 다시 해야함)<br>
+        3. 비긴 게임의 기록은 1번 조건에 포함되지 않음<br>
+        (비길경우 그 전판의 승부가 난 게임 기록으로 연속사용 제약 발동)<br><br>
+        
+        출력 결과 예 (결과는 어디든 볼수있으면 됨)<br><br>
+        1판 A:묵 B:찌 A승 B패<br>
+        2판 A:찌 B:찌 비김<br>
+        2판 A:빠 B:찌 B승 A패<br>...
+        10판 A:빠 B:찌 B승<br><br>
+        A 15전 8승 2패 5무<br>
+        B 15전 2승 8패 5무<br>
+    </p>
+</body>
+</html>
