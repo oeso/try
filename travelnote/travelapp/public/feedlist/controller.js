@@ -1,5 +1,5 @@
 /* feedlist */
 angular.module('travel')
-    .controller('feedlist', function($scope){
+    .controller('feedlist',['$scope', 'fb', function($scope, FB){
         //loginWidthFacebook()
-    })
+    }])

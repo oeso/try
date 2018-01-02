@@ -10,7 +10,7 @@ http.createServer(function (req, res) {
     // 200: 응답 성공, text/html: html문서
     res.writeHead(200, {'Content-Type': 'text/html'});
     // end: 응답 본문을 작성합니다.
-    res.end('Travel note');
+    res.end('Travel note 1');
     // listen: 매개변수로 포트와 호스트를 지정합니다.
 }).listen(9999, '127.0.0.1');
 console.log('Server running at http://127.0.0.1:9999/');

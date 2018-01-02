@@ -2,30 +2,61 @@
 <html lang="en" ng-app="travel">
 <head>
     <meta charset="UTF-8">
-    <title>Travel Index</title>
+    <!--<title ng-bind-html="gnbInfo.title"></title>-->
+    <title>{{gnbInfo.title}}</title>
     <link rel="stylesheet" href="stat/stylesheets/travelnote.css">
     <link rel="shotcut icon" href="http://ottorii.cafe24.com/tn/public/stat/images/tn_favicon.png">
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>-->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script> 최신버전. 1.0.2와는 사용법에 차이가 있음 -->
-    <!--<script src="https://connect.facebook.net/en_US/sdk.js"></script>-->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
-    <script src="route.js"></script>
-    <script src="build/result.js"></script>
 </head>
 <body>
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId            : '1752200768352421',
+            autoLogAppEvents : true,
+            xfbml            : true,
+            version          : 'v2.11'
+        });
+    };
+
+    (function(d, s, id){
         var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
+        if (d.getElementById(id)) {return;}
         js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.9&appId=1498390546894034";
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
         fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
+    <div id="fb-root"></div>
 
     <div ng-controller="wrap">
-
         <div ng-view></div>
-
     </div>
+
+    <script src="https://o.gzcdn.net/mui/js/highcharts_standalone_v4.1.4.js"></script>
+    <script src="https://o.gzcdn.net/mui/js/highcharts_v4.1.4.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="https://code.angularjs.org/1.4.6/angular.js"></script>
+    <script src="https://code.angularjs.org/1.4.6/angular-aria.js"></script>
+    <script src="https://code.angularjs.org/1.4.6/angular-loader.js"></script>
+    <script src="https://code.angularjs.org/1.4.6/angular-mocks.js"></script>
+    <script src="https://code.angularjs.org/1.4.6/angular-resource.js"></script>
+    <script src="https://code.angularjs.org/1.4.6/angular-route.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>-->
+
+    <script src="base/config.js"></script>
+    <script src="base/appInfo.js"></script>
+
+    <!-- conf.js 가 route.js 보다 밑에 와야 함. 즉 config 보다 factory가 나중에 등록되어야 한다는 말임 -->
+    <!-- live 나갈 때는 아래 result.js로 빌드해서 나감 -->
+    <!--<script src="build/result.js"></script>-->
+
+    <!-- 개발시 script -->
+    <script src="account/controller.js"></script>
+    <script src="feedlist/controller.js"></script>
+    <script src="login/controller.js"></script>
+    <script src="login/loginSuccessController.js"></script>
+    <script src="reservation/controller.js"></script>
+    <script src="reservationSuccess/controller.js"></script>
 </body>
 </html>
