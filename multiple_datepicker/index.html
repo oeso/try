@@ -3,48 +3,155 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, width=device-width, height=device-height, minimal-ui">
-    <title>Multiple Date Picker TEST</title>
+    <title>Month Picker</title>
     <meta name="apple-mobile-web-app-capable" content="no">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" href="http://newgdr.golfzon.com/base/style.min.css">
+    <link rel="stylesheet" href="monthPicker.css">
 </head>
 <body ng-controller="view">
 
+    <div class="header_gdr">
+        <div>
+            <a href="" class="header_gdr-prevbtn" ng-click="setDate('prev')">
+                <span class="hide">이전 연습기록 이동</span>
+            </a>
+            <a href="" class="header_gdr-date" ng-click="calanderOpen()">{{targetMonth|date:'yyyy년 MM월'}}</a>
+            <a href="" class="header_gdr-nextbtn" ng-click="setDate('next')">
+                <span class="hide">다음 연습기록 이동</span>
+            </a>
+        </div>
+    </div>        
 
-    <div>
-        <multiple-date-picker 
-            sunday-first-day="true" 
-            show-days-of-surrounding-months="true" 
-            fire-events-for-days-of-surrounding-months="true" 
-            css-days-of-surrounding-months="'picker-other-month-custom'" 
-            month-changed="logMonthChanged" 
-            month="month" 
-            year-changed="logYearChanged" 
-            highlight-days="highlightDays" 
-            day-click="checkSelection" 
-            class="ng-isolate-scope">
-        </multiple-date-picker>
-        <a href="" class="btn_close_calender" ng-click="calanderOpen();">닫기</a>
+<!-- dim layer -->
+<div class="dimmed" ng-if="dimmed"></div>
+<!-- //dim layer -->
+    <div ng-if="calanderStatus">
+        <month-picker ng-model="month" result="month" this-month="thisMonth"></month-picker>
     </div>
 
     <script src="https://code.angularjs.org/1.6.6/angular.js"></script>
     <script src="https://code.angularjs.org/1.6.6/angular-route.js"></script>
-    <script src="multipleDatePicker.js"></script>
+    <script src="monthPicker.js"></script>
 
     <script>
         var app = angular.module("app",[]);
         app.controller('view',['$scope','$rootScope', function($scope,$rootScope,$timeout){
+            //현재 월
+            $scope.thisMonth = new Date().getMonth()+1;
+            $scope.targetMonth = $scope.thisMonth;
+            $scope.targetMonth = 565656;
 
-            console.log("view");
-            console.log("date:", multipleDatePicker);
-            $scope.month = 4;
-            $scope.monthChanged = "dfsd"
+            //좌우 카운터
+            $scope.count = $scope.results ? $scope.results.length : 0;
+
+            $scope.$watch('results', function(newValue, oldValue){
+                $scope.count = newValue ? (newValue.length ? newValue.length : 0) : 0;
+            },true);
+
+            function apiMonthCheck(){
+                var defaultValue = [];
+                $scope.results = [{"month": "12"},{"month": "8"},{"month": "7"},{"month": "4"},{"month": "2"}];
+                
+                for(var i=0; i<$scope.results.length; i++){
+                    defaultValue.push(Number($scope.results[i].month));
+                };
+                defaultValue.sort(function(a,b){
+                    return a-b;
+                });
+
+                var arr = [];
+                for(var i = 1; i< 13; i++){
+                    var obj = {};
+                        obj.list = i;
+                    if( defaultValue.indexOf(i) > -1 ){
+                        obj.month = i;
+                    }
+                    arr.push(obj);
+                }
+                $scope.month = arr;
+            }
+            apiMonthCheck();
+
+
+
+            $scope.today = new Date();
+            $scope.calanderOpen = function(){
+                $scope.calanderStatus = $scope.calanderStatus ? false : true;
+                $scope.dimmed = $scope.dimmed ? false : true;
+                calanderSet();
+            }
+
             
+            $scope.setDate = function(_date){
+                if(_date == ''){
+                    if(flag == "prev") alert("이전 데이터가 없습니다.");
+                    if(flag == "next") alert("다음 데이터가 없습니다.");
+                }else{
+                    $scope.today = _date;
+                    $scope.date = _date;
+                    
+                    //clearData();
+                    //loadData();
+                    //getFindPracticeDate();
 
+                    if( _date === "prev" ){
+                        $scope.count--;
+                        
+                        $scope.targetMonth = $scope.targetMonth-1;
+                        $scope.today = $scope.targetMonth-1;
+                    }else if( _date === "next" ){
+                        $scope.count++;
+                        $scope.targetMonth = $scope.targetMonth+1;
+                    }
+
+                }
+            }
+            var calanderSet = function(){
+                api.getDrivingPracticeDateList(function(err, o){
+                    $scope.highlightDays = [];
+                        var cnt = o.results.count;
+                        $scope.month = moment($scope.date);
+                        for(var i=0;i<cnt;i++){
+                            if($scope.today == o.results.entitys[i].statDate){
+                                $scope.highlightDays.push({
+                                    date:moment(o.results.entitys[i].statDate).date($filter('date')($scope.today,'d')),
+                                    css:'cell-select',
+                                    selectable: true,
+                                    title:"date_"+i
+                                })   	        	   	        					
+                            }else{
+                                $scope.highlightDays.push({
+                                    date:moment(o.results.entitys[i].statDate).date($filter('date')(o.results.entitys[i].statDate,'d')),
+                                    css:'cell-selected',
+                                    selectable: true,
+                                    title:"date_"+i
+                                });   	        					
+                            }
+                        }
+                },{
+                    size:0,
+                    yearMonth:$filter('date')(new Date($scope.date),'yyyy-MM')
+                });
+            }
+
+            
+	        var clearData = function(){
+
+            }
+            
+            var loadData = function(){
+
+            };
+            
+            // function getFindPracticeDate(){
+            //     $scope.preDate = o.results.entity.preDate==undefined?'':o.results.entity.preDate;
+            //     $scope.today = o.results.entity.today;
+            //     $scope.nextDate = o.results.entity.nextDate==undefined?'':o.results.entity.nextDate;
+            // }
         }]);
 
-        app.directive('multipleDatePicker', multipleDatePicker);
+        app.directive('monthPicker', monthPicker);
     </script>
 </body>
 </html>
