@@ -11,15 +11,11 @@
 </head>
 <body ng-controller="view">
 
-    <div class="header_gdr">
+    <div class="header">
         <div>
-            <a href="" class="header_gdr-prevbtn" ng-click="setDate('prev')">
-                <span class="hide">이전 연습기록 이동</span>
-            </a>
-            <a href="" class="header_gdr-date" ng-click="calanderOpen()">{{targetMonth|date:'yyyy년 MM월'}}</a>
-            <a href="" class="header_gdr-nextbtn" ng-click="setDate('next')">
-                <span class="hide">다음 연습기록 이동</span>
-            </a>
+            <a href="" class="prevbtn" ng-click="setDate('prev')"></a>
+            <a href="" class="gdr-date" ng-click="calanderOpen()">{{targetMonth|date:'yyyy년 MM월'}}</a>
+            <a href="" class="nextbtn" ng-click="setDate('next')"></a>
         </div>
     </div>        
 
