@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>touch swipe</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <style>html,body,div{margin:0;padding:0}body{padding:10px}</style>
+</head>
+<body>
+    <div id="linkyWrap" style="position:relative; height:50px; background:#efefef">
+        <a id="linky" href="" style="position:absolute; left:0; top:0; bottom:0; min-width:60px; height:50px; background:#4983d5"></a>
+    </div>
+
+    <br><br>
+    <div id="vals"></div>
+    <div id="val_last">종료시 : </div>
+
+    <script>
+        var linkyWrapWidth = document.getElementById("linkyWrap").offsetWidth;
+        var linky = document.getElementById("linky");
+        var vals = document.getElementById("vals");
+        var val_last = document.getElementById("val_last");
+        var x,y;
+
+        linky.ontouchstart = function(){
+            linky.ontouchmove = moving;
+        }
+
+        function moving(event){
+            x = event.touches[0].clientX;
+            y = event.touches[0].clientY;
+
+            if(x > linkyWrapWidth){
+                x = linkyWrapWidth;
+            }
+            if(x<0){x = 0;}
+            linky.style.width = x + "px";
+
+            vals.innerHTML = x + ", " + y;
+        }
+
+        linky.ontouchend  = function(event){
+            val_last.innerHTML = "종료시 : " + x + ", " + y;
+            linky.ontouchmove = null;
+        }
+
+    </script>
+</body>
+</html>
